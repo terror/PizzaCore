@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PizzaCore.Models;
 using System;
@@ -16,6 +16,10 @@ namespace PizzaCore.Controllers {
     }
 
     public IActionResult Index() {
+      return View();
+    }
+
+    public IActionResult About() {
       return View();
     }
 
