@@ -9,8 +9,7 @@ using PizzaCore.Data;
 using PizzaCore.Services;
 using System;
 
-namespace PizzaCore
-{
+namespace PizzaCore {
   public class Startup {
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
