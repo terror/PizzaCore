@@ -1,0 +1,64 @@
+@model PizzaCore.Models.ContactModel
+
+@{
+  ViewData["Title"] = "Contact Us";
+}
+
+<h1>Contact Us</h1>
+
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    <form asp-action="View">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Topic" class="control-label"></label>
+        <input asp-for="Topic" class="form-control" />
+        <span asp-validation-for="Topic" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Message" class="control-label"></label>
+        <input asp-for="Message" class="form-control" />
+        <span asp-validation-for="Message" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input type="submit" id="submitBtn" value="Send" class="btn btn-primary" disabled />
+        <input type="reset" value="Reset" class="btn btn-primary" onclick="resetReCaptcha()" />
+      </div>
+      <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6LdIiBQdAAAAAANVFuSzfjBfyJKEjPnW8kEH886l" data-callback="enableSubmitBtn"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <script type="text/javascript">
+        function enableSubmitBtn() {
+            document.getElementById("submitBtn").disabled = false;
+        }
+
+        function resetReCaptcha() {
+            grecaptcha.reset();
+        }
+  </script>
+}

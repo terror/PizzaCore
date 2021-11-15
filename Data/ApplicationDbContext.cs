@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using PizzaCore.Models;
 
 namespace PizzaCore.Data {
   public class ApplicationDbContext : IdentityDbContext {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) {
     }
+    public DbSet<PizzaCore.Models.ContactModel> ContactModel { get; set; }
   }
 }
