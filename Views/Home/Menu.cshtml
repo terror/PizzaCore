@@ -1,0 +1,59 @@
+
+@{
+  ViewData["Title"] = "Menu";
+}
+
+
+<section id="menu-grid-container">
+
+  <div class="menu-item">
+    <div class="item-image"><img src="~/images/menu(temp)/item1.jpg" /></div>
+    <div class="item-title"></div>
+    <div class="item-description"></div>
+    <div class="item-action-container">
+      <span class="item-price"></span>
+      <button class="item-cart-add">Add</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-image"><img src="~/images/menu(temp)/item2.jpg" /></div>
+    <div class="item-title"></div>
+    <div class="item-description"></div>
+    <div class="item-action-container">
+      <span class="item-price"></span>
+      <button class="item-cart-add">Add</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-image"><img src="~/images/menu(temp)/item3.jpg" /></div>
+    <div class="item-title"></div>
+    <div class="item-description"></div>
+    <div class="item-action-container">
+      <span class="item-price"></span>
+      <button class="item-cart-add">Add</button>
+    </div>
+  </div>
+
+
+</section>
+
+
+<style>
+  #menu-grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-row: auto;
+
+  }
+
+  .menu-item {
+    display: flex;
+  }
+</style>
+
+<script>
+
+</script>
+
