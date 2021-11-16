@@ -1,0 +1,88 @@
+@model PizzaCore.Models.ContactModel
+
+@{
+  ViewData["Title"] = "Contact Us";
+}
+
+<h1>Contact Us</h1>
+
+<hr />
+<!-- All contact info & location -->
+<div id="contact-info">
+
+  <!-- Contact info -->
+  <div id="contact-info-elements">
+    <div class="contact-info-element">
+      <h5>Carryout Hours</h5>
+      <p>Su-Sa 10:30am-11:00pm</p>
+    </div>
+    <div class="contact-info-element">
+      <h5>Delivery Hours</h5>
+      <p>Su-Th 10:30am-12:00am</p>
+      <p>Fr-Sa 10:30am-1:00am</p>
+    </div>
+    <div class="contact-info-element">
+      <h5>Phone number</h5>
+      <p><a href="tel:+15144575036">(514) 457-5036</a></p>
+    </div>
+    <div class="contact-info-element">
+      <h5>Email</h5>
+      <p><a href="mailto:pizzacore@gmail.com">pizzacore@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Location using Google Maps -->
+  <div id="map"></div>
+</div>
+<hr />
+
+<!-- Contact us form -->
+<h4 id="contactform-title">Contact us form</h4>
+<div class="row">
+  <div class="col-md-4">
+    <form asp-action="Contact">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Topic" class="control-label"></label>
+        <select asp-for="Topic" class="form-control">
+          <option disabled selected>Select topic</option>
+          <option value="DeliveryComplaint">Delivery Address Complaint</option>
+          <option value="OrderComplaint">Order Issue Complaint</option>
+          <option value="PositiveFeedback">Positive Feedback</option>
+          <option value="TechnicalIssue">Technical Issue</option>
+          <option value="GiftCards">Gift Cards</option>
+          <option value="SocialMedia">Social Media</option>
+          <option value="Other">Other</option>
+        </select>
+        <span asp-validation-for="Topic" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Message" class="control-label"></label>
+        <textarea asp-for="Message" class="form-control"></textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input type="submit" id="submitBtn" value="Send" class="btn btn-primary" disabled />
+        <input type="reset" value="Reset" class="btn btn-primary" onclick="resetReCaptcha()" />
+      </div>
+      <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6LdIiBQdAAAAAANVFuSzfjBfyJKEjPnW8kEH886l" data-callback="enableSubmitBtn"></div>
+      </div>
+    </form>
+  </div>
+</div>
