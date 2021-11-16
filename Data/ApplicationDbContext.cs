@@ -10,6 +10,5 @@ namespace PizzaCore.Data {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) {
     }
-    public DbSet<PizzaCore.Models.ContactModel> ContactModel { get; set; }
   }
 }

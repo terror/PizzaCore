@@ -7,7 +7,10 @@
 <h1>Contact Us</h1>
 
 <hr />
+<!-- All contact info & location -->
 <div id="contact-info">
+
+  <!-- Contact info -->
   <div id="contact-info-elements">
     <div class="contact-info-element">
       <h5>Carryout Hours</h5>
@@ -27,9 +30,13 @@
       <p><a href="mailto:pizzacore@gmail.com">pizzacore@gmail.com</a></p>
     </div>
   </div>
+
+  <!-- Location using Google Maps -->
   <div id="map"></div>
 </div>
 <hr />
+
+<!-- Contact us form -->
 <h4 id="contactform-title">Contact us form</h4>
 <div class="row">
   <div class="col-md-4">
@@ -79,38 +86,3 @@
     </form>
   </div>
 </div>
-
-
-@section Scripts {
-  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-  <script type="text/javascript">
-    function enableSubmitBtn() {
-      document.getElementById("submitBtn").disabled = false;
-    }
-
-    function resetReCaptcha() {
-      grecaptcha.reset();
-    }
-  </script>
-
-  <script>
-    var map;
-    function initMap() {
-      const myLatLng = { lat: 45.407082014717304, lng: -73.94177111534077 };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: myLatLng,
-      });
-
-      new google.maps.Marker({
-        position: myLatLng,
-        map,
-      });
-
-    }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-1yhtUyW4uaws1dwiuhQ19ITrSS2BlJY&callback=initMap"
-          async defer></script>
-}

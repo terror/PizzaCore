@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PizzaCore.Models
-{
-  public class ContactModel
-  {
+namespace PizzaCore.Models {
+  public class ContactModel {
     [Key]
     public int Id { get; set; }
 

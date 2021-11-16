@@ -1,20 +1,16 @@
-using Assignment3.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaCore.Data;
+using PizzaCore.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PizzaCore {
+namespace PizzaCore
+{
   public class Startup {
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
@@ -33,8 +29,11 @@ namespace PizzaCore {
           .AddEntityFrameworkStores<ApplicationDbContext>();
       services.AddControllersWithViews();
 
-      services.AddHttpClient<ReCaptcha>(x =>
+      services.Configure<ReCaptchaOptions>(options =>
       {
+        options.ApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
+      });
+      services.AddHttpClient<ReCaptcha>(x => {
         x.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
       });
     }

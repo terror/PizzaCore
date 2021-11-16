@@ -1,11 +1,8 @@
-using Assignment3.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PizzaCore.Models;
-using System;
-using System.Collections.Generic;
+using PizzaCore.Services;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaCore.Controllers {
@@ -31,20 +28,16 @@ namespace PizzaCore.Controllers {
     }
 
     [HttpGet("contact")]
-    public IActionResult Contact()
-    {
+    public IActionResult Contact() {
       return View();
     }
 
     [HttpPost("contact")]
-    public async Task<IActionResult> ContactAsync(ContactModel contact)
-    {
-      if (ModelState.IsValid)
-      {
+    public async Task<IActionResult> ContactAsync(ContactModel contact) {
+      if (ModelState.IsValid) {
         var captcha = Request.Form["g-recaptcha-response"].ToString();
 
-        if (await _captcha.IsValid(captcha))
-        {
+        if (await _captcha.IsValid(captcha)) {
           // Add the contact to the database.
 
           // Call the view Success and send the contact model
