@@ -1,19 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaCore.Data;
+using PizzaCore.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PizzaCore {
+namespace PizzaCore
+{
   public class Startup {
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
@@ -31,6 +28,15 @@ namespace PizzaCore {
       services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
           .AddEntityFrameworkStores<ApplicationDbContext>();
       services.AddControllersWithViews();
+
+      services.Configure<GoogleServicesOptions>(options =>
+      {
+        options.ReCaptchaApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
+        options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
+      });
+      services.AddHttpClient<ReCaptcha>(x => {
+        x.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
