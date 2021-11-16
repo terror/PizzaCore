@@ -39,8 +39,8 @@ namespace PizzaCore.Models
     public string Topic { get; set; }
 
     [Required]
-    [MaxLength(300)]
-    [Display(Name = "Question or Comment")]
+    [MaxLength(500)]
+    [Display(Name = "Message")]
     public string Message { get; set; }
 
     public DateTime Date { get; set; }

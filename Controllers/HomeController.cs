@@ -45,9 +45,7 @@ namespace PizzaCore.Controllers {
 
         if (await _captcha.IsValid(captcha))
         {
-          // Add the contact to the database
-          //_context.Contacts.Add(contact);
-          //_context.SaveChanges();
+          // Add the contact to the database.
 
           // Call the view Success and send the contact model
           return View("Success", contact);
