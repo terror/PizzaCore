@@ -29,9 +29,10 @@ namespace PizzaCore
           .AddEntityFrameworkStores<ApplicationDbContext>();
       services.AddControllersWithViews();
 
-      services.Configure<ReCaptchaOptions>(options =>
+      services.Configure<GoogleServicesOptions>(options =>
       {
-        options.ApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
+        options.ReCaptchaApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
+        options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
       });
       services.AddHttpClient<ReCaptcha>(x => {
         x.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");

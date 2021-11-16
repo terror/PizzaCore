@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaCore.Services {
-  public class ReCaptchaOptions {
-    public string ApiKey { get; set; }
+  public class GoogleServicesOptions {
+    public string ReCaptchaApiKey { get; set; }
+    public string MapsApiKey { get; set; }
   }
 }
