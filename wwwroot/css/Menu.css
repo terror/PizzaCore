@@ -40,10 +40,10 @@
 .menu-item {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: white;    
   justify-content: space-between;
 }
 
 body {
-  background-color: #f0f1f3;
+  background-color: #f0f1f3; /*I'm setting background to greyish color for development reasons (Can be changed by whoever does color scheme) */
 }

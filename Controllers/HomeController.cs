@@ -32,6 +32,12 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
+   /* [HttpGet]
+    public async Task<ActionResult<IEnumerable<Menu>>> GetMenu()
+    {
+      return await _context.Samurais.ToListAsync();
+    }*/
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() {
       return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
