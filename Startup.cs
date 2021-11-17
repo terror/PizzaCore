@@ -29,11 +29,15 @@ namespace PizzaCore
           .AddEntityFrameworkStores<ApplicationDbContext>();
       services.AddControllersWithViews();
 
-      services.Configure<GoogleServicesOptions>(options =>
-      {
+      services.AddDbContext<PizzaCoreContext>(options => {
+        options.UseSqlServer(Configuration.GetConnectionString("PizzaCoreConnection"));
+      });
+
+      services.Configure<GoogleServicesOptions>(options => {
         options.ReCaptchaApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
         options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
       });
+
       services.AddHttpClient<ReCaptcha>(x => {
         x.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
       });
