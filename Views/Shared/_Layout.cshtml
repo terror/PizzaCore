@@ -1,3 +1,7 @@
+@using Microsoft.Extensions.Options
+@using PizzaCore.Services
+@inject IOptions<GoogleServicesOptions> GoogleServicesOptions
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,20 +41,26 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - PizzaCore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+  <div class="container">
+    <main role="main" class="pb-3">
+      @RenderBody()
+    </main>
+  </div>
+
+  <footer class="border-top footer text-muted">
+
+    <div class="container">
+      &copy; 2021 - PizzaCore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+  </footer>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=@GoogleServicesOptions.Value.MapsApiKey&callback=initMap"
+          async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
