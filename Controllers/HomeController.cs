@@ -1,23 +1,37 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PizzaCore.Data;
 using PizzaCore.Models;
 using PizzaCore.Services;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace PizzaCore.Controllers {
+
+  
   public class HomeController : Controller {
     private readonly ILogger<HomeController> _logger;
     private readonly ReCaptcha _captcha;
     private readonly PizzaCoreContext _context;
+    
 
     public HomeController(ILogger<HomeController> logger, ReCaptcha captcha, PizzaCoreContext context) {
       _logger = logger;
       _captcha = captcha;
       _context = context;
+      
+      
+
     }
+
+    
 
     public IActionResult Index() {
       return View();
@@ -36,11 +50,26 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
-   /* [HttpGet]
-    public async Task<ActionResult<IEnumerable<Menu>>> GetMenu()
+    [Route("api/[controller]/Menu")]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MenuModel>>> GetMenu()
     {
-      return await _context.Samurais.ToListAsync();
-    }*/
+      var stuff = await _context.MenuModel.ToListAsync();
+      return stuff;
+    }
+
+    [Route("api/[controller]/Menu/Pictures/{id}")]
+    [HttpGet]
+    public async Task<ActionResult<byte[]>> GetMenuItemPics(int id)
+    {
+      var stuff = await _context.MenuModel.FindAsync(id);
+      if (stuff == null || stuff.ItemImage == null)
+      {
+        return null;
+      }
+
+      return stuff.ItemImage;
+    }
 
     [HttpGet("contact")]
     public IActionResult Contact() {
