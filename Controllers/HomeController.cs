@@ -37,8 +37,8 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
-    [HttpGet("covid19")]
-    public IActionResult COVID19() {
+    [HttpGet("covid")]
+    public IActionResult Covid() {
       return View();
     }
 
