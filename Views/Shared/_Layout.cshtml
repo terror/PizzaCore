@@ -13,8 +13,11 @@
   @RenderSection("Styles", false)
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" id="main-navbar">
+  <header id="main-navbar">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
+      <div class="text-light" id="phone-info">
+        Delivery in Montreal: <a href="tel:5144575036">(514) 457-5036</a>
+      </div>
       <div class="container">
         <p class="navbar-brand" id="nav-logo">
           <a href="@Url.Action("Index", "Home")">
@@ -40,6 +43,10 @@
             </li>
           </ul>
           <partial name="_LoginPartial" />
+          <div>
+            <a class="nav-link text-light" href="#">🛒Cart</a>
+            
+          </div>
         </div>
       </div>
     </nav>
