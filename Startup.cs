@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using PizzaCore.Services;
 using System;
 using System.Drawing;
 using System.IO;
+
 
 namespace PizzaCore
 {
@@ -145,6 +147,9 @@ namespace PizzaCore
         options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
       });
 
+
+      // Enforce lowercase routing
+      services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
       services.AddHttpClient<ReCaptcha>(x => {
         x.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
       });
