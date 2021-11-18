@@ -24,6 +24,14 @@ function initMap() {
   });
 }
 
+document.getElementById("english-lang").addEventListener("click", () => {
+  document.getElementById("current-lang").textContent = "English";
+});
+
+document.getElementById("french-lang").addEventListener("click", () => {
+  document.getElementById("current-lang").textContent = "French";
+})
+
 
 /**
  * ReCaptcha
