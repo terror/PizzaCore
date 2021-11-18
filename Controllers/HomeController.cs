@@ -68,17 +68,18 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
+    [HttpGet("menu")]
     public IActionResult Menu() {
       return View();
     }
 
-    [Route("api/[controller]/Menu")]
+    [Route("api/menu")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MenuModel>>> GetMenu() {
       return await _context.MenuModel.ToListAsync();
     }
 
-    [Route("api/[controller]/Menu/Pictures/{id}")]
+    [Route("api/menu/pictures/{id}")]
     [HttpGet]
     public async Task<ActionResult<byte[]>> GetMenuItemPics(int id) {
       var menuItem = await _context.MenuModel.FindAsync(id);
