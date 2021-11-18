@@ -31,37 +31,14 @@ namespace PizzaCore.Controllers {
     public IActionResult Contact() {
       return View();
     }
-
-    [HttpGet("Careers")]
+    
+    [HttpGet("careers")]
     public IActionResult Careers() {
       return View();
     }
 
-    [HttpGet("COVID19")]
+    [HttpGet("covid19")]
     public IActionResult COVID19() {
-      return View();
-    }
-
-    [HttpPost("contact")]
-    public async Task<IActionResult> ContactAsync(ContactModel contact) {
-      if (ModelState.IsValid) {
-        var captcha = Request.Form["g-recaptcha-response"].ToString();
-
-        if (await _captcha.IsValid(captcha)) {
-          // Add the contact to the database.
-          _context.Add(contact.setDate(DateTime.Now));
-          await _context.SaveChangesAsync();
-
-          // Call the view Success and send the contact model
-          return View("Success", contact);
-        }
-      }
-
-      return View();
-    }
-
-    [HttpGet("contact")]
-    public IActionResult Contact() {
       return View();
     }
 
