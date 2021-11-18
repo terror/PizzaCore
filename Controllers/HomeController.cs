@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PizzaCore.Controllers {
 
@@ -35,19 +36,8 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
-
     [HttpGet("contact")]
     public IActionResult Contact() {
-      return View();
-    }
-    
-    [HttpGet("careers")]
-    public IActionResult Careers() {
-      return View();
-    }
-
-    [HttpGet("covid")]
-    public IActionResult Covid() {
       return View();
     }
 
@@ -62,7 +52,7 @@ namespace PizzaCore.Controllers {
           await _context.SaveChangesAsync();
 
           // Call the view Success and send the contact model
-          return View("Success", contact);
+          return View("ContactSuccess", contact);
         }
       }
       return View();
@@ -89,6 +79,43 @@ namespace PizzaCore.Controllers {
       }
 
       return menuItem.ItemImage;
+    }
+
+    [HttpGet("careers")]
+    public IActionResult Careers() {
+      return View();
+    }
+
+    [HttpPost("careers")]
+    public async Task<IActionResult> CareersAsync(CareersModel careers) {
+      if (ModelState.IsValid) {
+        var captcha = Request.Form["g-recaptcha-response"].ToString();
+
+        if (await _captcha.IsValid(captcha)) {
+
+          using (var memoryStream = new MemoryStream()) {
+            await careers.CVFile.CopyToAsync(memoryStream);
+
+            // Upload the file if less than 2 MB
+            if (memoryStream.Length < 2097152) {
+              // Add the career submission to the database.
+              _context.Add(careers.setCVBinary(memoryStream.ToArray()).setDate(DateTime.Now));
+              await _context.SaveChangesAsync();
+
+              // Call the view Success and send the careers model
+              return View("CareersSuccess", careers);
+            } else {
+              ModelState.AddModelError("File", "The file is too large.");
+            }
+          }
+        }
+      }
+      return View();
+    }
+
+    [HttpGet("covid")]
+    public IActionResult Covid() {
+      return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
