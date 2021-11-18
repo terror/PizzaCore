@@ -1,5 +1,5 @@
-using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace PizzaCore.Migrations {
   public partial class contact : Migration {
