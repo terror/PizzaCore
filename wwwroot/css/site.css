@@ -107,6 +107,26 @@ body {
     margin-bottom: 16px;
 }
 
+/* Careers page styles
+-------------------------------------------------- */
+#careers-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* COVID page styles
+-------------------------------------------------- */
+#covid-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#covid-info-elements {
+  margin-right: 15%;
+}
+
 /* Navbar styles
 -------------------------------------------------- */
 #nav-logo {

@@ -27,12 +27,20 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
-    public IActionResult Privacy() {
+    [HttpGet("contact")]
+    public IActionResult Contact() {
       return View();
     }
 
-    [HttpGet("contact")]
-    public IActionResult Contact() {
+    [HttpGet("Careers")]
+    public IActionResult Careers()
+    {
+      return View();
+    }
+
+    [HttpGet("COVID19")]
+    public IActionResult COVID19()
+    {
       return View();
     }
 
