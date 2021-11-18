@@ -63,10 +63,10 @@ html {
   color: black;
 }
 
-  .category-nav-item:hover {
-    background-color: #dc3545;
-    color: #ececec;
-  }
+.category-nav-item:hover {
+  background-color: #dc3545;
+  color: #ececec;
+}
 
 #category-nav-container {
   position: sticky;
