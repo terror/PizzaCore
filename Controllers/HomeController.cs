@@ -60,6 +60,29 @@ namespace PizzaCore.Controllers {
       return View();
     }
 
+    [HttpGet("contact")]
+    public IActionResult Contact() {
+      return View();
+    }
+
+    [HttpPost("contact")]
+    public async Task<IActionResult> ContactAsync(ContactModel contact) {
+      if (ModelState.IsValid) {
+        var captcha = Request.Form["g-recaptcha-response"].ToString();
+
+        if (await _captcha.IsValid(captcha)) {
+          // Add the contact to the database.
+          _context.Add(contact.setDate(DateTime.Now));
+          await _context.SaveChangesAsync();
+
+          // Call the view Success and send the contact model
+          return View("Success", contact);
+        }
+      }
+
+      return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() {
       return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
