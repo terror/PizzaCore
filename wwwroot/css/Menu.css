@@ -1,0 +1,78 @@
+
+
+.item-image {
+  width: 100%;
+  height: 50%;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.item-title, .item-description, .item-action-container {
+  margin: 0px 8px 0px 8px;
+}
+
+.item-action-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+}
+
+.item-price {
+  display: inline-block;
+  width: 100%;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.item-cart-add {
+  width: 100%;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  background-color: white;    
+  justify-content: space-between;
+}
+
+body {
+  background-color: #f0f1f3; /*I'm setting background to greyish color for development reasons (Can be changed by whoever does color scheme) */
+  
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.menu-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 230px));
+  grid-auto-rows: 360px;
+  grid-gap: 10px;
+  grid-auto-flow: row;
+}
+
+.category-nav-item {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 8px 0;
+  color: black;
+}
+
+.category-nav-item:hover {
+  background-color:lightgrey;
+  color: white;
+}
+
+#category-nav-container {
+  position: sticky;
+  top: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  display: flex;
+  font-size: x-large;
+  background-color: white;
+}
