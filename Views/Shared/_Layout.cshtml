@@ -1,7 +1,6 @@
 @using Microsoft.Extensions.Options
 @using PizzaCore.Services
 @inject IOptions<GoogleServicesOptions> GoogleServicesOptions
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +10,11 @@
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="~/css/theme.min.css" />
   <link rel="stylesheet" href="~/css/site.css" />
+  @RenderSection("Styles", false)
 </head>
 <body>
   <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" id="main-navbar">
       <div class="container">
         <p class="navbar-brand" id="nav-logo">
           <a href="@Url.Action("Index", "Home")">
@@ -30,6 +30,9 @@
               <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Careers">Careers</a>
             </li>
             <li class="nav-item">
@@ -41,6 +44,7 @@
       </div>
     </nav>
   </header>
+
   <div class="container">
     <main role="main" class="pb-3">
       @RenderBody()
@@ -48,6 +52,7 @@
   </div>
 
   <footer class="border-top footer text-muted">
+
     <div class="container">
       &copy; 2021 - PizzaCore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
