@@ -61,8 +61,8 @@ html {
 }
 
 .category-nav-item:hover {
-  background-color:lightgrey;
-  color: white;
+  background-color: #dc3545;
+  color: #ececec;
 }
 
 #category-nav-container {
