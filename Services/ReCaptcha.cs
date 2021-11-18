@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 namespace PizzaCore.Services {
   public class ReCaptcha {
     private readonly HttpClient captchaClient;
-    public GoogleServicesOptions Options { get; set; }
+    public GoogleServicesOptions options { get; set; }
 
     public ReCaptcha(HttpClient captchaClient, IOptions<GoogleServicesOptions> options) {
       this.captchaClient = captchaClient;
-      this.Options = options.Value;
+      this.options = options.Value;
     }
 
     public async Task<bool> IsValid(string captcha) {
       try {
-        var postTask = await captchaClient
-            .PostAsync($"?secret={Options.ReCaptchaApiKey}&response={captcha}", new StringContent(""));
+        var postTask = await captchaClient.PostAsync($"?secret={options.ReCaptchaApiKey}&response={captcha}", new StringContent(""));
         var result = await postTask.Content.ReadAsStringAsync();
         var resultObject = JObject.Parse(result);
         dynamic success = resultObject["success"];
         return (bool)success;
-      } catch (Exception e) {
+      } catch {
         return false;
       }
     }

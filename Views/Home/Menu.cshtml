@@ -1,182 +1,34 @@
-@section Styles{
-  <link rel="stylesheet" href="~/css/Menu.css" />
-}
+@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
+@section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
+
 @{
   ViewData["Title"] = "Menu";
 }
 
-<!-- Ishpal: I made the menu sort of look like the https://www.pizzahut.ca/order/pizzas/ menu.
-             And I think it would look nice if we follow pizzahut's design for the cart too.-->
-
+<!-- Navigation -->
 <nav id="category-nav-container">
-  <a class="category-nav-item" href="#Pizza-Section">Pizzas</a>
-  <a class="category-nav-item" href="#Burger-Section">Burgers</a>
+  <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
+  <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
   <a class="category-nav-item" href="#Fries-Section">Fries</a>
-  <a class="category-nav-item" href="#Drinks-Section" >Drinks</a>
+  <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
 </nav>
 
-<h2 id="Pizza-Section" class="text-secondary">Pizza</h2>
-<section class="menu-grid-container" id="pizza-grid-container">
-
-</section>
-
-<h2 id="Burger-Section" class="text-secondary">Burger</h2>
-<section class="menu-grid-container" id="burger-grid-container">
-
-</section>
-
-
-<h2 id="Fries-Section" class="text-secondary">Fries</h2>
-<section class="menu-grid-container" id="fries-grid-container">
-
-</section>
-
-<h2 id="Drinks-Section" class="text-secondary">Drinks</h2>
-<section class="menu-grid-container" id="drink-grid-container">
-
-</section>
-
-
-
-
-
-
-  <script>
-    const currentURL = window.location.href;
-    const currentURLArray = currentURL.split("/");
-
-    let baseUrl = "";
-    const baseUrlSplitLength = 3;
-    for (let i = 0; i < baseUrlSplitLength; i++) {
-      baseUrl += currentURLArray[i] + "/";
+<!-- Products -->
+@foreach (var item in Model) {
+  <h2 id="@(item.Category)-Section">@(item.Category)</h2>
+  <section class="menu-grid-container">
+    @foreach (var product in item.Products) {
+      <div class="menu-item">
+        <div class="item-image">
+          <img src="~/images/products/@(product.ImageId).jpg"/>
+        </div>
+        <div class="item-title">@product.Name</div>
+        <div class="item-description">@product.Description</div>
+        <div class="item-action-container">
+          <span class="item-price">$@product.Price</span>
+          <button class="item-cart-add">Add</button>
+        </div>
+      </div>
     }
-
-    let menuItems = baseUrl + "api" + "/";
-    for (let i = baseUrlSplitLength; i < currentURLArray.length; i++) {
-      menuItems += currentURLArray[i] + "/";
-    }
-
-    console.log(menuItems);
-    //console.log(currentURLArray);
-    fetch(menuItems)
-      .then((response) => response.json())
-      .then((data) => {
-        //console.log(data);
-        const menuContainer = [document.getElementById("burger-grid-container"), document.getElementById("drink-grid-container"), document.getElementById("fries-grid-container"), document.getElementById("pizza-grid-container") ];
-
-
-        let menuItem;
-        let itemImage;
-        let itemTitle;
-        let itemDescription;
-        let itemActionContainer;
-        let itemPrice;
-        let itemAddCartBtn;
-
-        let newElement;
-        let menuItemData;
-
-        console.log(data);
-
-        data.sort((a, b) => {
-          if (a.itemCategory < b.itemCategory) {
-            return -1;
-          }
-          if (a.itemCategory > b.itemCategory) {
-            return 1;
-          }
-          return 0;
-        })
-
-        console.log(data);
-
-        let category = "";
-        let categoryNum = -1;
-
-        for (let i = 0; i < data.length; i++) {
-
-          menuItemData = data[i];
-
-          if (menuItemData.itemCategory !== category) {
-            category = menuItemData.itemCategory;
-            categoryNum++;
-          }
-
-          // Creating menuItem div
-          menuItem = document.createElement("div");
-          menuItem.className = "menu-item";
-          menuContainer[categoryNum].appendChild(menuItem);
-
-          // Creating item image
-          itemImage = document.createElement("div");
-          itemImage.className = "item-image";
-          newElement = document.createElement("img");
-          if (menuItemData.itemImage) {
-            newElement.src = menuItemData.itemImage;
-          }
-          itemImage.appendChild(newElement);
-          menuItem.appendChild(itemImage);
-
-          // Creating item title
-          itemTitle = document.createElement("div");
-          itemTitle.className = "item-title";
-          itemTitle.textContent = menuItemData.itemName;
-          menuItem.appendChild(itemTitle);
-
-          // Creating item description
-          itemDescription = document.createElement("div");
-          itemDescription.className = "item-description";
-          itemDescription.textContent = menuItemData.itemDescription;
-          menuItem.appendChild(itemDescription);
-
-          itemActionContainer = document.createElement("div");
-          itemActionContainer.className = "item-action-container";
-
-          // Creating item Price
-          itemPrice = document.createElement("span");
-          itemPrice.className = "item-price";
-          itemPrice.innerText = "$" + menuItemData.itemPrice;
-          itemActionContainer.appendChild(itemPrice);
-
-          // Creating item add to cart button
-          itemAddCartBtn = document.createElement("button");
-          itemAddCartBtn.className = "item-cart-add";
-          itemAddCartBtn.textContent = "Add";
-          itemActionContainer.appendChild(itemAddCartBtn);
-
-          menuItem.appendChild(itemActionContainer);
-
-
-
-
-          /*fetch(menuItems + "Pictures/" + menuItemData.id)
-            .then(response => response.blob())
-            .then(imageBlob => {
-              console.log(imageBlob);
-              // Then create a local URL for that image and print it
-              const imageObjectURL = URL.createObjectURL(imageBlob);
-              console.log(imageObjectURL);
-            });*/
-
-
-
-
-        }
-      })
-
-    function compare(a, b) {
-      if (a.last_nom < b.last_nom) {
-        return -1;
-      }
-      if (a.last_nom > b.last_nom) {
-        return 1;
-      }
-      return 0;
-    }
-
-
-    function hexToBase64(str) {
-      return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-    }
-  </script>
-
+  </section>
+}
