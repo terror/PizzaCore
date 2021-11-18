@@ -109,10 +109,14 @@ body {
 
 /* Careers page styles
 -------------------------------------------------- */
-#careers-info {
+.job-info {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.job-info-elements {
+  margin-right: 15%;
 }
 
 /* COVID page styles
@@ -134,10 +138,11 @@ body {
 }
 
 
-  #main-navbar {
-    position: sticky;
-    top: 0;
-  }
+#main-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
 .selected-lang{
     cursor: pointer;
