@@ -1,10 +1,6 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-/*! `Custom` Bootstrap 5 theme */
-@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,400,700);
-@import url(https://fonts.googleapis.com/css?family=Comfortaa:200,300,400,700);
-
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -33,6 +29,7 @@ a {
 html {
   font-size: 14px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -42,6 +39,7 @@ html {
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -66,6 +64,7 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -92,23 +91,24 @@ body {
 }
 
 .contact-info-element {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 #map {
-    height: 350px;
-    width: 500px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+  height: 350px;
+  width: 500px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 #contactform-title {
-    margin-top:32px;
-    margin-bottom: 16px;
+  margin-top: 32px;
+  margin-bottom: 16px;
 }
 
 /* Careers page styles
 -------------------------------------------------- */
+<<<<<<< HEAD
 #careers-info {
   display: flex;
   align-items: center;
@@ -130,5 +130,5 @@ body {
 /* Navbar styles
 -------------------------------------------------- */
 #nav-logo {
-    margin: 0 15px 0 0;
+  margin: 0 15px 0 0;
 }
