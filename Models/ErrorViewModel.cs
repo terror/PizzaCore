@@ -1,5 +1,3 @@
-using System;
-
 namespace PizzaCore.Models {
   public class ErrorViewModel {
     public string RequestId { get; set; }
