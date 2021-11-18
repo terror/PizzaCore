@@ -33,14 +33,12 @@ namespace PizzaCore.Controllers {
     }
 
     [HttpGet("Careers")]
-    public IActionResult Careers()
-    {
+    public IActionResult Careers() {
       return View();
     }
 
     [HttpGet("COVID19")]
-    public IActionResult COVID19()
-    {
+    public IActionResult COVID19() {
       return View();
     }
 
