@@ -22,8 +22,7 @@ namespace PizzaCore.Services {
         var resultObject = JObject.Parse(result);
         dynamic success = resultObject["success"];
         return (bool)success;
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         return false;
       }
     }
