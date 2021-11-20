@@ -1,0 +1,36 @@
+@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
+@section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
+
+@{
+  ViewData["Title"] = "Menu";
+}
+
+<!-- Navigation -->
+<nav id="category-nav-container">
+  <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
+  <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
+  <a class="category-nav-item" href="#Fries-Section">Fries</a>
+  <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
+</nav>
+
+<!-- Products -->
+@if (Model != null) {
+  @foreach (var item in Model) {
+    <h2 id="@(item.Category)-Section">@(item.Category)</h2>
+    <section class="menu-grid-container">
+      @foreach (var product in item.Products) {
+        <div class="menu-item">
+          <div class="item-image">
+            <img src="~/images/products/@(product.ImageId).jpg"/>
+          </div>
+          <div class="item-title">@product.Name</div>
+          <div class="item-description">@product.Description</div>
+          <div class="item-action-container">
+            <span class="item-price">$@product.Price</span>
+            <button class="item-cart-add">Add</button>
+          </div>
+        </div>
+      }
+    </section>
+  }
+}
