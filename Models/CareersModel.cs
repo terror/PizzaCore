@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web;
 
 namespace PizzaCore.Models {
   public class CareersModel {
@@ -10,19 +9,14 @@ namespace PizzaCore.Models {
     public int Id { get; set; }
 
     [Required]
-    [MinLength(2, ErrorMessage = "The field First Name must be a string with a " +
-                                 "minimum length of 2 and a maximum length of 50.")]
-    [MaxLength(50, ErrorMessage = "The field First Name must be a string with a " +
-                                 "minimum length of 2 and a maximum length of 50.")]
+    [MinLength(2, ErrorMessage = "The field First Name must be a string with a minimum length of 2 and a maximum length of 50.")]
     [RegularExpression("^[^0-9]+$", ErrorMessage = "First name cannot contain numbers.")]
     [Display(Name = "First Name")]
     public string FirstName { get; set; }
 
     [Required]
-    [MinLength(2, ErrorMessage = "The field Last Name must be a string with a " +
-                                  "minimum length of 2 and a maximum length of 50.")]
-    [MaxLength(50, ErrorMessage = "The field Last Name must be a string with a " +
-                                  "minimum length of 2 and a maximum length of 50.")]
+    [MinLength(2, ErrorMessage = "The field Last Name must be a string with a minimum length of 2 and a maximum length of 50.")]
+    [MaxLength(50, ErrorMessage = "The field Last Name must be a string with a minimum length of 2 and a maximum length of 50.")]
     [RegularExpression("^[^0-9]+$", ErrorMessage = "Last name cannot contain numbers.")]
     [Display(Name = "Last Name")]
     public string LastName { get; set; }
@@ -54,6 +48,5 @@ namespace PizzaCore.Models {
       Date = date;
       return this;
     }
-
   }
 }
