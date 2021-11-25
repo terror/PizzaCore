@@ -27,25 +27,23 @@ namespace PizzaCore.Controllers {
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(CareersModel careers) {
-      if (ModelState.IsValid) {
-        var captchaResponse = Request.Form["g-recaptcha-response"].ToString();
+      var captchaResponse = Request.Form["g-recaptcha-response"].ToString();
 
-        if (await captcha.IsValid(captchaResponse)) {
-          using (var memoryStream = new MemoryStream()) {
-            await careers.CVFile.CopyToAsync(memoryStream);
+      if (ModelState.IsValid && await captcha.IsValid(captchaResponse)) {
+        using (var memoryStream = new MemoryStream()) {
+          // Copy over file contents to the memory stream
+          await careers.CVFile.CopyToAsync(memoryStream);
 
-            // Upload the file if less than 2 MB
-            if (memoryStream.Length < FILE_SIZE_LIMIT) {
-              // Add the career submission to the database.
-              context.Add(careers.setCVBinary(memoryStream.ToArray()).setDate(DateTime.Now));
-              await context.SaveChangesAsync();
+          // Error out if the file is >= 2MB
+          if (memoryStream.Length >= FILE_SIZE_LIMIT)
+            return View(new ErrorModel { Message = "File size cannot be greater than 2MB." });
 
-              // Call the view Success and send the careers model
-              return View("Success", careers);
-            } else {
-              ModelState.AddModelError("File", "The file is too large.");
-            }
-          }
+          // Add the career submission to the database.
+          context.Add(careers.setCVBinary(memoryStream.ToArray()).setDate(DateTime.Now));
+          await context.SaveChangesAsync();
+
+          // Call the view Success and send the careers model
+          return View("Success", careers);
         }
       }
 

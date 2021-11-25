@@ -94,14 +94,14 @@
     "Name": "Super Cheese Pizza",
     "Description": "The super cheesy pizza best for cheese lovers",
     "Category": "Pizzas",
-    "Price": 0,
+    "Price": 18.99,
     "ImageId": "traditional-cheese-pizza"
   },
   {
     "Name": "Traditional Cheese Pizza",
     "Description": "The most enjoyed pizza of all time, just cheese!",
     "Category": "Pizzas",
-    "Price": 0,
+    "Price": 17.99,
     "ImageId": "traditional-vegetarian-pizza"
   },
   {
