@@ -27,12 +27,13 @@ namespace PizzaCore.Data {
     public IEnumerable<ProductByCategory> GetProductsGroupedByCategory() {
       try {
         logger.LogInformation("[PizzaRepository::GetProductsGroupedByCategory] Grouping products by category ...");
-        // Grab all products
-        var products = GetAllProducts();
+        // The order we want
+        var order = new List<string> { "Pizzas", "Burgers", "Fries", "Drinks" };
         // Category -> [Product]
-        return products
+        return GetAllProducts()
           .GroupBy(p => p.Category)
           .Select(group => new ProductByCategory { Category = group.Key, Products = group.ToList() })
+          .OrderBy(group => order.IndexOf(group.Category))
           .ToList();
       } catch (Exception ex) {
         logger.LogError($"Failed to group products by category: {ex.Message}");
