@@ -7,24 +7,41 @@
     "ImageId": "7UP"
   },
   {
-    "Name":  "All-dressed Pizza",
+    "Name": "All-dressed Pizza",
     "Description": "Can't go wrong with all-dressed pizza!",
-    "Category":  "Pizzas",
-    "Price":  16.99,
-    "ImageId": "all-dressed-pizza"
+    "Category": "Pizzas",
+    "Price": 12.99,
+    "ImageId": "all-dressed-pizza",
+    "Size": "Small"
+  },
+  {
+    "Name": "All-dressed Pizza",
+    "Description": "Can't go wrong with all-dressed pizza!",
+    "Category": "Pizzas",
+    "Price": 14.99,
+    "ImageId": "all-dressed-pizza",
+    "Size": "Medium"
+  },
+  {
+    "Name": "All-dressed Pizza",
+    "Description": "Can't go wrong with all-dressed pizza!",
+    "Category": "Pizzas",
+    "Price": 16.99,
+    "ImageId": "all-dressed-pizza",
+    "Size": "Large"
   },
   {
     "Name": "Beef Cheddar Burger",
     "Description": "Super filling beef burger",
     "Category": "Burgers",
-    "Price":  10.89,
+    "Price": 10.89,
     "ImageId": "beef-cheddar-burger"
   },
   {
     "Name": "Big Core Burger",
     "Description": "Our specialty burger, the big core burger",
     "Category": "Burgers",
-    "Price":  11.99,
+    "Price": 11.99,
     "ImageId": "big-core-burger"
   },
   {

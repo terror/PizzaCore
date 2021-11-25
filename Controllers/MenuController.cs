@@ -11,7 +11,8 @@ namespace PizzaCore.Controllers {
 
     // GET: /menu
     public IActionResult Index() {
-      var products = repository.GetProductsGroupedByCategory();
+      var products = repository.GetProductsGroupedByCategoryAndName();
+      //var products = repository.GetProductsGroupedByCategory();
       return View(products);
     }
   }

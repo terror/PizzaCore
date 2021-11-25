@@ -41,6 +41,24 @@ namespace PizzaCore.Data {
       }
     }
 
+    public IEnumerable<ProductByCategoryAndName> GetProductsGroupedByCategoryAndName() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetProductsGroupedByCategoryAndName] Grouping products by category and name ...");
+        // The order we want
+        var order = new List<string> { "Pizzas", "Burgers", "Fries", "Drinks" };
+        // Category -> [Product]
+        return GetAllProducts()
+          .GroupBy(p => new { p.Category, p.Name })
+          .Select(group => new ProductByCategoryAndName { Category = group.Key.Category, Name = group.Key.Name, Products = group.ToList() })
+          .OrderBy(group => order.IndexOf(group.Category))
+          .ToList();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to group products by category and title: {ex.Message}");
+        return null;
+      }
+    }
+
     public bool SaveAll() {
       return context.SaveChanges() > 0;
     }
