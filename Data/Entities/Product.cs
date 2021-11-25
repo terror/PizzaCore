@@ -8,6 +8,7 @@ namespace PizzaCore.Data.Entities {
     public string Category { get; set; }
     public double Price { get; set; }
     public string ImageId { get; set; }
+    public bool IsFeatured { get; set; }
   }
 
   public class ProductByCategory {

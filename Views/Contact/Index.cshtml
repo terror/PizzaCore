@@ -1,4 +1,5 @@
 @model PizzaCore.Models.ContactModel
+@section Styles{ <link rel="stylesheet" href="~/css/contact.css" /> }
 
 @{
   ViewData["Title"] = "Contact Us";
@@ -8,10 +9,10 @@
 
 <hr />
 <!-- All contact info & location -->
-<div id="contact-info">
+<div id="contact-info" class="info-bar">
 
   <!-- Contact info -->
-  <div id="contact-info-elements">
+  <div id="contact-info-elements" class="info-bar-left">
     <div class="contact-info-element">
       <h5>Carryout Hours</h5>
       <p>Su-Sa 10:30am-11:00pm</p>

@@ -3,6 +3,7 @@ using PizzaCore.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace PizzaCore.Data {
   public class PizzaCoreRepository : IPizzaCoreRepository {
@@ -20,6 +21,22 @@ namespace PizzaCore.Data {
         return context.Products;
       } catch (Exception ex) {
         logger.LogError($"Failed to get all products: {ex.Message}");
+        return null;
+      }
+    }
+
+    public IEnumerable<Product> GetFeaturedProducts()
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::GetFeaturedProducts] Getting featured products ...");
+        return GetAllProducts()
+          .Where(p => p.IsFeatured)
+          .ToList();
+      }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to get featured products: {ex.Message}");
         return null;
       }
     }
