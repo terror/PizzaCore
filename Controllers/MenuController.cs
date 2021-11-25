@@ -14,5 +14,12 @@ namespace PizzaCore.Controllers {
       var products = repository.GetProductsGroupedByCategory();
       return View(products);
     }
+
+    [HttpPost("cart/{id}")]
+    public IActionResult Cart(int id)
+    {
+
+      return Index();
+    }
   }
 }
