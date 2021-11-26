@@ -8,19 +8,10 @@ namespace PizzaCore.Controllers
 {
   public class CheckoutController : Controller
   {
-    /*public IActionResult Index()
+    public IActionResult Index()
     {
       return View();
     }
-
-    [HttpPost("cart/{id}")]
-    public IActionResult Cart(int id)
-    {
-
-
-      return Index();
-    }*/
-
 
   }
 }

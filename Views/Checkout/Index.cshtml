@@ -1,11 +1,38 @@
 @{ ViewData["Title"] = "Checkout"; }
+@section Styles{<link rel="stylesheet" href="~/css/checkout.css" /> }
 
 <h1 class="text-secondary">@ViewData["Title"]</h1>
 
-<h2>1. Review Order</h2>
-<partial name="ReviewOrder" />
+<div id="checkout-container">
+  <section id="general-info">
+    <h2>1. Review Order</h2>
+    <partial name="_ReviewOrder" />
 
+    <h2>2. Address</h2>
 
-<h2>2. Address</h2>
+    <h2>3. Payment Options</h2>
+  </section>
+  <section id="order-summary">
+    <div id="summary-content">
+      <h2>Order Summary</h2>
+      <div class="sumary-detail">
+        <label>Sub total:</label>
+        <strong>PRICE BEFORE TAX HERE</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>GST:</label>
+        <strong>GST TAX HERE</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>QST:</label>
+        <strong>QST TAX HERE</strong>
+      </div>
+      <div id="order-total" class="sumary-detail">
+        <label>Total: </label>
+        <strong>$65.79</strong>
+      </div>
+      <button>PLACE ORDER</button>
+    </div>
+  </section>
+</div>
 
-<h2>3. Payment Options</h2>

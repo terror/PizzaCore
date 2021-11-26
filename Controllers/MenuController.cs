@@ -15,10 +15,10 @@ namespace PizzaCore.Controllers {
       return View(products);
     }
 
-    [HttpPost("cart/{id}")]
-    public IActionResult Cart(int id)
+    [HttpPost("cart")]
+    public IActionResult Cart(int productId)
     {
-
+      
       return Index();
     }
   }
