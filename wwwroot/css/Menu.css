@@ -73,3 +73,16 @@ html {
   font-size: x-large;
   background-color: white;
 }
+
+.item-size-price {
+    display: flex;
+    text-align: end;
+}
+
+.size-select {
+    margin-left: 15px;
+}
+
+.item-price {
+    margin-right: 25px;
+}
