@@ -24,6 +24,7 @@ namespace PizzaCore.Data {
         foreach (var product in products) {
           product.Sizes = context.ProductSizes
             .Where(ps => ps.Product.Equals(product))
+            .OrderBy(ps => ps.Price)
             .ToList();
         }
 
