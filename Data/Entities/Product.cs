@@ -11,11 +11,10 @@ namespace PizzaCore.Data.Entities {
     public IEnumerable<ProductSize> Sizes { get; set; }
     public string ImageId { get; set; }
 
-    /// <summary>
-    /// Creates a JSON string consisting of the product sizes and their corresponding prices.
-    /// Used when updating the price after a user makes a size selection from the menu view.
-    /// </summary>
-    /// <returns></returns>
+    /*
+     * Creates a JSON string consisting of the product sizes and their corresponding prices.
+     * Used when updating the price after a user makes a size selection from the menu view.
+     */
     public string GetPricesBySizeAsJson() {
       return JsonSerializer.Serialize(Sizes.Select(s => new { Size = s.Size, Price = s.Price}));
     }
