@@ -49,13 +49,12 @@ namespace PizzaCore.Data {
             new ProductSize() { Product = product, Size = "OS", Price = 2.99 }
           };
         }
-        else if (product.Category == "Burgers"){
+        else if (product.Category == "Burgers") {
           product.Sizes = new List<ProductSize> {
             new ProductSize() { Product = product, Size = "OS", Price = 11.99 }
           };
         }
-        else if (product.Category == "Fries")
-        {
+        else if (product.Category == "Fries") {
           product.Sizes = new List<ProductSize> {
             new ProductSize() { Product = product, Size = "Small", Price = 2.99 },
             new ProductSize() { Product = product, Size = "Medium", Price = 4.99 },

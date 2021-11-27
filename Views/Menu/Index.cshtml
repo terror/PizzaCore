@@ -19,8 +19,11 @@
 {
   @foreach (var item in Model)
   {
+    <!-- Category -->
     <h2 id="@(item.Category)-Section">@(item.Category)</h2>
     <section class="menu-grid-container">
+
+      <!-- Product -->
       @foreach (var product in item.Products)
       {
         <div class="menu-item">
@@ -30,8 +33,10 @@
           <div class="item-title">@product.Name</div>
           <div class="item-description">@product.Description</div>
           <div class="item-size-price">
+            <!-- Add drop down for size selection only if the product has multiple sizes-->
             @if (product.Sizes.Count() > 1)
             {
+              <!-- Add each size as a option in the drop down menu, call updatePrice() when the selection is changed -->
               <select class="size-select" onchange="updatePrice(this, @product.GetPricesBySizeAsJson())">
                 @foreach (var productSize in product.Sizes)
                 {

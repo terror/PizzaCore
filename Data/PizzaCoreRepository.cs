@@ -20,7 +20,7 @@ namespace PizzaCore.Data {
 
         var products = context.Products.ToList();
 
-        // Get all the products sizes for each product
+        // Get all the sizes for each product
         foreach (var product in products) {
           product.Sizes = context.ProductSizes
             .Where(ps => ps.Product.Equals(product))
