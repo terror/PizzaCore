@@ -1,5 +1,8 @@
+@model PizzaCore.Models.DeliveryInfoModel
+@using System.Security.Claims
 @{ ViewData["Title"] = "Checkout"; }
-@section Styles{<link rel="stylesheet" href="~/css/checkout.css" /> }
+@section Styles{
+  <link rel="stylesheet" href="~/css/checkout.css" /> }
 
 <h1 class="text-secondary">@ViewData["Title"]</h1>
 
@@ -15,6 +18,48 @@
 
     <!--Form asking user for address-->
     <h2>2. Address</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <form asp-action="View">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control"/>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Phone" class="control-label"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="City" class="control-label"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="PostalCode" class="control-label"></label>
+            <input asp-for="PostalCode" class="form-control" />
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+          </div>
+        </form>
+      </div>
+    </div>
 
 
     <!--Payment Information-->
@@ -42,8 +87,11 @@
         <label>Total: </label>
         <strong>$65.79</strong>
       </div>
-      <button>PLACE ORDER</button>
+      <button class="btn-primary text-light">PLACE ORDER</button>
     </div>
   </section>
 </div>
 
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

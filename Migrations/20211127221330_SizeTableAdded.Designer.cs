@@ -10,7 +10,7 @@ using PizzaCore.Data;
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-    [Migration("20211126160632_SizeTableAdded")]
+    [Migration("20211127221330_SizeTableAdded")]
     partial class SizeTableAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,6 +141,50 @@ namespace PizzaCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ContactModels");
+                });
+
+            modelBuilder.Entity("PizzaCore.Models.DeliveryInfoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryInfoModel");
                 });
 
             modelBuilder.Entity("PizzaCore.Data.Entities.ProductSize", b =>
