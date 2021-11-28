@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace PizzaCore.Data.Entities {
   public class Product {
@@ -6,8 +8,23 @@ namespace PizzaCore.Data.Entities {
     public string Name { get; set; }
     public string Description { get; set; }
     public string Category { get; set; }
-    public double Price { get; set; }
+    public IEnumerable<ProductSize> Sizes { get; set; }
     public string ImageId { get; set; }
+
+    /*
+     * Creates a JSON string consisting of the product sizes and their corresponding prices.
+     * Used when updating the price after a user makes a size selection from the menu view.
+     */
+    public string GetPricesBySizeAsJson() {
+      return JsonSerializer.Serialize(Sizes.Select(s => new { Size = s.Size, Price = s.Price}));
+    }
+  }
+
+  public class ProductSize {
+    public int Id { get; set; }
+    public Product Product { get; set; }
+    public string Size { get; set; }
+    public double Price { get; set; }
   }
 
   public class ProductByCategory {

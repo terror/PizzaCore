@@ -24,6 +24,10 @@ function initMap() {
   });
 }
 
+
+/**
+ * Navbar
+ * */
 document.getElementById("english-lang").addEventListener("click", () => {
   document.getElementById("current-lang").textContent = "English";
 });
@@ -43,3 +47,21 @@ function enableSubmitBtn() {
 function resetReCaptcha() {
   grecaptcha.reset();
 }
+
+
+/**
+ * Menu
+ * */
+function updatePrice(target, pricesBySize) {
+  const price = target.parentElement.getElementsByClassName("item-price")[0];
+  const size = target.value;
+
+  // Set the price UI element to the price that corresponds to the selected size
+  pricesBySize.forEach(ps => {
+    if (ps.Size == size) {
+      price.textContent = "$" + ps.Price;
+      return;
+    }
+  });
+}
+
