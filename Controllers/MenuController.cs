@@ -18,8 +18,8 @@ namespace PizzaCore.Controllers {
       var cart = repository.GetCart(HttpContext.Session);
       ViewBag.cart = cart;
       ViewBag.cartTotal = cart != null ? cart.Sum(item => item.Product.Price * item.Quantity) : default;
-
       var products = repository.GetProductsGroupedByCategory();
+
       return View(products);
     }
 
