@@ -48,6 +48,14 @@ namespace PizzaCore {
       // Prettify errors in development
       services.AddDatabaseDeveloperPageExceptionFilter();
 
+      // Configure session options
+      services.AddDistributedMemoryCache();
+      services.AddSession(options => {
+        options.IdleTimeout = TimeSpan.FromHours(4);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true; 
+      });
+
       // Configure MVC services for controllers with views
       services.AddControllersWithViews();
 
@@ -74,6 +82,7 @@ namespace PizzaCore {
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseRouting();
+      app.UseSession();
       app.UseAuthentication();
       app.UseAuthorization();
 

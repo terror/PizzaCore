@@ -73,3 +73,36 @@ html {
   font-size: x-large;
   background-color: white;
 }
+
+main{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  
+}
+.the-menu{
+  flex:7;
+  max-width:1190px;
+}
+.the-cart {
+  flex: 1;
+  height: fit-content; /*calc(100vh - 210px);*/
+  max-height: 700px;
+  position: sticky;
+  top: 127px;
+  bottom: 0;
+  margin-left: 20px;
+  background-color: white;
+  min-width: 345px;
+  max-width: 345px;
+  overflow-y: scroll;
+}
+.container{
+  max-width: 100%;
+}
+.navbar{
+  width: 100%;
+}
+
+

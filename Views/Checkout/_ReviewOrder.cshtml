@@ -3,28 +3,32 @@
 
   <div id="order-container">
 
+    @if (ViewBag.cart != null) {
+      @foreach (var item in ViewBag.cart) {
 
-    <div class="order-item">
+      <div class="order-item">
 
-      <section class="order-item-image">
-        <img  />
-      </section>
+        <section class="order-item-image">
+          <img  src="~/images/products/@(item.Product.ImageId).jpg"/>
+        </section>
 
 
-      <section class="order-item-info">
-        <label></label>
-        <p>ORDER ITEM DESCRIPTION</p>
-        <button>Remove</button>
-      </section>
+        <section class="order-item-info">
+          <label></label>
+          <p>@(item.Product.Description)</p>
+          <button>Remove</button>
+        </section>
 
-      <section class="order-item-quantity">
-        <label>Quantity</label>
-        <div>
-          <button style="background: url(~/wwwroot/images/checkout/minus-quantity.png)"></button>
-          <strong></strong>
-          <button style="background: url(~/wwwroot/images/checkout/plus-quantity.png)"></button>
-        </div>
-      </section>
-    </div>
-  
+        <section class="order-item-quantity">
+          <label>Quantity</label>
+          <div>
+            <button style="background: url(~/wwwroot/images/checkout/minus-quantity.png)"></button>
+            <strong>@(item.Quantity)</strong>
+            <button style="background: url(~/wwwroot/images/checkout/plus-quantity.png)"></button>
+          </div>
+        </section>
+      </div>
+      }
+    }
+
   </div>
