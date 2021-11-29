@@ -8,7 +8,7 @@ namespace PizzaCore.Data {
   public class PizzaCoreContext : DbContext {
     public DbSet<CareersModel> CareersModels { get; set; }
     public DbSet<ContactModel> ContactModels { get; set; }
-    public DbSet<DeliveryInfoModel> DeliveryInfoModel { get; set; }
+    public DbSet<OrderInfoModel> OrderInfoModels { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductSize> ProductSizes { get; set; }
     public PizzaCoreContext(DbContextOptions<PizzaCoreContext> options) : base(options) { }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PizzaCore.Models
 {
-  public class DeliveryInfoModel {
+  public class OrderInfoModel {
     [Key]
     public int Id { get; set; }
 
@@ -45,5 +45,7 @@ namespace PizzaCore.Models
     [RegularExpression("^[ABCEGHJ-NPRSTVXY]\\d[ABCEGHJ-NPRSTV-Z][ ]\\d[ABCEGHJ-NPRSTV-Z]\\d$", ErrorMessage = "Error! Must be a valid postal code (X1X 1X1).")]
     [Display(Name = "Postal Code")]
     public string PostalCode { get; set; }
+
+    // TODO: Extend to include payment information
   }
 }
