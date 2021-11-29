@@ -141,12 +141,7 @@ body {
 
 /* Generic styles
 -------------------------------------------------- */
-.info-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.info-bar-left {
-  margin-right: 15%;
+.form-title {
+  margin-top: 32px;
+  margin-bottom: 16px;
 }

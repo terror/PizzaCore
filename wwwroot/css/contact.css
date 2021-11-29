@@ -1,3 +1,13 @@
+#contact-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contact-info-elements {
+margin-right: 20%;
+}
+
 .contact-info-element p {
   margin: 0;
 }
@@ -10,10 +20,5 @@
   height: 350px;
   width: 500px;
   margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-#contactform-title {
-  margin-top: 32px;
   margin-bottom: 16px;
 }

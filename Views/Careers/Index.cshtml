@@ -1,4 +1,5 @@
 @model PizzaCore.Models.CareersModel
+@section Styles{ <link rel="stylesheet" href="~/css/careers.css" /> }
 
 @{
   ViewData["Title"] = "Careers";
@@ -10,41 +11,36 @@
 <!-- Job Information -->
 <div>
   <h2 class="text-secondary">Positions</h2>
-  <div>
-    <div class="info-bar">
-      <div class="info-bar-left">
-        <h3>Cook</h3>
-        <p>Experience the joy of making authentic pizzas along with the experts in our restaurant.</p>
-        <p>We are looking for people passionate about food and with great communication skills.</p>
-      </div>
-      <img src="~/images/careers/cook.jpg" class="img-fluid img-thumbnail rounded" width="300" />
+  <div class="career-info">
+    <img src="~/images/careers/cook.jpg" class="career-info-pic img-fluid img-thumbnail rounded" width="300" />
+    <div>
+      <h3>Cook</h3>
+      <p>Experience the joy of making authentic pizzas along with the experts in our restaurant.</p>
+      <p>We are looking for people passionate about food and with great communication skills.</p>
     </div>
   </div>
-  <div>
-    <div class="info-bar">
-      <div class="info-bar-left">
-        <h3>Delivery Person</h3>
-        <p>Help us deliver our food to the customers all over the city.</p>
-        <p>We are looking for bilingual people with a driver's license and with great communication skills.</p>
-      </div>
-      <img src="~/images/careers/delivery-person.jpg" class="img-fluid img-thumbnail rounded" width="300" />
+  <div class="career-info">
+    <img src="~/images/careers/delivery-person.jpg" class="career-info-pi img-fluid img-thumbnail rounded" width="300" />
+    <div>
+      <h3>Delivery Person</h3>
+      <p>Help us deliver our food to the customers all over the city.</p>
+      <p>We are looking for bilingual people with a driver's license and with great communication skills.</p>
     </div>
   </div>
-  <div>
-    <div class="info-bar">
-      <div class="info-bar-left">
-        <h3>Manager</h3>
-        <p>Manage employees and assign them roles through our website.</p>
-        <p>We are looking for very organized people with excellent team management skills.</p>
-      </div>
-      <img src="~/images/careers/manager.jpg" class="img-fluid img-thumbnail rounded" width="300" />
+  <div class="career-info">
+    <img src="~/images/careers/manager.jpg" class="career-info-pi img-thumbnail rounded" width="300" />
+    <div>
+      <h3>Manager</h3>
+      <p>Manage employees and assign them roles through our website.</p>
+      <p>We are looking for very organized people with excellent team management skills.</p>
     </div>
   </div>
 </div>
+<hr />
 
 <!-- CV Submit form -->
 <div>
-  <h2 class="text-secondary">Submit your CV here!</h2>
+  <h2 class="text-secondary form-title">Submit your CV here!</h2>
   <form asp-action="Careers" enctype="multipart/form-data">
     <div class="form-group">
       <label asp-for="FirstName" class="control-label"></label>

@@ -50,6 +50,7 @@ html {
   grid-auto-rows: 360px;
   grid-gap: 10px;
   grid-auto-flow: row;
+  margin-top: 20px;
 }
 
 .category-nav-item {
