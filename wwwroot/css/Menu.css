@@ -214,7 +214,7 @@ main {
   background-color: #dc3545;
 }
 .checkout-btn span{
-    flex: 1;
+  flex: 1;
 }
 .checkout-btn:first-child {
   text-align: left;
@@ -226,3 +226,15 @@ main {
 }
 
 
+.item-size-price {
+  display: flex;
+  text-align: end;
+}
+
+.size-select {
+  margin-left: 15px;
+}
+
+.item-price {
+  margin-right: 25px;
+}

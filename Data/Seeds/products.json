@@ -3,119 +3,102 @@
     "Name": "Fresh 7UP",
     "Description": "Deliciously refreshing 7UP",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "7UP"
   },
   {
-    "Name":  "All-dressed Pizza",
+    "Name": "All-dressed Pizza",
     "Description": "Can't go wrong with all-dressed pizza!",
-    "Category":  "Pizzas",
-    "Price":  16.99,
+    "Category": "Pizzas",
     "ImageId": "all-dressed-pizza"
   },
   {
     "Name": "Beef Cheddar Burger",
     "Description": "Super filling beef burger",
     "Category": "Burgers",
-    "Price":  10.89,
     "ImageId": "beef-cheddar-burger"
   },
   {
     "Name": "Big Core Burger",
     "Description": "Our specialty burger, the big core burger",
     "Category": "Burgers",
-    "Price":  11.99,
     "ImageId": "big-core-burger"
   },
   {
     "Name": "Chicken Core Burger",
     "Description": "Our specialty chicken burger, the chicken core burger",
     "Category": "Burgers",
-    "Price": 11.99,
     "ImageId": "chicken-core-burger"
   },
   {
     "Name": "Fresh Coke",
     "Description": "Deliciously refreshing coke",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "coke"
   },
   {
     "Name": "Fresh Diet Coke",
     "Description": "Deliciously refreshing diet coke",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "diet-coke"
   },
   {
     "Name": "Fresh Diet Pepsi",
     "Description": "Deliciously refreshing diet pepsi",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "diet-pepsi"
   },
   {
     "Name": "Fresh Ginger Ale",
     "Description": "Deliciously refreshing ginger ale",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "ginger-ale"
   },
   {
     "Name": "Fresh Pepsi",
     "Description": "Deliciously refreshing pepsi",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "pepsi"
   },
   {
     "Name": "Salted Fries",
     "Description": "Traditional salted fries for everyone",
     "Category": "Fries",
-    "Price": 2.99,
     "ImageId": "salted-fries"
   },
   {
     "Name": "Specialty Egg Pizza",
     "Description": "Our specialty egg pizza, try it and you will love it",
     "Category": "Pizzas",
-    "Price": 17.99,
     "ImageId": "specialty-egg-pizza"
   },
   {
     "Name": "Traditional Pepperoni Pizza",
     "Description": "For all pepperoni lovers! Can't get wrong with the traditional pepperoni pizza'",
     "Category": "Pizzas",
-    "Price": 17.45,
     "ImageId": "specialty-pepperoni-pizza"
   },
   {
     "Name": "Super Cheese Pizza",
     "Description": "The super cheesy pizza best for cheese lovers",
     "Category": "Pizzas",
-    "Price": 18.99,
     "ImageId": "traditional-cheese-pizza"
   },
   {
     "Name": "Traditional Cheese Pizza",
     "Description": "The most enjoyed pizza of all time, just cheese!",
     "Category": "Pizzas",
-    "Price": 17.99,
     "ImageId": "traditional-vegetarian-pizza"
   },
   {
     "Name": "Unsalted Fries",
     "Description": "Fresh unsalted fries for healthy folks",
     "Category": "Fries",
-    "Price": 2.99,
     "ImageId": "unsalted-fries"
   },
   {
     "Name": "Water Bottle",
     "Description": "Fresh water bottle to keep everyone hydrated",
     "Category": "Drinks",
-    "Price": 1.99,
     "ImageId": "water-bottle"
   }
 ]

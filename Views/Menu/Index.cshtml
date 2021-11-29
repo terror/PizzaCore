@@ -1,11 +1,10 @@
 @model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
-@section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
+@section Styles{
+  <link rel="stylesheet" href="~/css/menu.css" /> }
 
 @{
     ViewData["Title"] = "Menu";
 }
-
-
 
   <section class="the-menu">
 
@@ -33,6 +32,20 @@
               </div>
               <div class="item-title">@product.Name</div>
               <div class="item-description">@product.Description</div>
+              <div class="item-size-price">
+                <!-- Add drop down for size selection only if the product has multiple sizes-->
+                @if (product.Sizes.Count() > 1)
+                {
+                  <!-- Add each size as a option in the drop down menu, call updatePrice() when the selection is changed -->
+                  <select class="size-select" onchange="updatePrice(this, @product.GetPricesBySizeAsJson())">
+                    @foreach (var productSize in product.Sizes)
+                    {
+                      <option value="@(productSize.Size)">@(productSize.Size)</option>
+                    }
+                  </select>
+                }
+                <span class="item-price">$@product.Sizes.First().Price</span>
+              </div>
               <div class="item-action-container">
                 <span class="item-price">$@product.Price</span>
                 @using (Html.BeginForm("PostCart", "Menu"))
