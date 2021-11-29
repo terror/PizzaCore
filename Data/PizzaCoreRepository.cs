@@ -73,7 +73,7 @@ namespace PizzaCore.Data {
       return session.GetObjectFromJson<List<CartItem>>(SESSION_KEY_CART);
     }
 
-    public void AddToCart(ISession session, int productId)
+    public void AddToCart(ISession session, int productSizeId)
     {
       try
       {
@@ -81,12 +81,15 @@ namespace PizzaCore.Data {
 
         // Get the cart & the product we want to add
         var cartItemList = GetCart(session);
+
+        Product product = context.ProductSizes.Find(productSizeId).Product;
+
         List<CartItem> cart;
-        Product productToAdd = GetProduct(productId);
+        Product productToAdd = GetProduct(product.Id);
 
         // Validate product id
         if (productToAdd == null)
-          throw new ArgumentException($"Product of id {productId} does not exist", "productId");
+          throw new ArgumentException($"Product of id {productSizeId} does not exist", "productId");
 
         // If the cart doesn't exist in the session yet
         if (cartItemList == null)
@@ -94,7 +97,7 @@ namespace PizzaCore.Data {
           cart = new List<CartItem>();
           cart.Add(new CartItem
           {
-            Product = GetProduct(productId),
+            Product = GetProduct(productSizeId),
             Quantity = 1    // quantity is 1 because cart doesn't exist in session,
                             // so there is no product of that type in the cart yet.
           });
@@ -106,7 +109,7 @@ namespace PizzaCore.Data {
         else
         {
           cart = cartItemList.ToList();
-          int productCartIndex = FindProductInCart(cart, productId);
+          int productCartIndex = FindProductInCart(cart, productSizeId);
 
           if (productCartIndex != -1)
           {
@@ -130,7 +133,7 @@ namespace PizzaCore.Data {
       }
       catch (Exception ex)
       {
-        logger.LogError($"Failed to add product of id {productId} to cart : {ex.Message}");
+        logger.LogError($"Failed to add product of id {productSizeId} to cart : {ex.Message}");
       }
 
     }

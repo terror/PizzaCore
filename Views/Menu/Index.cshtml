@@ -1,128 +1,142 @@
-@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
+@using PizzaCore.Data.Entities
+@model dynamic
+@*@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>*@
 @section Styles{
   <link rel="stylesheet" href="~/css/menu.css" /> }
 
 @{
-    ViewData["Title"] = "Menu";
+  ViewData["Title"] = "Menu";
 }
 
-  <section class="the-menu">
+<section class="the-menu">
 
-    <!-- Navigation -->
-    <nav id="category-nav-container">
-      <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
-      <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
-      <a class="category-nav-item" href="#Fries-Section">Fries</a>
-      <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
-    </nav>
+  <!-- Navigation -->
+  <nav id="category-nav-container">
+    <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
+    <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
+    <a class="category-nav-item" href="#Fries-Section">Fries</a>
+    <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
+  </nav>
 
-    <!-- Products -->
-    @if (Model != null)
+  <!-- Products -->
+  @if (Model != null)
+  {
+
+    @foreach (var item in Model.TheProducts)
     {
+      <h2 id="@(item.Category)-Section">@(item.Category)</h2>
+      <section class="menu-grid-container">
+        @foreach (var product in item.Products)
+        {
+          <div class="menu-item">
+            <div class="item-image">
+              <img src="~/images/products/@(product.ImageId).jpg" />
+            </div>
+            <div class="item-title">@product.Name</div>
+            <div class="item-description">@product.Description</div>
+            @*<div class="item-size-price">
 
-      @foreach (var item in Model)
-      {
-        <h2 id="@(item.Category)-Section">@(item.Category)</h2>
-        <section class="menu-grid-container">
-          @foreach (var product in item.Products)
-          {
-            <div class="menu-item">
-              <div class="item-image">
-                <img src="~/images/products/@(product.ImageId).jpg" />
-              </div>
-              <div class="item-title">@product.Name</div>
-              <div class="item-description">@product.Description</div>
-              <div class="item-size-price">
-                <!-- Add drop down for size selection only if the product has multiple sizes-->
-                @if (product.Sizes.Count() > 1)
+              </div>*@
+            <div class="item-action-container item-size-price">
+              <!-- Add drop down for size selection only if the product has multiple sizes-->
+              @if (product.Sizes.Count() > 1)
+              {
+                <span class="item-price">$@product.Sizes.First().Price</span>
+                @using (Html.BeginForm("PostCart", "Menu", FormMethod.Post))
                 {
-                  <!-- Add each size as a option in the drop down menu, call updatePrice() when the selection is changed -->
+
+                 @* List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+                  foreach (var productSize in product.Sizes)
+                  {
+                    selectListItems.Add(new SelectListItem { Text = productSize.Size, Value = productSize.Id});
+                  }
+                  
+                  @Html.DropDownListFor(Model.TheCart.ProductSizes, new List<SelectListItem>(selectListItems), "Select Size", __o);
+
+                  <input type="hidden" name="Id"  value="@(product.Id) " />*@
+
+                  <!--add each size as a option in the drop down menu, call updateprice() when the selection is changed--> 
                   <select class="size-select" onchange="updatePrice(this, @product.GetPricesBySizeAsJson())">
                     @foreach (var productSize in product.Sizes)
                     {
-                      <option value="@(productSize.Size)">@(productSize.Size)</option>
+                      <option value="@(productSize.Id)">@(productSize.Size)</option>
                     }
                   </select>
+                  <button class="item-cart-add" name="id" value="@(product.Sizes.First().Id)">Add</button>
                 }
-                <span class="item-price">$@product.Sizes.First().Price</span>
-              </div>
-              <div class="item-action-container">
-                <span class="item-price">$@product.Price</span>
-                @using (Html.BeginForm("PostCart", "Menu"))
-                {
-                <button class="item-cart-add" name="id" value="@(product.Id)">Add</button>
-                }
-                
-              </div>
-            </div>
-          }
-        </section>
-      }
+              }
 
-    }
-  </section>
-
-  <!--Cart as a side panel-->
-  <section class="the-cart">
-    <h2>Your Cart</h2>
-    @{ int numOfItems = 0;}
-    <div id="cart-item-container">
-      @if (ViewBag.cart != null)
-      {
-        foreach (var item in ViewBag.cart)
-        {
-          numOfItems += item.Quantity;
-      <div class="cart-item">
-
-        <section class="item-cart-image">
-          <img src="~/images/products/@(item.Product.ImageId).jpg"/>
-        </section>
-
-        <section class="cart-item-info">
-
-          <div class="size-remove-container">
-            <span>PRODUCT SIZE</span>
-            <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-          </div>
-
-          <div class="cart-item-title-price">
-            <span>@(item.Product.Name)</span>
-            <strong>$@(item.Product.Price * item.Quantity)</strong>
-          </div>
-
-          <div class="cart-item-quantity-remove">
-            <div class="item-quantity-container">
-              <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
-              <i>@(item.Quantity)</i>
-              <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
             </div>
           </div>
-
-        </section>
-        
-      </div>
         }
+      </section>
+    }
+
+  }
+</section>
+
+<!--Cart as a side panel-->
+<section class="the-cart">
+  <h2>Your Cart</h2>
+  @{ int numOfItems = 0;}
+  <div id="cart-item-container">
+    @if (ViewBag.cart != null)
+    {
+      foreach (var item in ViewBag.cart)
+      {
+        numOfItems += item.Quantity;
+        <div class="cart-item">
+
+          <section class="item-cart-image">
+            <img src="~/images/products/@(item.Product.ImageId).jpg" />
+          </section>
+
+          <section class="cart-item-info">
+
+            <div class="size-remove-container">
+              <span>PRODUCT SIZE</span>
+              <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+
+            <div class="cart-item-title-price">
+              <span>@(item.Product.Name)</span>
+              <strong>$@(item.Product.Price * item.Quantity)</strong>
+            </div>
+
+            <div class="cart-item-quantity-remove">
+              <div class="item-quantity-container">
+                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                <i>@(item.Quantity)</i>
+                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
       }
+    }
+  </div>
+  <div class="cart-price-breakdown">
+    <div class="sub-total">
+      <label>Sub Total:</label>
+      <strong>$@(ViewBag.cartTotal)</strong>
     </div>
-    <div class="cart-price-breakdown">
-      <div class="sub-total">
-        <label>Sub Total:</label>
-        <strong>$@(ViewBag.cartTotal)</strong>
-      </div>
-      <div class="tax-info">
-        <label>Taxes:</label>
-        @{  const double TAX_RATE = 0.14975;
-            double taxAmount = ViewBag.cartTotal * TAX_RATE;
-            double totalPrice = ViewBag.cartTotal + taxAmount;
-            }
-        <span>$@(taxAmount)</span>
-      </div>
-      <div class="total-price">
-        <label>Total:</label>
-        <strong>$@(totalPrice)</strong>
-      </div>
+    <div class="tax-info">
+      <label>Taxes:</label>
+      @{ const double TAX_RATE = 0.14975;
+        double taxAmount = ViewBag.cartTotal * TAX_RATE;
+        double totalPrice = ViewBag.cartTotal + taxAmount;
+      }
+      <span>$@(taxAmount)</span>
     </div>
-    
-    <button class="checkout-btn"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
-  </section>
+    <div class="total-price">
+      <label>Total:</label>
+      <strong>$@(totalPrice)</strong>
+    </div>
+  </div>
+
+  <button class="checkout-btn"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
+</section>
 
