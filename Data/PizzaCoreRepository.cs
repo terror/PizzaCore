@@ -57,12 +57,12 @@ namespace PizzaCore.Data {
       }
     }
 
-    public Product GetProduct(int id){
+    public ProductSize GetProductSize(int id){
       try{ 
-        return context.Products.Find(id);
+        return context.ProductSizes.Find(id);
       }
       catch (Exception ex){
-        logger.LogError($"Failed to get product of id {id} : {ex.Message}");
+        logger.LogError($"Failed to get product size of id {id} : {ex.Message}");
         return null;
       }
     }
@@ -73,93 +73,75 @@ namespace PizzaCore.Data {
       return session.GetObjectFromJson<List<CartItem>>(SESSION_KEY_CART);
     }
 
-    public void AddToCart(ISession session, int productSizeId)
+    public void AddToCart(ISession session, ProductSize productToAdd)
     {
       try
       {
         logger.LogInformation("[PizzaRepository::AddToCart] Adding product to cart...");
 
-        // Get the cart & the product we want to add
-        var cartItemList = GetCart(session);
-
-        Product product = context.ProductSizes.Find(productSizeId).Product;
-
-        List<CartItem> cart;
-        Product productToAdd = GetProduct(product.Id);
-
-        // Validate product id
+        // Validate product
         if (productToAdd == null)
-          throw new ArgumentException($"Product of id {productSizeId} does not exist", "productId");
+          throw new ArgumentNullException("productToAdd", $"Given ProductSize cannot be null");
 
-        // If the cart doesn't exist in the session yet
-        if (cartItemList == null)
-        {
+        // Get the cart
+        var cartList = GetCart(session);
+
+        // Convert IEnumerable cartList to List<CartItem> so we can add to it.
+        List<CartItem> cart;
+        if (cartList != null)
+          cart = cartList.ToList(); 
+        else
           cart = new List<CartItem>();
-          cart.Add(new CartItem
-          {
-            Product = GetProduct(productSizeId),
-            Quantity = 1    // quantity is 1 because cart doesn't exist in session,
-                            // so there is no product of that type in the cart yet.
-          });
 
 
+        // Check if this product already exists in the cart
+        int productCartIndex = FindProductInCart(cart, productToAdd.Id);
+
+        if (productCartIndex != -1)
+        {
+          cart[productCartIndex].Quantity++;    // Increment quantity because same
+                                                // product with this size already exists in cart
         }
-
-        // If the cart already exists in the session
         else
         {
-          cart = cartItemList.ToList();
-          int productCartIndex = FindProductInCart(cart, productSizeId);
-
-          if (productCartIndex != -1)
+          cart.Add(new CartItem
           {
-            cart[productCartIndex].Quantity++;    // Increment quantity because same
-                                                  // product already exists in cart
-          }
-          else
-          {
-            cart.Add(new CartItem
-            {
-              Product = productToAdd,
-              Quantity = 1    // quantity is 1 because no same product is in cart
-            });
-          }
+            ProductSize = productToAdd,
+            Quantity = 1    // quantity is 1 because no same product with this size is in cart
+          });
         }
-
+        
         // Set the new cart with added product in the session.
         session.SetObjectAsJson(SESSION_KEY_CART, cart);
-
-
       }
       catch (Exception ex)
       {
-        logger.LogError($"Failed to add product of id {productSizeId} to cart : {ex.Message}");
+        logger.LogError($"Failed to add product to cart : {ex.Message}");
       }
 
     }
 
-    public void RemoveFromCart(ISession session, int productId) {
+    public void RemoveFromCart(ISession session, int productSizeId) {
       try {
         logger.LogInformation("[PizzaRepository::RemoveFromCart] Removing product from cart");
 
         // Get cart and remove product
         List<CartItem> cart = GetCart(session).ToList();
-        int productCartIndex = FindProductInCart(cart, productId);
+        int productCartIndex = FindProductInCart(cart, productSizeId);
         cart.RemoveAt(productCartIndex);
       }
       catch (ArgumentOutOfRangeException) {
-        logger.LogError($"Failed to remove product of id {productId} from cart : Product of id {productId} does not exist in the cart");
+        logger.LogError($"Failed to remove product of id {productSizeId} from cart : Product of id {productSizeId} does not exist in the cart");
       }
       catch(Exception ex) {
-        logger.LogError($"Failed to remove product of id {productId} from cart: {ex.Message}");
+        logger.LogError($"Failed to remove product of id {productSizeId} from cart: {ex.Message}");
       }
       
     }
 
-    private int FindProductInCart(List<CartItem> cart, int productId)
+    private int FindProductInCart(List<CartItem> cart, int productSizeId)
     {
-      return cart.FindIndex(item => item.Product.Id == productId);
-
+      return cart.FindIndex(item => item.ProductSize.Id == productSizeId);
     }
 
     public bool SaveAll() {

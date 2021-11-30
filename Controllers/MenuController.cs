@@ -9,7 +9,6 @@ using System.Linq;
 namespace PizzaCore.Controllers {
   public class MenuController : Controller {
     private readonly IPizzaCoreRepository repository;
-    private static int productSizeId = -1;
 
     public MenuController(IPizzaCoreRepository repository) {
       this.repository = repository;
@@ -17,30 +16,27 @@ namespace PizzaCore.Controllers {
 
     // GET: /menu
     public IActionResult Index() {
+      // Storing cart & cartTotal in ViewBag
       var cart = repository.GetCart(HttpContext.Session);
-      
       ViewBag.cart = cart;
-      ViewBag.cartTotal = cart != null ? cart.Sum(item => item.Product.Price * item.Quantity) : default;
+      ViewBag.cartTotal = cart != null ? cart.Sum(cartItem => cartItem.ProductSize.Price * cartItem.Quantity) : default;
+
       var products = repository.GetProductsGroupedByCategory();
 
-      dynamic model = new ExpandoObject();
-      model.TheProducts = products;
-      model.TheCart = cart;
-
-
-      return View(model);
+      return View(products);
     }
 
     [HttpPost("cart")]
-    public IActionResult PostCart(int id){
-      repository.AddToCart(HttpContext.Session, id);
-      productSizeId = id;
+    public IActionResult PostCart(int productSizeId){
+      ProductSize productSize = repository.GetProductSize(productSizeId);
+      repository.AddToCart(HttpContext.Session, productSize);
+
       return RedirectToAction("Index");
     }
 
     [HttpDelete("cart/{id}")]
-    public IActionResult DeleteCart(int id) {
-      repository.RemoveFromCart(HttpContext.Session, id);
+    public IActionResult DeleteCart(int productSizeId) {
+      repository.RemoveFromCart(HttpContext.Session, productSizeId);
       return RedirectToAction("Index");
     }
   }

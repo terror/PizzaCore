@@ -6,8 +6,9 @@ namespace PizzaCore.Data {
   public interface IPizzaCoreRepository {
     IEnumerable<Product> GetAllProducts();
     IEnumerable<ProductByCategory> GetProductsGroupedByCategory();
+    ProductSize GetProductSize(int id);
     IEnumerable<CartItem> GetCart(ISession session);
-    void AddToCart(ISession session, int productId);
+    void AddToCart(ISession session, ProductSize productSize);
     void RemoveFromCart(ISession session, int productId);
     bool SaveAll();
   }

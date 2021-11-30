@@ -9,7 +9,7 @@ namespace PizzaCore.Data.Entities
 
   public class CartItem
   {
-    public Product Product { get; set; }
+    public ProductSize ProductSize { get; set; }
     public int Quantity { get; set; }
   }
 }

@@ -1,6 +1,4 @@
-@using PizzaCore.Data.Entities
-@model dynamic
-@*@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>*@
+@model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
 @section Styles{
   <link rel="stylesheet" href="~/css/menu.css" /> }
 
@@ -22,7 +20,7 @@
   @if (Model != null)
   {
 
-    @foreach (var item in Model.TheProducts)
+    @foreach (var item in Model)
     {
       <h2 id="@(item.Category)-Section">@(item.Category)</h2>
       <section class="menu-grid-container">
@@ -39,9 +37,10 @@
               </div>*@
             <div class="item-action-container item-size-price">
               <!-- Add drop down for size selection only if the product has multiple sizes-->
+              <span class="item-price">$@product.Sizes.First().Price</span>
+
               @if (product.Sizes.Count() > 1)
               {
-                <span class="item-price">$@product.Sizes.First().Price</span>
                 @using (Html.BeginForm("PostCart", "Menu", FormMethod.Post))
                 {
 
@@ -56,14 +55,14 @@
 
                   <input type="hidden" name="Id"  value="@(product.Id) " />*@
 
-                  <!--add each size as a option in the drop down menu, call updateprice() when the selection is changed--> 
+                  <!--add each size as an option in the drop down menu, call updateprice() when the selection is changed--> 
                   <select class="size-select" onchange="updatePrice(this, @product.GetPricesBySizeAsJson())">
                     @foreach (var productSize in product.Sizes)
                     {
                       <option value="@(productSize.Id)">@(productSize.Size)</option>
                     }
                   </select>
-                  <button class="item-cart-add" name="id" value="@(product.Sizes.First().Id)">Add</button>
+                  <button class="item-cart-add" name="productSizeId" value="@(product.Sizes.First().Id)">Add</button>
                 }
               }
 
