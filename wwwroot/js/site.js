@@ -53,13 +53,15 @@ function resetReCaptcha() {
  * Menu
  * */
 function updatePrice(target, pricesBySize) {
-  const price = target.parentElement.getElementsByClassName("item-price")[0];
+  const price = target.parentNode.getElementsByClassName("item-price")[0];
   const size = target.value;
+  const addBtn = target.parentNode.parentNode.getElementsByClassName("item-cart-add")[0];
 
-  // Set the price UI element to the price that corresponds to the selected size
+  // Update the displayed price
   pricesBySize.forEach(ps => {
     if (ps.Size == size) {
       price.textContent = "$" + ps.Price;
+      addBtn.value = ps.Id;
       return;
     }
   });

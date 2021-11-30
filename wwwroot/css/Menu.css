@@ -16,6 +16,11 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 8px;
+  justify-content: center;
+}
+
+.item-action-container form {
+    width: 100%;
 }
 
 .item-price {
@@ -229,6 +234,8 @@ main {
 .item-size-price {
   display: flex;
   text-align: end;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .size-select {
