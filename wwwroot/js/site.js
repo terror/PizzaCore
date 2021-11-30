@@ -56,11 +56,13 @@ function updatePrice(target, pricesBySize) {
   const price = target.parentNode.getElementsByClassName("item-price")[0];
   const size = target.value;
   const addBtn = target.parentNode.parentNode.getElementsByClassName("item-cart-add")[0];
-
+  
   // Update the displayed price
   pricesBySize.forEach(ps => {
     if (ps.Size == size) {
-      price.textContent = "$" + ps.Price;
+      let m = Number((Math.abs(ps.Price) * 100).toPrecision(15));
+      
+      price.textContent = "$" + (Math.round(m) / 100 * Math.sign(ps.Price)).toFixed(2);
       addBtn.value = ps.Id;
       return;
     }

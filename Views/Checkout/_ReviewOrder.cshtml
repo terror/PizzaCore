@@ -9,13 +9,13 @@
       <div class="order-item">
 
         <section class="order-item-image">
-          <img  src="~/images/products/@(item.Product.ImageId).jpg"/>
+          <img  src="~/images/products/@(item.ProductSize.Product.ImageId).jpg"/>
         </section>
 
 
         <section class="order-item-info">
           <label></label>
-          <p>@(item.Product.Description)</p>
+          <p>@(item.ProductSize.Product.Description)</p>
           <button>Remove</button>
         </section>
 

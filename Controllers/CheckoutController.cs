@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaCore.Data;
+using PizzaCore.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace PizzaCore.Controllers
 
     public IActionResult Index() {
 
-      var cart = repository.GetCart(HttpContext.Session);
+      IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
       ViewBag.cart = cart;
       ViewBag.cartTotal = cart != null ? cart.Sum(item => item.ProductSize.Price * item.Quantity) : default;
 
