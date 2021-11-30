@@ -25,8 +25,8 @@ namespace PizzaCore.Data {
 
         // Get all the sizes for each product
         foreach (var product in products) {
-          product.Sizes = context.ProductSizes
-            .Where(ps => ps.Product.Equals(product))
+          product.ProductSizes = context.ProductSizes
+            .Where(ps => ps.ProductId.Equals(product.Id))
             .OrderBy(ps => ps.Price)
             .ToList();
         }
@@ -36,6 +36,11 @@ namespace PizzaCore.Data {
         logger.LogError($"Failed to get all products: {ex.Message}");
         return null;
       }
+    }
+
+    private Product GetProduct(int id)
+    {
+      return context.Products.Find(id);
     }
 
     public IEnumerable<ProductByCategory> GetProductsGroupedByCategory() {
@@ -58,8 +63,10 @@ namespace PizzaCore.Data {
     }
 
     public ProductSize GetProductSize(int id){
-      try{ 
-        return context.ProductSizes.Find(id);
+      try{
+        ProductSize productSize = context.ProductSizes.Find(id);
+        productSize.Product = GetProduct(productSize.ProductId);
+        return productSize;
       }
       catch (Exception ex){
         logger.LogError($"Failed to get product size of id {id} : {ex.Message}");

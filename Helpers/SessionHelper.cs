@@ -12,7 +12,10 @@ namespace PizzaCore.Helpers
     // Extension methods
     public static void SetObjectAsJson(this ISession session, string key, object value)
     {
-      session.SetString(key, JsonConvert.SerializeObject(value));
+      session.SetString(key, JsonConvert.SerializeObject(value, Formatting.Indented, new JsonSerializerSettings
+      {
+        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+      }));
     }
 
     public static T GetObjectFromJson<T>(this ISession session, string key)

@@ -37,32 +37,21 @@
               </div>*@
             <div class="item-action-container item-size-price">
               <!-- Add drop down for size selection only if the product has multiple sizes-->
-              <span class="item-price">$@product.Sizes.First().Price</span>
+              <span class="item-price">$@product.ProductSizes.First().Price</span>
 
-              @if (product.Sizes.Count() > 1)
+              @if (product.ProductSizes.Count() > 1)
               {
                 @using (Html.BeginForm("PostCart", "Menu", FormMethod.Post))
                 {
 
-                 @* List<SelectListItem> selectListItems = new List<SelectListItem>();
-
-                  foreach (var productSize in product.Sizes)
-                  {
-                    selectListItems.Add(new SelectListItem { Text = productSize.Size, Value = productSize.Id});
-                  }
-                  
-                  @Html.DropDownListFor(Model.TheCart.ProductSizes, new List<SelectListItem>(selectListItems), "Select Size", __o);
-
-                  <input type="hidden" name="Id"  value="@(product.Id) " />*@
-
                   <!--add each size as an option in the drop down menu, call updateprice() when the selection is changed--> 
                   <select class="size-select" onchange="updatePrice(this, @product.GetPricesBySizeAsJson())">
-                    @foreach (var productSize in product.Sizes)
+                    @foreach (var productSize in product.ProductSizes)
                     {
                       <option value="@(productSize.Id)">@(productSize.Size)</option>
                     }
                   </select>
-                  <button class="item-cart-add" name="productSizeId" value="@(product.Sizes.First().Id)">Add</button>
+                  <button class="item-cart-add" name="productSizeId" value="@(product.ProductSizes.First().Id)">Add</button>
                 }
               }
 
@@ -88,7 +77,7 @@
         <div class="cart-item">
 
           <section class="item-cart-image">
-            <img src="~/images/products/@(item.Product.ImageId).jpg" />
+            <img src="~/images/products/@(item.ProductSize.Product.ImageId).jpg" />
           </section>
 
           <section class="cart-item-info">
@@ -99,8 +88,8 @@
             </div>
 
             <div class="cart-item-title-price">
-              <span>@(item.Product.Name)</span>
-              <strong>$@(item.Product.Price * item.Quantity)</strong>
+              <span>@(item.ProductSize.Product.Name)</span>
+              <strong>$@(item.ProductSize.Price * item.Quantity)</strong>
             </div>
 
             <div class="cart-item-quantity-remove">

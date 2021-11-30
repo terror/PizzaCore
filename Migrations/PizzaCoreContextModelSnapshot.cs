@@ -53,7 +53,7 @@ namespace PizzaCore.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Size")
@@ -144,15 +144,17 @@ namespace PizzaCore.Migrations
             modelBuilder.Entity("PizzaCore.Data.Entities.ProductSize", b =>
                 {
                     b.HasOne("PizzaCore.Data.Entities.Product", "Product")
-                        .WithMany("Sizes")
-                        .HasForeignKey("ProductId");
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("PizzaCore.Data.Entities.Product", b =>
                 {
-                    b.Navigation("Sizes");
+                    b.Navigation("ProductSizes");
                 });
 #pragma warning restore 612, 618
         }
