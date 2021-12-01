@@ -34,8 +34,9 @@ namespace PizzaCore.Controllers {
       return RedirectToAction("Index");
     }
 
-    [HttpDelete("cart/{id}")]
+    [HttpPost("cartItem")]
     public IActionResult DeleteCart(int productSizeId) {
+      //var product = productSize;
       repository.RemoveFromCart(HttpContext.Session, productSizeId);
       return RedirectToAction("Index");
     }
