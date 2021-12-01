@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaCore.Data;
 using PizzaCore.Data.Entities;
-using PizzaCore.Helpers;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace PizzaCore.Controllers {
@@ -20,17 +17,15 @@ namespace PizzaCore.Controllers {
       var cart = repository.GetCart(HttpContext.Session);
       ViewBag.cart = cart;
       ViewBag.cartTotal = cart != null ? cart.Sum(cartItem => cartItem.ProductSize.Price * cartItem.Quantity) : default;
-
       var products = repository.GetProductsGroupedByCategory();
-
       return View(products);
     }
 
+    // POST: /cart
     [HttpPost("cart")]
-    public IActionResult PostCart(int productSizeId){
+    public IActionResult PostCart(int productSizeId) {
       ProductSize productSize = repository.GetProductSize(productSizeId);
       repository.AddToCart(HttpContext.Session, productSize);
-
       return RedirectToAction("Index");
     }
 
