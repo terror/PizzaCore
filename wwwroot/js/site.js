@@ -68,4 +68,3 @@ function updatePrice(target, pricesBySize) {
     }
   });
 }
-
