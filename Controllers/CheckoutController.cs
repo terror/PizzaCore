@@ -6,15 +6,24 @@ using PizzaCore.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Threading.Tasks;
 
 namespace PizzaCore.Controllers {
   public class CheckoutController : Controller {
+
     private readonly IPizzaCoreRepository repository;
     private readonly ILogger<CheckoutController> logger;
+    private readonly IEmailSender emailSender;
 
-    public CheckoutController(IPizzaCoreRepository repository, ILogger<CheckoutController> logger) {
+    private string emailTopic = "Order confirmation";
+    private string emailMessage = "Thank you for placing your order at PizzaCore!\n" +
+                                  "If you have any questions about your order, please call the store directly at (514) 457-5036";
+
+    public CheckoutController(IPizzaCoreRepository repository, ILogger<CheckoutController> logger, IEmailSender emailSender) {
       this.repository = repository;
       this.logger = logger;
+      this.emailSender = emailSender;
     }
 
     // GET: /checkout
@@ -28,9 +37,13 @@ namespace PizzaCore.Controllers {
     // POST: /checkout
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Index(OrderModel order) {
+    public async Task<IActionResult> IndexAsync(OrderModel order) {
       // TODO: Save cart items, process payment
       repository.SaveOrder(order.setDate(DateTime.Now));
+
+      // Send confirmation email to customer
+      await emailSender.SendEmailAsync(order.Email, emailTopic, emailTopic);
+
       return View("Success", order);
     }
   }

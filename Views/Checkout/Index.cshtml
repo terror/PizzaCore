@@ -14,9 +14,8 @@
     <h2>Review Order</h2>
     <partial name="_ReviewOrder" />
 
-    <!--Form asking user for address-->
-    <h2>2. Address</h2>
-    @*<div class="row">
+    <h2>2. Information</h2>
+    <div class="row">
       <div class="col-md-4">
         <form asp-action="View">
           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -35,11 +34,16 @@
             <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name"/>
             <span asp-validation-for="Email" class="text-danger"></span>
           </div>
-          <div class="form-group">
-            <label asp-for="Phone" class="control-label"></label>
-            <input asp-for="Phone" class="form-control" />
-            <span asp-validation-for="Phone" class="text-danger"></span>
-          </div>
+        </form>
+      </div>
+    </div>
+
+    <!--Form asking user for address-->
+    <h2>3. Address</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <form asp-action="View">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
           <div class="form-group">
             <label asp-for="Address" class="control-label"></label>
             <input asp-for="Address" class="form-control" />
@@ -57,34 +61,14 @@
           </div>
         </form>
       </div>
-    </div>*@
+    </div>
 
 
     <!--Payment Information-->
-    <h2>3. Payment Options</h2>
+    <h2>4. Payment Options</h2>
     <!-- Order Form -->
     <form asp-action="Index">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-      <div class="form-group">
-        <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="Address" class="control-label"></label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
-      </div>
       <div class="form-group">
         <label asp-for="Payment" class="control-label"></label>
         <select asp-for="Payment" class="form-control">
