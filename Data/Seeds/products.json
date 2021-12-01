@@ -3,102 +3,280 @@
     "Name": "Fresh 7UP",
     "Description": "Deliciously refreshing 7UP",
     "Category": "Drinks",
-    "ImageId": "7UP"
+    "ImageId": "7UP",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "All-dressed Pizza",
     "Description": "Can't go wrong with all-dressed pizza!",
     "Category": "Pizzas",
-    "ImageId": "all-dressed-pizza"
+    "ImageId": "all-dressed-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 11.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 14.99
+      },
+      {
+        "Size": "Large",
+        "Price": 16.99
+      }
+    ]
   },
   {
     "Name": "Beef Cheddar Burger",
     "Description": "Super filling beef burger",
     "Category": "Burgers",
-    "ImageId": "beef-cheddar-burger"
+    "ImageId": "beef-cheddar-burger",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 8.49
+      }
+    ]
   },
   {
     "Name": "Big Core Burger",
     "Description": "Our specialty burger, the big core burger",
     "Category": "Burgers",
-    "ImageId": "big-core-burger"
+    "ImageId": "big-core-burger",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 8.49
+      }
+    ]
   },
   {
     "Name": "Chicken Core Burger",
     "Description": "Our specialty chicken burger, the chicken core burger",
     "Category": "Burgers",
-    "ImageId": "chicken-core-burger"
+    "ImageId": "chicken-core-burger",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 7.99
+      }
+    ]
   },
   {
     "Name": "Fresh Coke",
     "Description": "Deliciously refreshing coke",
     "Category": "Drinks",
-    "ImageId": "coke"
+    "ImageId": "coke",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "Fresh Diet Coke",
     "Description": "Deliciously refreshing diet coke",
     "Category": "Drinks",
-    "ImageId": "diet-coke"
+    "ImageId": "diet-coke",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "Fresh Diet Pepsi",
     "Description": "Deliciously refreshing diet pepsi",
     "Category": "Drinks",
-    "ImageId": "diet-pepsi"
+    "ImageId": "diet-pepsi",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "Fresh Ginger Ale",
     "Description": "Deliciously refreshing ginger ale",
     "Category": "Drinks",
-    "ImageId": "ginger-ale"
+    "ImageId": "ginger-ale",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "Fresh Pepsi",
     "Description": "Deliciously refreshing pepsi",
     "Category": "Drinks",
-    "ImageId": "pepsi"
+    "ImageId": "pepsi",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.50
+      }
+    ]
   },
   {
     "Name": "Salted Fries",
     "Description": "Traditional salted fries for everyone",
     "Category": "Fries",
-    "ImageId": "salted-fries"
+    "ImageId": "salted-fries",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 2.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 4.99
+      },
+      {
+        "Size": "Large",
+        "Price": 5.99
+      }
+    ]
   },
   {
     "Name": "Specialty Egg Pizza",
     "Description": "Our specialty egg pizza, try it and you will love it",
     "Category": "Pizzas",
-    "ImageId": "specialty-egg-pizza"
+    "ImageId": "specialty-egg-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 11.40
+      },
+      {
+        "Size": "Medium",
+        "Price": 14.40
+      },
+      {
+        "Size": "Large",
+        "Price": 16.45
+      }
+    ]
   },
   {
-    "Name": "Traditional Pepperoni Pizza",
+    "Name": "Pepperoni Pizza",
     "Description": "For all pepperoni lovers! Can't get wrong with the traditional pepperoni pizza'",
     "Category": "Pizzas",
-    "ImageId": "specialty-pepperoni-pizza"
+    "ImageId": "specialty-pepperoni-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 10.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 13.99
+      },
+      {
+        "Size": "Large",
+        "Price": 15.99
+      }
+    ]
   },
   {
     "Name": "Super Cheese Pizza",
     "Description": "The super cheesy pizza best for cheese lovers",
     "Category": "Pizzas",
-    "ImageId": "traditional-cheese-pizza"
+    "ImageId": "super-cheese-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 10.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 13.99
+      },
+      {
+        "Size": "Large",
+        "Price": 15.99
+      }
+    ]
   },
   {
     "Name": "Traditional Cheese Pizza",
     "Description": "The most enjoyed pizza of all time, just cheese!",
     "Category": "Pizzas",
-    "ImageId": "traditional-vegetarian-pizza"
+    "ImageId": "traditional-cheese-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 10.40
+      },
+      {
+        "Size": "Medium",
+        "Price": 13.50
+      },
+      {
+        "Size": "Large",
+        "Price": 15.50
+      }
+    ]
+  },
+  {
+    "Name": "Vegetarian Pizza",
+    "Description": "Best for all the vegetable fans",
+    "Category": "Pizzas",
+    "ImageId": "traditional-vegetarian-pizza",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 11.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 14.99
+      },
+      {
+        "Size": "Large",
+        "Price": 16.99
+      }
+    ]
   },
   {
     "Name": "Unsalted Fries",
     "Description": "Fresh unsalted fries for healthy folks",
     "Category": "Fries",
-    "ImageId": "unsalted-fries"
+    "ImageId": "unsalted-fries",
+    "ProductSizes": [
+      {
+        "Size": "Small",
+        "Price": 2.99
+      },
+      {
+        "Size": "Medium",
+        "Price": 4.99
+      },
+      {
+        "Size": "Large",
+        "Price": 5.99
+      }
+    ]
   },
   {
     "Name": "Water Bottle",
     "Description": "Fresh water bottle to keep everyone hydrated",
     "Category": "Drinks",
-    "ImageId": "water-bottle"
+    "ImageId": "water-bottle",
+    "ProductSizes": [
+      {
+        "Size": "OS",
+        "Price": 1.00
+      }
+    ]
   }
 ]
