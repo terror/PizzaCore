@@ -11,6 +11,7 @@ namespace PizzaCore.Data {
     public DbSet<OrderInfoModel> OrderInfoModels { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductSize> ProductSizes { get; set; }
+    
     public PizzaCoreContext(DbContextOptions<PizzaCoreContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder) { 

@@ -66,26 +66,35 @@
     <h2>3. Payment Options</h2>
   </section>
 
+  @{
+    const int DECIMAL_NUM = 2;
+    const double GST_TAX_RATE = 0.05;
+    const double QST_TAX_RATE = 0.09975;
 
+    double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
+    double gstTax = Math.Round(subTotal * GST_TAX_RATE, DECIMAL_NUM);
+    double qstTax = Math.Round(subTotal * QST_TAX_RATE, DECIMAL_NUM);
+    double finalPrice = Math.Round(subTotal + gstTax + qstTax, DECIMAL_NUM);
+  }
   <!--Order Summary Section-->
   <section id="order-summary">
     <div id="summary-content">
       <h2>Order Summary</h2>
       <div class="sumary-detail">
         <label>Sub total:</label>
-        <strong>PRICE BEFORE TAX HERE</strong>
+        <strong>$@(subTotal)</strong>
       </div>
       <div class="sumary-detail">
         <label>GST:</label>
-        <strong>GST TAX HERE</strong>
+        <strong>$@gstTax</strong>
       </div>
       <div class="sumary-detail">
         <label>QST:</label>
-        <strong>QST TAX HERE</strong>
+        <strong>$@qstTax</strong>
       </div>
       <div id="order-total" class="sumary-detail">
         <label>Total: </label>
-        <strong>$65.79</strong>
+        <strong>$@finalPrice</strong>
       </div>
       <button class="btn-primary text-light">PLACE ORDER</button>
     </div>
