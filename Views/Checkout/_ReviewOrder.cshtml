@@ -4,7 +4,7 @@
 
   <div id="order-container">
 
-    @if (ViewBag.cart != null) {
+    @if (ViewBag.cart != null && ViewBag.cart.Count >= 1) {
       @foreach (var item in ViewBag.cart) {
 
       <div class="order-item">
@@ -45,6 +45,12 @@
         </section>
       </div>
       }
+    }
+    else
+    {
+      <div id="empty-cart-div">
+        <img src="~/images/logo.png"/>
+      </div>
     }
 
   </div>
