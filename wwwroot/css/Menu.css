@@ -216,8 +216,8 @@ main {
 .checkout-btn {
   display: flex;
   border: none;
-  background-color: #dc3545;
 }
+
 .checkout-btn span{
   flex: 1;
 }

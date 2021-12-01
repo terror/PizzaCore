@@ -10,13 +10,8 @@ using PizzaCore.Data;
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-<<<<<<< HEAD:Migrations/20211127221330_SizeTableAdded.Designer.cs
-    [Migration("20211127221330_SizeTableAdded")]
-    partial class SizeTableAdded
-=======
-    [Migration("20211130040925_Init_And_AddedSizeTable")]
+    [Migration("20211201142737_Init_And_AddedSizeTable")]
     partial class Init_And_AddedSizeTable
->>>>>>> master:Migrations/20211130040925_Init_And_AddedSizeTable.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -148,7 +143,7 @@ namespace PizzaCore.Migrations
                     b.ToTable("ContactModels");
                 });
 
-            modelBuilder.Entity("PizzaCore.Models.DeliveryInfoModel", b =>
+            modelBuilder.Entity("PizzaCore.Models.OrderInfoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +184,7 @@ namespace PizzaCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryInfoModel");
+                    b.ToTable("OrderInfoModels");
                 });
 
             modelBuilder.Entity("PizzaCore.Data.Entities.ProductSize", b =>
