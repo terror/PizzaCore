@@ -218,20 +218,22 @@ main {
 .checkout-btn {
   display: flex;
   border: none;
-  background-color: #dc3545;
+  width: 100%;
 }
+
 .checkout-btn span{
   flex: 1;
 }
-.checkout-btn:first-child {
-  text-align: left;
-  font-style:italic;
+
+.checkout-btn {
+  text-align: center;
+  font-style: italic;
 }
+
 #checkout-text{
   font-weight: 600;
   font-size:larger;
 }
-
 
 .item-size-price {
   display: flex;
@@ -247,3 +249,4 @@ main {
 .item-price {
   margin-right: 25px;
 }
+
