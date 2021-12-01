@@ -26,42 +26,11 @@ namespace PizzaCore.Data {
       if (!context.Products.Any()) {
         // Add a range of products deserialized from our sample json data
         var products = JsonSerializer.Deserialize<IEnumerable<Product>>(File.ReadAllText(Path.Combine(env.ContentRootPath, SAMPLE_DATA_FILEPATH)));
-        SeedSizes(products);
         context.AddRange(products);
       }
 
       // Save changes
       context.SaveChanges();
-    }
-
-    private void SeedSizes(IEnumerable<Product> products) {
-      // Seed the appropriate product sizes depending on the products category.
-      foreach(var product in products) {
-        if (product.Category == "Pizzas") {
-          product.Sizes = new List<ProductSize> {
-            new ProductSize() { Product = product, Size = "Small", Price = 10.99 },
-            new ProductSize() { Product = product, Size = "Medium", Price = 13.99 },
-            new ProductSize() { Product = product, Size = "Large", Price = 15.99 }
-          };
-        }
-        else if (product.Category == "Drinks") {
-          product.Sizes = new List<ProductSize> {
-            new ProductSize() { Product = product, Size = "OS", Price = 2.99 }
-          };
-        }
-        else if (product.Category == "Burgers") {
-          product.Sizes = new List<ProductSize> {
-            new ProductSize() { Product = product, Size = "OS", Price = 11.99 }
-          };
-        }
-        else if (product.Category == "Fries") {
-          product.Sizes = new List<ProductSize> {
-            new ProductSize() { Product = product, Size = "Small", Price = 2.99 },
-            new ProductSize() { Product = product, Size = "Medium", Price = 4.99 },
-            new ProductSize() { Product = product, Size = "Large", Price = 5.99 }
-          };
-        }
-      }
     }
   }
 }
