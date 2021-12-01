@@ -42,7 +42,7 @@ namespace PizzaCore.Controllers {
       repository.SaveOrder(order.setDate(DateTime.Now));
 
       // Send confirmation email to customer
-      await emailSender.SendEmailAsync(order.Email, emailTopic, emailTopic);
+      await emailSender.SendEmailAsync(order.Email, emailTopic, emailMessage);
 
       return View("Success", order);
     }
