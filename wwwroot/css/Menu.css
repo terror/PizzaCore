@@ -32,17 +32,19 @@
 
 .item-cart-add {
   width: 100%;
+  border:none;
 }
 
 .menu-item {
   display: flex;
   flex-direction: column;
   background-color: white;
+  box-shadow: 0px 1px;
   justify-content: space-between;
 }
 
 body {
-  background-color: #f0f1f3; /*I'm setting background to greyish color for development reasons (Can be changed by whoever does color scheme) */
+  background-color: var(--bs-tertiary);
 }
 
 html {

@@ -1,0 +1,125 @@
+/*------------Review Order Section-------------*/
+#order-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 7px 0;
+  border-bottom: solid 2px var(--bs-tertiary);
+  justify-content: space-between;
+}
+
+.order-item-image {
+  flex: 1;
+  padding: 5px;
+}
+
+.order-item-info, .order-item-quantity, .order-item-subtotal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.order-item-quantity, .order-item-subtotal {
+  align-items: center;
+}
+
+.order-item-info {
+  flex: 2;
+  padding: 5px;
+}
+
+.order-item-subtotal strong {
+  font-size: x-large;
+}
+
+.order-item img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.order-item-info label {
+  font-weight: bold;
+  font-size: large;
+  text-transform: uppercase;
+}
+
+.order-item-info div span, .order-item-info div label {
+  display: block;
+}
+
+.order-item-quantity div {
+  display: flex;
+  align-items: center;
+}
+
+.order-item-quantity button {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.order-item-quantity svg {
+  height: inherit;
+  width: inherit;
+  stroke: var(--bs-secondary);
+}
+
+.order-item-quantity strong {
+  font-size: larger;
+  margin: 0 3px;
+}
+
+.order-item-info button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--bs-secondary);
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+  .order-item-info button span {
+    margin-bottom: 3px;
+  }
+
+.order-item-info svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--bs-secondary);
+}
+.order-item-info span{
+  margin-left: 3px;
+}
+
+.order-item-image {
+  background-color: var(--bs-tertiary);
+  border-radius: 5px;
+}
+#empty-cart-div{
+  background-image:url("../images/checkout/empty-cart-background.jpg");
+  height:300px;
+  width:100%;
+  line-height:300px;
+  text-align:center;
+}
+#empty-cart-div img{
+  height:80px;
+  width:80px;
+  vertical-align:central;
+  opacity:0.5;
+}
+
+

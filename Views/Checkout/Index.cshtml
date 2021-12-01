@@ -2,7 +2,9 @@
 @using System.Security.Claims
 @{ ViewData["Title"] = "Checkout"; }
 @section Styles{
-  <link rel="stylesheet" href="~/css/checkout.css" /> }
+  <link rel="stylesheet" href="~/css/checkout.css" />
+  <link rel="stylesheet" href="~/css/checkout-review-order.css" />
+}
 
 <h1 class="text-secondary">@ViewData["Title"]</h1>
 
@@ -82,19 +84,19 @@
       <h2>Order Summary</h2>
       <div class="sumary-detail">
         <label>Sub total:</label>
-        <strong>$@(subTotal)</strong>
+        <strong>@(subTotal.ToString("C2"))</strong>
       </div>
       <div class="sumary-detail">
         <label>GST:</label>
-        <strong>$@gstTax</strong>
+        <strong>@gstTax.ToString("C2")</strong>
       </div>
       <div class="sumary-detail">
         <label>QST:</label>
-        <strong>$@qstTax</strong>
+        <strong>@qstTax.ToString("C2")</strong>
       </div>
       <div id="order-total" class="sumary-detail">
         <label>Total: </label>
-        <strong>$@finalPrice</strong>
+        <strong>@finalPrice.ToString("C2")</strong>
       </div>
       <button class="btn-primary text-light">PLACE ORDER</button>
     </div>
