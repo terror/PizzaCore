@@ -16,7 +16,7 @@ namespace PizzaCore.Data.Entities {
      * Used when updating the price after a user makes a size selection from the menu view.
      */
     public string GetPricesBySizeAsJson() {
-      return JsonSerializer.Serialize(ProductSizes.Select(s => new { Id = s.Id, Size = s.Size, Price = s.Price}));
+      return JsonSerializer.Serialize(ProductSizes.Select(s => new { Id = s.Id, Size = s.Size, Price = s.Price }));
     }
   }
 
