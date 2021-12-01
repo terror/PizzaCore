@@ -116,5 +116,7 @@
       <strong>@(finalPrice.ToString("C2"))</strong>
     </div>
   </div>
-  <button class="checkout-btn btn btn-secondary text-light" onclick="location.href='/checkout'" disabled="@(numOfItems == 0)"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
+  <form id="checkout-btn-form" asp-controller="Checkout" asp-action="Index" method="get">
+    <button class="checkout-btn btn btn-secondary text-light" disabled="@(numOfItems == 0)"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
+  </form>
 </section>
