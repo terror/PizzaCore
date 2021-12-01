@@ -1,5 +1,4 @@
-@model PizzaCore.Models.OrderInfoModel
-@using System.Security.Claims
+@model OrderModel
 @{ ViewData["Title"] = "Checkout"; }
 @section Styles{
   <link rel="stylesheet" href="~/css/checkout.css" />
@@ -9,18 +8,15 @@
 <h1 class="text-secondary">@ViewData["Title"]</h1>
 
 <div id="checkout-container">
-
-  <!--Information about order placing-->
+  <!-- Information about order placing -->
   <section id="general-info">
-
-    <!--Cart Item Display-->
-    <h2>1. Review Order</h2>
+    <!-- Cart Item Display -->
+    <h2>Review Order</h2>
     <partial name="_ReviewOrder" />
-
 
     <!--Form asking user for address-->
     <h2>2. Address</h2>
-    <div class="row">
+    @*<div class="row">
       <div class="col-md-4">
         <form asp-action="View">
           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -61,11 +57,52 @@
           </div>
         </form>
       </div>
-    </div>
+    </div>*@
 
 
     <!--Payment Information-->
     <h2>3. Payment Options</h2>
+    <!-- Order Form -->
+    <form asp-action="Index">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Address" class="control-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Payment" class="control-label"></label>
+        <select asp-for="Payment" class="form-control">
+          <option disabled selected>Select payment method</option>
+          <option value="Cash">Cash</option>
+          <option value="Debit">Debit</option>
+          <option value="PayPal">PayPal</option>
+        </select>
+        <span asp-validation-for="Payment" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input type="submit" id="submitBtn" value="Send" class="btn btn-secondary text-light" disabled />
+        <input type="reset" value="Reset" class="btn btn-secondary text-light" onclick="resetReCaptcha()" />
+      </div>
+      <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6LdIiBQdAAAAAANVFuSzfjBfyJKEjPnW8kEH886l" data-callback="enableSubmitBtn"></div>
+      </div>
+    </form>
   </section>
 
   @{

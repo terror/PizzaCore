@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaCore.Data;
 using PizzaCore.Services;
-using Newtonsoft.Json;
 using System;
 
 namespace PizzaCore {
@@ -55,7 +54,7 @@ namespace PizzaCore {
       services.AddSession(options => {
         options.IdleTimeout = TimeSpan.FromHours(4);
         options.Cookie.HttpOnly = true;
-        options.Cookie.IsEssential = true; 
+        options.Cookie.IsEssential = true;
       });
 
       // Configure MVC services for controllers with views
