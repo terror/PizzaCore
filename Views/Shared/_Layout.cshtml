@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - PizzaCore</title>
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="~/css/theme.min.css" />
   <link rel="stylesheet" href="~/css/site.css" />
   @RenderSection("Styles", false)
@@ -38,9 +39,6 @@
             <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Covid">COVID-19</a>
-            </li>
           </ul>
           <partial name="_LoginPartial" />
           <div>
@@ -55,11 +53,25 @@
     <main role="main" class="pb-3">
       @RenderBody()
     </main>
+    <div class="spacer"></div>
   </div>
 
   <footer class="border-top footer text-muted">
-    <div class="container">
-      &copy; 2021 - PizzaCore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <section>
+      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
+      <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
+      <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
+      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Covid">COVID-19</a>
+    </section>
+    <section>
+      <a href="https://www.facebook.com/pizzahutcanada/" target="_blank" class="icon"><i class="fa fa-facebook"></i></a>
+      <a href="https://play.google.com/store/apps/details?id=com.pizzahut.canada" target="_blank" class="icon"><i class="fa fa-google"></i></a>
+      <a href="https://www.instagram.com/pizza__core/" target="_blank" class="icon"><i class="fa fa-instagram"></i></a>
+      <a href="https://www.youtube.com/user/pizzahut" target="_blank" class="icon"><i class="fa fa-youtube"></i></a>
+    </section>
+    <div class="copyright">
+      <p>Copyright © Abstract Connoisseurs 2021</p>
     </div>
   </footer>
 

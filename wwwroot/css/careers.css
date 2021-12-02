@@ -1,0 +1,9 @@
+.job-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.job-info-left {
+  margin-right: 30px;
+}

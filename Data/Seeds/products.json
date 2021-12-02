@@ -9,7 +9,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "All-dressed Pizza",
@@ -29,7 +30,8 @@
         "Size": "Large",
         "Price": 16.99
       }
-    ]
+    ],
+    "IsFeatured": true
   },
   {
     "Name": "Beef Cheddar Burger",
@@ -41,7 +43,8 @@
         "Size": "OS",
         "Price": 8.49
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Big Core Burger",
@@ -53,7 +56,8 @@
         "Size": "OS",
         "Price": 8.49
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Chicken Core Burger",
@@ -65,7 +69,8 @@
         "Size": "OS",
         "Price": 7.99
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Fresh Coke",
@@ -77,7 +82,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Fresh Diet Coke",
@@ -89,7 +95,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Fresh Diet Pepsi",
@@ -101,7 +108,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Fresh Ginger Ale",
@@ -113,7 +121,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Fresh Pepsi",
@@ -125,7 +134,8 @@
         "Size": "OS",
         "Price": 1.50
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Salted Fries",
@@ -145,7 +155,8 @@
         "Size": "Large",
         "Price": 5.99
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Specialty Egg Pizza",
@@ -165,7 +176,8 @@
         "Size": "Large",
         "Price": 16.45
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Pepperoni Pizza",
@@ -185,7 +197,8 @@
         "Size": "Large",
         "Price": 15.99
       }
-    ]
+    ],
+    "IsFeatured": true
   },
   {
     "Name": "Super Cheese Pizza",
@@ -225,7 +238,8 @@
         "Size": "Large",
         "Price": 15.50
       }
-    ]
+    ],
+    "IsFeatured": true
   },
   {
     "Name": "Vegetarian Pizza",
@@ -245,7 +259,8 @@
         "Size": "Large",
         "Price": 16.99
       }
-    ]
+    ],
+    "IsFeatured": true
   },
   {
     "Name": "Unsalted Fries",
@@ -265,7 +280,8 @@
         "Size": "Large",
         "Price": 5.99
       }
-    ]
+    ],
+    "IsFeatured": false
   },
   {
     "Name": "Water Bottle",
@@ -277,6 +293,7 @@
         "Size": "OS",
         "Price": 1.00
       }
-    ]
+    ],
+    "IsFeatured": false
   }
 ]

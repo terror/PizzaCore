@@ -1,7 +1,6 @@
 @using PizzaCore.Data.Entities;
 @model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
-@section Styles{
-  <link rel="stylesheet" href="~/css/menu.css" /> }
+@section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
 
 @{
   ViewData["Title"] = "Menu";
@@ -21,12 +20,13 @@
   <!-- Products -->
   @if (Model != null) {
     @foreach (var item in Model) {
-      <h2 id="@(item.Category)-Section">@(item.Category)</h2>
-      <section id=@(item.Category) class="menu-grid-container">
+    <div id="@(item.Category)-Section" class="menu-section-anchor"></div>
+    <h2 class="menu-category-title">@(item.Category)</h2>
+    <section class="menu-grid-container">
         @foreach (var product in item.Products) {
           <div class="menu-item">
             <div class="item-image">
-              <img src="~/images/products/@(product.ImageId).jpg" />
+            <img src="~/images/products/@(product.ImageId).jpg"/>
             </div>
             <div class="item-title">@product.Name</div>
             <div class="item-description">@product.Description</div>
@@ -89,9 +89,19 @@
 
             <div class="cart-item-quantity-remove">
               <div class="item-quantity-container">
-                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, new { Quantity = 0, ProductSizeId=0 }))
+                {
+                  <input type="hidden" name="Quantity" value="@(item.Quantity-1)"/>
+                  <input type="hidden" name="ProductSizeId" value="@(item.ProductSize.Id)" />
+                  <button disabled="@(item.Quantity <= 1)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                }
                 <i>@(item.Quantity)</i>
-                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, new { Quantity = 0, ProductSizeId = 0 }))
+                {
+                  <input type="hidden" name="Quantity" value="@(item.Quantity+1)"/>
+                  <input type="hidden" name="ProductSizeId" value="@(item.ProductSize.Id)" />
+                  <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                }
               </div>
             </div>
 

@@ -1,4 +1,5 @@
 @model PizzaCore.Models.ContactModel
+@section Styles{ <link rel="stylesheet" href="~/css/contact.css" /> }
 
 @{
   ViewData["Title"] = "Contact Us";
@@ -8,10 +9,10 @@
 
 <hr />
 <!-- All contact info & location -->
-<div id="contact-info">
+<div id="contact-info" class="info-bar">
 
   <!-- Contact info -->
-  <div id="contact-info-elements">
+  <div id="contact-info-elements" class="info-bar-left">
     <div class="contact-info-element">
       <h5>Carryout Hours</h5>
       <p>Su-Sa 10:30am-11:00pm</p>
@@ -36,10 +37,10 @@
 <hr />
 
 <!-- Contact us form -->
-<h4 class="text-secondary" id="contactform-title">Contact Us</h4>
+<h4 class="text-secondary form-title">Contact Us</h4>
 <div class="row">
   <div class="col-md-4">
-    <form asp-action="Index">
+    <form asp-action="Contact">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
         <label asp-for="FirstName" class="control-label"></label>

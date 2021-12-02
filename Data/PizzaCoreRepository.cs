@@ -6,6 +6,7 @@ using PizzaCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace PizzaCore.Data {
   public class PizzaCoreRepository : IPizzaCoreRepository {
@@ -40,7 +41,23 @@ namespace PizzaCore.Data {
     }
 
     private Product GetProduct(int id) {
-      return context.Products.Find(id);
+        return context.Products.Find(id);
+    }
+
+    public IEnumerable<Product> GetFeaturedProducts()
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::GetFeaturedProducts] Getting featured products ...");
+        return GetAllProducts()
+          .Where(p => p.IsFeatured)
+          .ToList();
+    }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to get featured products: {ex.Message}");
+        return null;
+      }
     }
 
     public IEnumerable<ProductByCategory> GetProductsGroupedByCategory() {
@@ -125,11 +142,46 @@ namespace PizzaCore.Data {
         List<CartItem> cart = GetCart(session).ToList();
         int productCartIndex = FindProductInCart(cart, productSizeId);
         cart.RemoveAt(productCartIndex);
+
+        // Set the updated cart in the session
         session.SetObjectAsJson(SESSION_KEY_CART, cart);
-      } catch (ArgumentOutOfRangeException) {
+
+      } catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is NullReferenceException) {
         logger.LogError($"Failed to remove product of id {productSizeId} from cart : Product of id {productSizeId} does not exist in the cart");
       } catch (Exception ex) {
-        logger.LogError($"Failed to remove product of id {productSizeId} from cart: {ex.Message}");
+        logger.LogError($"Failed to remove product from cart: {ex.Message}");
+      }
+    }
+
+    public void UpdateCart(ISession session, CartItem cartItem)
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::UpdateCart] Updating cart item in cart");
+
+        // Validate cartItem state
+        if(cartItem.Quantity <= 0) {
+          throw new ArgumentException("cannot update cart item to have quantity of 0 or less");
+        }
+
+        // Get cart from session
+        List<CartItem> cart = GetCart(session).ToList();
+
+        // Updating the cartItem and set the updated cart in the session
+        int productCartIndex = FindProductInCart(cart, cartItem.ProductSize.Id);
+        cart[productCartIndex] = cartItem;
+        session.SetObjectAsJson(SESSION_KEY_CART, cart);
+
+      }
+      catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is NullReferenceException) {
+        logger.LogError($"Failed to update product of id {cartItem.ProductSize.Id} in cart : Product of id {cartItem.ProductSize.Id} does not exist in the cart");
+      }
+      catch (ArgumentException ex)
+      {
+        logger.LogError($"Failed to update product in cart : Given {ex.ParamName} is not in a valid state");
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to update product in cart: {ex.Message}");
       }
     }
 
