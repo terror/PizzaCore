@@ -36,7 +36,7 @@ namespace PizzaCore.Controllers {
 
           // Error out if the file is >= 2MB
           if (memoryStream.Length >= FILE_SIZE_LIMIT)
-            return View(new ErrorModel { Message = "File size cannot be greater than 2MB." });
+            return View("Error", new ErrorModel { Message = "File size cannot be greater than 2MB." });
 
           // Add the career submission to the database.
           context.Add(careers.setCVBinary(memoryStream.ToArray()).setDate(DateTime.Now));
