@@ -32,15 +32,15 @@ namespace PizzaCore.Models {
     public string Phone { get; set; }
 
     [Required]
+    public string Method { get; set; }
+
     public string Address { get; set; }
 
-    [Required]
     [RegularExpression("^[A-Za-z-.' ]+$", ErrorMessage = "The City field is not a valid city.")]
     [MinLength(2, ErrorMessage = "The City field is not a valid city.")]
     [MaxLength(50, ErrorMessage = "The City field is not a valid city.")]
     public string City { get; set; }
 
-    [Required]
     [RegularExpression("^[ABCEGHJ-NPRSTVXY]\\d[ABCEGHJ-NPRSTV-Z][ ]\\d[ABCEGHJ-NPRSTV-Z]\\d$", ErrorMessage = "Error! Must be a valid postal code (X1X 1X1).")]
     [Display(Name = "Postal Code")]
     public string PostalCode { get; set; }

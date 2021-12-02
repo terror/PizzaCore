@@ -1,11 +1,6 @@
-// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
 /**
  * Google Maps
- * */
+ */
 var map;
 function initMap() {
   // Coordinates for John Abbott.
@@ -24,10 +19,9 @@ function initMap() {
   });
 }
 
-
 /**
  * Navbar
- * */
+ */
 document.getElementById("english-lang").addEventListener("click", () => {
   document.getElementById("current-lang").textContent = "English";
 });
@@ -36,10 +30,9 @@ document.getElementById("french-lang").addEventListener("click", () => {
   document.getElementById("current-lang").textContent = "French";
 })
 
-
 /**
  * ReCaptcha
- * */
+ */
 function enableSubmitBtn() {
   document.getElementById("submitBtn").disabled = false;
 }
@@ -48,10 +41,9 @@ function resetReCaptcha() {
   grecaptcha.reset();
 }
 
-
 /**
  * Menu
- * */
+ */
 function updatePrice(target, pricesBySize) {
   const price = target.parentNode.getElementsByClassName("item-price")[0];
   const size = target.value;
@@ -67,4 +59,17 @@ function updatePrice(target, pricesBySize) {
       return;
     }
   });
+}
+
+/**
+* Checkout
+*/
+
+function onDeliveryMethodChange() {
+  const deliveryMethod = document.getElementById("deliverySelect").value;
+  const location = document.getElementsByClassName("order-location");
+  for (let i = 0; i < location.length; ++i) {
+    location[i].disabled = deliveryMethod === "Pickup";
+    location[i].value = "";
+  }
 }
