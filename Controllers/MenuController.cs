@@ -26,14 +26,14 @@ namespace PizzaCore.Controllers {
     public IActionResult PostCart(int productSizeId) {
       ProductSize productSize = repository.GetProductSize(productSizeId);
       repository.AddToCart(HttpContext.Session, productSize);
-      return RedirectToAction("Index");
+      return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
 
-    // DELETE: /cart/{id}
-    [HttpDelete("cart/{id}")]
+    [HttpPost("cartItem")]
     public IActionResult DeleteCart(int productSizeId) {
+      //var product = productSize;
       repository.RemoveFromCart(HttpContext.Session, productSizeId);
-      return RedirectToAction("Index");
+      return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
 
     [HttpPost("cartEdit")]

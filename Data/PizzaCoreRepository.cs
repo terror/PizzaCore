@@ -125,6 +125,7 @@ namespace PizzaCore.Data {
         List<CartItem> cart = GetCart(session).ToList();
         int productCartIndex = FindProductInCart(cart, productSizeId);
         cart.RemoveAt(productCartIndex);
+        session.SetObjectAsJson(SESSION_KEY_CART, cart);
       } catch (ArgumentOutOfRangeException) {
         logger.LogError($"Failed to remove product of id {productSizeId} from cart : Product of id {productSizeId} does not exist in the cart");
       } catch (Exception ex) {
