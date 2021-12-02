@@ -1,19 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PizzaCore.Data;
 using PizzaCore.Models;
 using System.Diagnostics;
 
 namespace PizzaCore.Controllers {
   public class HomeController : Controller {
     private readonly ILogger<HomeController> logger;
+    private readonly IPizzaCoreRepository repository;
 
-    public HomeController(ILogger<HomeController> logger) {
+    public HomeController(ILogger<HomeController> logger, IPizzaCoreRepository repository) {
+      this.repository = repository;
       this.logger = logger;
     }
 
     // GET: /
     public IActionResult Index() {
-      return View();
+      var products = repository.GetFeaturedProducts();
+      return View(products);
     }
 
     // GET: /about
