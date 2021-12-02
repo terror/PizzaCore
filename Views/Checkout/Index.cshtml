@@ -14,6 +14,7 @@
     <h2>Review Order</h2>
     <partial name="_ReviewOrder" />
 
+    <!-- General Information -->
     <h2>2. Information</h2>
     <form asp-action="Index" id="order-info-form">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,29 +34,36 @@
         <span asp-validation-for="Email" class="text-danger"></span>
       </div>
 
-    <!--Form asking user for address-->
+    <!-- Form asking user for address -->
     <h2>3. Address</h2>
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
+        <label asp-for="Method" class="control-label"></label>
+        <select asp-for="Method" class="form-control" id="deliverySelect" onchange="onDeliveryMethodChange()">
+          <option disabled selected>Select delivery method</option>
+          <option value="Pickup">Pickup</option>
+          <option value="Delivery">Delivery</option>
+        </select>
+        <span asp-validation-for="Method" class="text-danger"></span>
+      </div>
+      <div class="form-group">
         <label asp-for="Address" class="control-label"></label>
-        <input asp-for="Address" class="form-control" />
+        <input asp-for="Address" class="form-control order-location" disabled/>
         <span asp-validation-for="Address" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="City" class="control-label"></label>
-        <input asp-for="City" class="form-control" />
+        <input asp-for="City" class="form-control order-location" disabled />
         <span asp-validation-for="City" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="PostalCode" class="control-label"></label>
-        <input asp-for="PostalCode" class="form-control" />
+        <input asp-for="PostalCode" class="form-control order-location" disabled/>
         <span asp-validation-for="PostalCode" class="text-danger"></span>
       </div>
 
-
-    <!--Payment Information-->
+    <!-- Payment Information -->
     <h2>4. Payment Options</h2>
-    <!-- Order Form -->
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
         <label asp-for="Payment" class="control-label"></label>
