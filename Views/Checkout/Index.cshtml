@@ -108,7 +108,7 @@
         <label>Total: </label>
         <strong>@finalPrice.ToString("C2")</strong>
       </div>
-      <button class="btn-primary text-light" type="submit" form="order-info-form">PLACE ORDER</button>
+      <button class="btn btn-primary text-light" type="submit" form="order-info-form" disabled="@(ViewBag.cart == null || ViewBag.cart.Count == 0)">PLACE ORDER</button>
     </div>
   </section>
 </div>
