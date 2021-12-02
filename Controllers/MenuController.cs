@@ -35,5 +35,13 @@ namespace PizzaCore.Controllers {
       repository.RemoveFromCart(HttpContext.Session, productSizeId);
       return RedirectToAction("Index");
     }
+
+    [HttpPost("cartEdit")]
+    public IActionResult EditCart(CartItem cartItem)
+    {
+      int id = cartItem.ProductSize.Id;
+      int cartId = cartItem.Id;
+      return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
+    }
   }
 }

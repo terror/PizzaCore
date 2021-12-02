@@ -1,3 +1,4 @@
+@using PizzaCore.Data.Entities;
 @{
   const int DECIMAL_NUM = 2;
 }
@@ -26,9 +27,17 @@
         <section class="order-item-quantity">
           <label>Quantity</label>
           <div>
-            <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+            @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, new CartItem()))
+            {
+              <input type="hidden" name="Id" value="@(item.Id)"/>
+              <input type="hidden" name="Quantity" value="@(item.Quantity-1)" />
+              <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+            }
             <strong>@(item.Quantity)</strong>
+            @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, (CartItem)item))
+            {
             <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+            }
           </div>
         </section>
         @{double roundedPrice = Math.Round(item.ProductSize.Price * item.Quantity, DECIMAL_NUM);}
@@ -37,7 +46,7 @@
           <strong>@(roundedPrice.ToString("C2"))</strong>
         </section>
       </div>
-    }
+            }
   } else {
     <div id="empty-cart-div">
       <img src="~/images/logo.png" />
