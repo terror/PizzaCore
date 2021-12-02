@@ -37,10 +37,10 @@ namespace PizzaCore.Controllers {
     }
 
     [HttpPost("cartEdit")]
-    public IActionResult EditCart(CartItem cartItem)
+    public IActionResult EditCart(int Quantity, int ProductSizeId)
     {
-      int id = cartItem.ProductSize.Id;
-      int cartId = cartItem.Id;
+      CartItem updatedCartItem = new CartItem() { ProductSize = repository.GetProductSize(ProductSizeId), Quantity = Quantity };
+      repository.UpdateCart(HttpContext.Session, updatedCartItem);
       return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
   }

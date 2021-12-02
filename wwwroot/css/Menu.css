@@ -161,6 +161,9 @@ main {
   width: 20px;
   height: 20px;
 }
+.cart-item button:disabled{
+  opacity: 0.65;
+}
 
 .cart-item svg {
   height: inherit;
