@@ -74,6 +74,16 @@ namespace PizzaCore {
         options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
       });
 
+      // Configure Google 3rd party sign in
+      services.AddAuthentication()
+        .AddGoogle(options => {
+          IConfigurationSection googleAuthNSection =
+              Configuration.GetSection("Authentication:Google");
+
+          options.ClientId = googleAuthNSection["ClientId"];
+          options.ClientSecret = googleAuthNSection["ClientSecret"];
+        });
+
       // Enforce lowercase routing
       services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
     }
