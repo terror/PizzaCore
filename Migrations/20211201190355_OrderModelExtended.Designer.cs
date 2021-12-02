@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaCore.Data;
 
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-    partial class PizzaCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20211201190355_OrderModelExtended")]
+    partial class OrderModelExtended
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +36,6 @@ namespace PizzaCore.Migrations
 
                     b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsFeatured")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -185,8 +184,9 @@ namespace PizzaCore.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ItemPrice")
-                        .HasColumnType("float");
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

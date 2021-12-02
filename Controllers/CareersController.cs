@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using PizzaCore.Data;
 using PizzaCore.Models;
 using PizzaCore.Services;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PizzaCore.Controllers {
   public class CareersController : Controller {

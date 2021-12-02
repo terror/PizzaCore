@@ -1,0 +1,110 @@
+@model OrderModel
+@{ ViewData["Title"] = "Checkout"; }
+@section Styles{
+  <link rel="stylesheet" href="~/css/checkout.css" />
+  <link rel="stylesheet" href="~/css/checkout-review-order.css" />
+}
+
+<h1 class="text-secondary">@ViewData["Title"]</h1>
+
+<div id="checkout-container">
+  <!-- Information about order placing -->
+  <section id="general-info">
+    <!-- Cart Item Display -->
+    <h2>Review Order</h2>
+    <partial name="_ReviewOrder" />
+
+    <h2>2. Information</h2>
+    <form asp-action="Index" id="order-info-form">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+
+    <!--Form asking user for address-->
+    <h2>3. Address</h2>
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="Address" class="control-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="City" class="control-label"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="PostalCode" class="control-label"></label>
+        <input asp-for="PostalCode" class="form-control" />
+        <span asp-validation-for="PostalCode" class="text-danger"></span>
+      </div>
+
+
+    <!--Payment Information-->
+    <h2>4. Payment Options</h2>
+    <!-- Order Form -->
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="Payment" class="control-label"></label>
+        <select asp-for="Payment" class="form-control">
+          <option disabled selected>Select payment method</option>
+          <option value="Cash">Cash</option>
+          <option value="Debit">Debit</option>
+          <option value="PayPal">PayPal</option>
+        </select>
+        <span asp-validation-for="Payment" class="text-danger"></span>
+      </div>
+    </form>
+  </section>
+
+  @{
+    const int DECIMAL_NUM = 2;
+    const double GST_TAX_RATE = 0.05;
+    const double QST_TAX_RATE = 0.09975;
+
+    double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
+    double gstTax = Math.Round(subTotal * GST_TAX_RATE, DECIMAL_NUM);
+    double qstTax = Math.Round(subTotal * QST_TAX_RATE, DECIMAL_NUM);
+    double finalPrice = Math.Round(subTotal + gstTax + qstTax, DECIMAL_NUM);
+  }
+  <!--Order Summary Section-->
+  <section id="order-summary">
+    <div id="summary-content">
+      <h2>Order Summary</h2>
+      <div class="sumary-detail">
+        <label>Sub total:</label>
+        <strong>@(subTotal.ToString("C2"))</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>GST:</label>
+        <strong>@gstTax.ToString("C2")</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>QST:</label>
+        <strong>@qstTax.ToString("C2")</strong>
+      </div>
+      <div id="order-total" class="sumary-detail">
+        <label>Total: </label>
+        <strong>@finalPrice.ToString("C2")</strong>
+      </div>
+      <button class="btn-primary text-light" type="submit" form="order-info-form">PLACE ORDER</button>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

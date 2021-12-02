@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,14 @@ namespace PizzaCore {
       // Prettify errors in development
       services.AddDatabaseDeveloperPageExceptionFilter();
 
+      // Configure session options
+      services.AddDistributedMemoryCache();
+      services.AddSession(options => {
+        options.IdleTimeout = TimeSpan.FromHours(4);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+      });
+
       // Configure MVC services for controllers with views
       services.AddControllersWithViews();
 
@@ -55,6 +64,14 @@ namespace PizzaCore {
       services.Configure<GoogleServicesOptions>(options => {
         options.ReCaptchaApiKey = Configuration["ExternalProviders:Google:ReCaptchaApiKey"];
         options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
+      });
+
+      // Configure SendGrud service options
+      services.AddTransient<IEmailSender, SendGridEmailSender>();
+      services.Configure<SendGridEmailSenderOptions>(options => {
+        options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
+        options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
+        options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
       });
 
       // Enforce lowercase routing
@@ -74,6 +91,7 @@ namespace PizzaCore {
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseRouting();
+      app.UseSession();
       app.UseAuthentication();
       app.UseAuthorization();
 

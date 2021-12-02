@@ -1,37 +1,128 @@
+@using PizzaCore.Data.Entities;
 @model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
 @section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
 
 @{
   ViewData["Title"] = "Menu";
+  const int DECIMAL_NUM = 2;
 }
 
-<!-- Navigation -->
-<nav id="category-nav-container">
-  <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
-  <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
-  <a class="category-nav-item" href="#Fries-Section">Fries</a>
-  <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
-</nav>
+<section class="the-menu">
 
-<!-- Products -->
-@if (Model != null) {
-  @foreach (var item in Model) {
+  <!-- Navigation -->
+  <nav id="category-nav-container">
+    <a class="category-nav-item" href="#Pizzas-Section">Pizzas</a>
+    <a class="category-nav-item" href="#Burgers-Section">Burgers</a>
+    <a class="category-nav-item" href="#Fries-Section">Fries</a>
+    <a class="category-nav-item" href="#Drinks-Section">Drinks</a>
+  </nav>
+
+  <!-- Products -->
+  @if (Model != null) {
+    @foreach (var item in Model) {
     <div id="@(item.Category)-Section" class="menu-section-anchor"></div>
     <h2 class="menu-category-title">@(item.Category)</h2>
     <section class="menu-grid-container">
-      @foreach (var product in item.Products) {
-        <div class="menu-item">
-          <div class="item-image">
+        @foreach (var product in item.Products) {
+          <div class="menu-item">
+            <div class="item-image">
             <img src="~/images/products/@(product.ImageId).jpg"/>
+            </div>
+            <div class="item-title">@product.Name</div>
+            <div class="item-description">@product.Description</div>
+            <div class="item-action-container">
+              @using (Html.BeginForm("PostCart", "Menu", FormMethod.Post)) {
+                <div class="item-size-price">
+                  <!-- Add drop down for size selection only if the product has multiple sizes-->
+                  @if (product.ProductSizes.Count() > 1) {
+                    <!-- Add each size as an option in the drop down menu, call updateprice() when the selection is changed -->
+                    <select class="size-select" onchange="updatePrice(this, @(product.GetPricesBySizeAsJson()))">
+                      @foreach (var productSize in product.ProductSizes) {
+                        <option value="@(productSize.Size)">@(productSize.Size)</option>
+                      }
+                    </select>
+                  }
+                  <span class="item-price">@Math.Round(product.ProductSizes.First().Price, DECIMAL_NUM).ToString("C2")</span>
+                </div>
+                <button class="item-cart-add btn-secondary text-light" name="productSizeId" value="@(product.ProductSizes.First().Id)">Add</button>
+              }
+            </div>
           </div>
-          <div class="item-title">@product.Name</div>
-          <div class="item-description">@product.Description</div>
-          <div class="item-action-container">
-            <span class="item-price">$@product.Price</span>
-            <button class="item-cart-add">Add</button>
-          </div>
+        }
+      </section>
+    }
+
+  }
+</section>
+
+<!--Cart as a side panel-->
+<section class="the-cart">
+  <h2>Your Cart</h2>
+  @{ int numOfItems = 0;}
+  <div id="cart-item-container">
+    @if (ViewBag.cart != null) {
+      foreach (var item in ViewBag.cart) {
+        numOfItems += item.Quantity;
+        <div class="cart-item">
+
+          <section class="item-cart-image">
+            <img src="~/images/products/@(item.ProductSize.Product.ImageId).jpg" />
+          </section>
+
+          <section class="cart-item-info">
+
+            <div class="size-remove-container">
+              <span>@(item.ProductSize.Size)</span>
+
+              @using (Html.BeginForm("DeleteCart", "Menu", FormMethod.Post))
+              {
+                <input type="hidden" name="method" value="DELETE">
+                <button name="productSizeId" value="@item.ProductSize.Id"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              }
+            </div>
+
+            <div class="cart-item-title-price">
+              <span>@(item.ProductSize.Product.Name)</span>
+              @{double roundedPrice = Math.Round(item.ProductSize.Price * item.Quantity, DECIMAL_NUM);}
+              <strong>@(roundedPrice.ToString("C2"))</strong>
+            </div>
+
+            <div class="cart-item-quantity-remove">
+              <div class="item-quantity-container">
+                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                <i>@(item.Quantity)</i>
+                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+              </div>
+            </div>
+
+          </section>
+
         </div>
       }
-    </section>
+    }
+  </div>
+  @{
+    const double TAX_RATE = 0.14975;
+
+    double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
+    double taxAmount = Math.Round(subTotal * TAX_RATE, DECIMAL_NUM);
+    double finalPrice = Math.Round(subTotal + taxAmount, DECIMAL_NUM);
   }
-}
+  <div class="cart-price-breakdown">
+    <div class="sub-total">
+      <label>Sub Total:</label>
+      <strong>@(subTotal.ToString("C2"))</strong>
+    </div>
+    <div class="tax-info">
+      <label>Taxes:</label>
+      <span>@(taxAmount.ToString("C2"))</span>
+    </div>
+    <div class="total-price">
+      <label>Total:</label>
+      <strong>@(finalPrice.ToString("C2"))</strong>
+    </div>
+  </div>
+  <form id="checkout-btn-form" asp-controller="Checkout" asp-action="Index" method="get">
+    <button class="checkout-btn btn btn-secondary text-light" disabled="@(numOfItems == 0)"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
+  </form>
+</section>
