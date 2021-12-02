@@ -1,0 +1,9 @@
+#covid-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#covid-info-elements {
+  margin-right: 15%;
+}

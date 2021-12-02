@@ -16,7 +16,8 @@
 <!-- Products -->
 @if (Model != null) {
   @foreach (var item in Model) {
-    <h2 id="@(item.Category)-Section">@(item.Category)</h2>
+    <div id="@(item.Category)-Section" class="menu-section-anchor"></div>
+    <h2 class="menu-category-title">@(item.Category)</h2>
     <section class="menu-grid-container">
       @foreach (var product in item.Products) {
         <div class="menu-item">

@@ -1,9 +1,9 @@
-.career-info {
+.job-info {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
-.career-info-left {
-  margin-right: 20px;
+.job-info-left {
+  margin-right: 30px;
 }

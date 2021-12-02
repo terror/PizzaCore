@@ -50,7 +50,7 @@ html {
   grid-auto-rows: 360px;
   grid-gap: 10px;
   grid-auto-flow: row;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .category-nav-item {
@@ -73,4 +73,15 @@ html {
   display: flex;
   font-size: x-large;
   background-color: white;
+}
+
+.menu-category-title {
+  margin-top: 40px;
+}
+
+.menu-section-anchor {
+  display: block;
+  position: relative;
+  top: -150px;
+  visibility: hidden;
 }
