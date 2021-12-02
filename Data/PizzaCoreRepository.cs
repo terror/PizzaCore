@@ -6,6 +6,7 @@ using PizzaCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace PizzaCore.Data {
   public class PizzaCoreRepository : IPizzaCoreRepository {
@@ -40,7 +41,23 @@ namespace PizzaCore.Data {
     }
 
     private Product GetProduct(int id) {
-      return context.Products.Find(id);
+        return context.Products.Find(id);
+    }
+
+    public IEnumerable<Product> GetFeaturedProducts()
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::GetFeaturedProducts] Getting featured products ...");
+        return GetAllProducts()
+          .Where(p => p.IsFeatured)
+          .ToList();
+    }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to get featured products: {ex.Message}");
+        return null;
+      }
     }
 
     public IEnumerable<ProductByCategory> GetProductsGroupedByCategory() {

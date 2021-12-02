@@ -12,6 +12,7 @@ namespace PizzaCore.Data {
     void AddToCart(ISession session, ProductSize productSize);
     void RemoveFromCart(ISession session, int productId);
     void SaveOrder(OrderModel order);
+    IEnumerable<Product> GetFeaturedProducts();
     bool SaveAll();
   }
 }
