@@ -41,9 +41,6 @@
             </li>
           </ul>
           <partial name="_LoginPartial" />
-          <div>
-            <a class="nav-link text-light" href="/checkout">🛒Cart</a>
-          </div>
         </div>
       </div>
     </nav>
@@ -54,6 +51,15 @@
       @RenderBody()
     </main>
     <div class="spacer"></div>
+  </div>
+
+  <div id="checkout-warning">
+    <div id="checkout-warning-options">
+      <h2 class="text-light">You are currently not signed in!</h2>
+      <h3 class="text-light">What would you like to do?</h3>
+      <a class="sleek-button checkout-warning-option" href="/checkout">Continue as Guest</a>
+      <button class="sleek-button checkout-warning-option" onclick="onCheckoutGuestCancel()">Go Back</button>
+    </div>
   </div>
 
   <footer class="border-top footer text-muted">

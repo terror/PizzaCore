@@ -31,7 +31,7 @@ namespace PizzaCore.Models {
     public string Position { get; set; }
 
     [Required]
-    [Display(Name = "Your CV")]
+    [Display(Name = "Your CV (Max 2MB)")]
     [NotMapped]
     public IFormFile CVFile { get; set; }
 

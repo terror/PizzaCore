@@ -8,7 +8,7 @@
   <h1 class="display-4 text-secondary">Welcome to PizzaCore!</h1>
   <div id="featured-items" class="carousel slide" data-ride="carousel">
     <h2>Check out our featured items!</h2>
-    <a id="see-all-button" asp-area="" asp-controller="Menu" asp-action="Index">See All</a>
+    <a id="see-all-button" class="sleek-button" asp-area="" asp-controller="Menu" asp-action="Index">Check the Menu</a>
     <ol class="carousel-indicators">
       @foreach (var product in Model.Select((value, i) => new { i, value })) {
         <li data-target="#featured-items-carousel" data-slide-to="@(product.i)" class="@(product.value == Model.First() ? "active" : "")"></li>
@@ -16,15 +16,17 @@
     </ol>
     <div class="carousel-inner">
       @foreach (var product in Model) {
-        <div class="carousel-item @(product == Model.First() ? "active" : "")">
-          <div class="carousel-item-img-container">
-            <img src="~/images/products/@(product.ImageId).jpg" alt="@product.Name">
+        <a asp-area="" asp-controller="Menu" asp-action="Index" asp-fragment="@(product.Category)-Section">
+          <div class="carousel-item @(product == Model.First() ? "active" : "")">
+            <div class="carousel-item-img-container">
+              <img src="~/images/products/@(product.ImageId).jpg" alt="@product.Name">
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h3>@product.Name</h3>
+              <p>@product.Description</p>
+            </div>
           </div>
-          <div class="carousel-caption d-none d-md-block">
-            <h3>@product.Name</h3>
-            <p>@product.Description</p>
-          </div>
-        </div>
+        </a>
       }
     </div>
     <a class="carousel-control-prev" href="#featured-items" role="button" data-slide="prev">

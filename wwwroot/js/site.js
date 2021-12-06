@@ -73,3 +73,11 @@ function onDeliveryMethodChange() {
     location[i].value = "";
   }
 }
+
+function onCheckoutGuest() {
+  document.getElementById("checkout-warning").style.visibility = "visible";
+}
+
+function onCheckoutGuestCancel() {
+  document.getElementById("checkout-warning").style.visibility = "hidden";
+}

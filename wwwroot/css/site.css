@@ -162,10 +162,79 @@ footer .icon {
 #phone-info {
     max-width: 150px;
 }
+
 #phone-info a {
     text-decoration: none;
     color: inherit;
     font-weight: bold;
+}
+
+.checkout-button {
+  margin-left: 20px;
+  background-color: #dc3545;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+}
+
+.checkout-button:hover {
+  background-color: #931a26;
+  color: white;
+}
+
+/* Warning styles
+-------------------------------------------------- */
+#checkout-warning {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: #000000bb;
+}
+
+#checkout-warning-options {
+  visibility: inherit;
+  height: 400px;
+  width: 800px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background: #dc3545;
+  border-radius: 40px;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  bottom: 50%;
+  margin-top: -200px;
+  margin-left: -400px;
+}
+
+#checkout-warning-options * {
+  visibility: inherit;
+  text-align: center;
+}
+
+#checkout-warning-options h3 {
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.checkout-warning-option {
+  display: inline-block;
+  width: 50%;
+  margin-top: 20px;
+  background-color: white;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.checkout-warning-option:hover {
+  background-color: #ddd;
+  color: #dc3545!important;
 }
 
 /* Generic styles
@@ -173,4 +242,27 @@ footer .icon {
 .form-title {
   margin-top: 32px;
   margin-bottom: 16px;
+}
+
+.sleek-button {
+  padding: 15px 40px;
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sleek-button:hover {
+  text-decoration: none;
+}
+
+.button-as-link {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}
+
+.button-as-link:hover {
+  color: #cbd3da !important;
 }
