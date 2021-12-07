@@ -1,5 +1,6 @@
 @model PizzaCore.Models.CareersModel
 @section Styles{ <link rel="stylesheet" href="~/css/careers.css" /> }
+@section Scripts{ <script src="https://www.google.com/recaptcha/api.js" async defer></script> }
 
 @{
   ViewData["Title"] = "Careers";
@@ -47,7 +48,7 @@
 <!-- CV Submit form -->
 <div>
   <h2 class="text-secondary form-title">Submit your CV here!</h2>
-  <form asp-action="Careers" enctype="multipart/form-data">
+  <form asp-action="Index" enctype="multipart/form-data">
     <div class="form-group">
       <label asp-for="FirstName" class="control-label"></label>
       <input asp-for="FirstName" class="form-control" />

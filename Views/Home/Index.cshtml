@@ -16,15 +16,13 @@
     </ol>
     <div class="carousel-inner">
       @foreach (var product in Model) {
-        <a asp-area="" asp-controller="Menu" asp-action="Index" asp-fragment="@(product.Category)-Section">
-          <div class="carousel-item @(product == Model.First() ? "active" : "")">
-            <div class="carousel-item-img-container">
-              <img src="~/images/products/@(product.ImageId).jpg" alt="@product.Name">
-            </div>
-            <div class="carousel-caption d-none d-md-block">
-              <h3>@product.Name</h3>
-              <p>@product.Description</p>
-            </div>
+        <a class="carousel-item @(product == Model.First() ? "active" : "")" asp-area="" asp-controller="Menu" asp-action="Index" asp-fragment="@(product.Category)-Section">
+          <div class="carousel-item-img-container">
+            <img src="~/images/products/@(product.ImageId).jpg" alt="@product.Name">
+          </div>
+          <div class="carousel-caption d-none d-md-block">
+            <h3>@product.Name</h3>
+            <p>@product.Description</p>
           </div>
         </a>
       }

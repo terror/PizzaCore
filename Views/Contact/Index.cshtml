@@ -1,5 +1,14 @@
 @model PizzaCore.Models.ContactModel
+
+@using Microsoft.Extensions.Options
+@using PizzaCore.Services
+@inject IOptions<GoogleServicesOptions> GoogleServicesOptions
+
 @section Styles{ <link rel="stylesheet" href="~/css/contact.css" /> }
+@section Scripts{
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=@GoogleServicesOptions.Value.MapsApiKey&callback=initMap" async defer></script>
+}
 
 @{
   ViewData["Title"] = "Contact Us";
@@ -40,7 +49,7 @@
 <h4 class="text-secondary form-title">Contact Us</h4>
 <div class="row">
   <div class="col-md-4">
-    <form asp-action="Contact">
+    <form asp-action="Index">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
         <label asp-for="FirstName" class="control-label"></label>

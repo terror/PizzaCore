@@ -7,6 +7,8 @@
 
 #featured-items h2 {
   position: absolute;
+  width: 60%;
+  text-align: left;
   font-weight: bolder;
   top: 30px;
   left: 20px;

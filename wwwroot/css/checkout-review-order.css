@@ -46,6 +46,10 @@
   object-fit: cover;
 }
 
+.order-item button:disabled{
+  opacity: 0.65;
+}
+
 .order-item-info label {
   font-weight: bold;
   font-size: large;
@@ -93,9 +97,9 @@
   text-align: center;
 }
 
-  .order-item-info button span {
-    margin-bottom: 3px;
-  }
+.order-item-info button span {
+  margin-bottom: 3px;
+}
 
 .order-item-info svg {
   width: 15px;
