@@ -23,7 +23,10 @@ html {  position: relative;  min-height: 100%;}body {  margin-bottom: 150p
   font-size: 12px;
 }
 
-/* Navbar styles-------------------------------------------------- */#nav-logo {  margin: 0 15px 0 0;}#main-navbar {
+/* Navbar styles-------------------------------------------------- */#nav-logo {  margin: 0 15px 0 0;}
+
+#nav-logo img {
+  height: 75px;}#main-navbar {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -59,6 +62,7 @@ html {  position: relative;  min-height: 100%;}body {  margin-bottom: 150p
 .lang-menu:hover ul {
   display:block;}#phone-info {
   max-width: 150px;}
+
 #phone-info a {
   text-decoration: none;
   color: inherit;
@@ -133,11 +137,12 @@ html {  position: relative;  min-height: 100%;}body {  margin-bottom: 150p
 
 .sleek-button {
   display: inline-block;
-  padding: 15px 40px;
+  padding: 10px 30px;
   border: none;
   border-radius: 100px;
   text-decoration: none;
-  transition: 0.2s;
+  transition: color 0.2s;
+  transition: background-color 0.2s;
 }
 
 .sleek-button:hover {

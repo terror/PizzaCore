@@ -1,10 +1,13 @@
 @using PizzaCore.Data.Entities;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 @model IEnumerable<PizzaCore.Data.Entities.ProductByCategory>
 @section Styles{ <link rel="stylesheet" href="~/css/menu.css" /> }
 
 @{
   ViewData["Title"] = "Menu";
-  const int DECIMAL_NUM = 2;
+  const int DECIMAL_NUM = OrderModel.DECIMAL_NUM;
 }
 
 <section class="the-menu">
@@ -114,7 +117,7 @@
     }
   </div>
   @{
-    const double TAX_RATE = 0.14975;
+    const double TAX_RATE = OrderModel.GST_TAX_RATE + OrderModel.QST_TAX_RATE;
 
     double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
     double taxAmount = Math.Round(subTotal * TAX_RATE, DECIMAL_NUM);
@@ -134,7 +137,17 @@
       <strong>@(finalPrice.ToString("C2"))</strong>
     </div>
   </div>
-  <form id="checkout-btn-form" asp-controller="Checkout" asp-action="Index" method="get">
-    <button class="checkout-btn btn btn-secondary text-light" disabled="@(numOfItems == 0)"><span>@(numOfItems) items</span> <span id="checkout-text">Checkout</span><span></span></button>
-  </form>
+  @*<form id="checkout-btn-form" asp-controller="Checkout" asp-action="Index" method="get">*@
+    @if (SignInManager.IsSignedIn(User)) {
+      <a class="checkout-btn btn btn-secondary text-light @(numOfItems == 0 ? "disabled" : "")" href="/checkout">
+        <span id="checkout-text">Checkout</span>
+        <span>(@(numOfItems) items)</span>
+      </a>
+    } else {
+      <button class="checkout-btn btn btn-secondary text-light" disabled="@(numOfItems == 0)" onclick="onCheckoutGuest()">
+        <span id="checkout-text">Checkout</span>
+        <span>(@(numOfItems) items)</span>
+      </button>
+    }
+  @*</form>*@
 </section>

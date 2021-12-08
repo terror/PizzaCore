@@ -5,89 +5,104 @@
   <link rel="stylesheet" href="~/css/checkout-review-order.css" />
 }
 
+@{
+  double[] summary = OrderModel.generateSummary(ViewBag.CartTotal);
+
+  double subTotal = summary[0];
+  double gstTax = summary[1];
+  double qstTax = summary[2];
+  double allTaxes = gstTax + qstTax;
+  double finalPrice = summary[3];
+}
+
 <h1 class="text-secondary">@ViewData["Title"]</h1>
 
 <div id="checkout-container">
   <!-- Information about order placing -->
   <section id="general-info">
-    <!-- Cart Item Display -->
-    <h2>Review Order</h2>
-    <partial name="_ReviewOrder" />
+    
+    @if (ViewBag.cart != null && ViewBag.cart.Count >= 1) {
+      <!-- Cart Item Display -->
+      <h2>1. Review Order</h2>
+      <partial name="_ReviewOrder" />
 
-    <!-- General Information -->
-    <h2>2. Information</h2>
-    <form asp-action="Index" id="order-info-form">
-      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-      <div class="form-group">
-        <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-      </div>
+      <!-- General Information -->
+      <h2>2. Information</h2>
+      <form asp-action="Index" id="order-info-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+          <label asp-for="FirstName" class="control-label"></label>
+          <input asp-for="FirstName" class="form-control" />
+          <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="LastName" class="control-label"></label>
+          <input asp-for="LastName" class="form-control" />
+          <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="Email" class="control-label"></label>
+          <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name" />
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <!-- Form asking user for address -->
-    <h2>3. Address</h2>
-      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-      <div class="form-group">
-        <label asp-for="Method" class="control-label"></label>
-        <select asp-for="Method" class="form-control" id="deliverySelect" onchange="onDeliveryMethodChange()">
-          <option disabled selected>Select delivery method</option>
-          <option value="Pickup">Pickup</option>
-          <option value="Delivery">Delivery</option>
-        </select>
-        <span asp-validation-for="Method" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="Address" class="control-label"></label>
-        <input asp-for="Address" class="form-control order-location" disabled/>
-        <span asp-validation-for="Address" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="City" class="control-label"></label>
-        <input asp-for="City" class="form-control order-location" disabled />
-        <span asp-validation-for="City" class="text-danger"></span>
-      </div>
-      <div class="form-group">
-        <label asp-for="PostalCode" class="control-label"></label>
-        <input asp-for="PostalCode" class="form-control order-location" disabled/>
-        <span asp-validation-for="PostalCode" class="text-danger"></span>
-      </div>
+        <!-- Form asking user for address -->
+        <h2>3. Address</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+          <label asp-for="Method" class="control-label"></label>
+          <select asp-for="Method" class="form-control" id="deliverySelect" onchange="onDeliveryMethodChange()">
+            <option disabled selected>Select delivery method</option>
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery">Delivery</option>
+          </select>
+          <span asp-validation-for="Method" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="Address" class="control-label"></label>
+          <input asp-for="Address" class="form-control order-location" disabled />
+          <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="City" class="control-label"></label>
+          <input asp-for="City" class="form-control order-location" disabled />
+          <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="PostalCode" class="control-label"></label>
+          <input asp-for="PostalCode" class="form-control order-location" disabled />
+          <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
 
-    <!-- Payment Information -->
-    <h2>4. Payment Options</h2>
-      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-      <div class="form-group">
-        <label asp-for="Payment" class="control-label"></label>
-        <select asp-for="Payment" class="form-control">
-          <option disabled selected>Select payment method</option>
-          <option value="Cash">Cash</option>
-          <option value="Debit">Debit</option>
-          <option value="PayPal">PayPal</option>
-        </select>
-        <span asp-validation-for="Payment" class="text-danger"></span>
+        <!-- Payment Information -->
+        <h2>4. Payment Options</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+          <label asp-for="Payment" class="control-label"></label>
+          <select asp-for="Payment" class="form-control">
+            <option disabled selected>Select payment method</option>
+            <option value="Cash">Cash</option>
+            <option value="Debit">Debit</option>
+          </select>
+          <span asp-validation-for="Payment" class="text-danger"></span>
+        </div>
+
+        <input asp-for="SubTotal" type="hidden" value="@subTotal" />
+        <input asp-for="ShippingCost" type="hidden" value="0" />
+        <input asp-for="Taxes" type="hidden" value="@allTaxes" />
+
+      </form>
+
+    } else {
+      <h2>Empty Cart</h2>
+      <div id="empty-cart-div">
+        <img src="~/images/logo.png" />
+        <p>Your cart is currently empty!</p>
+        <p>Start by adding items from our <a asp-area="" asp-controller="Menu" asp-action="Index">MENU</a>.</p>
       </div>
-    </form>
+    }
   </section>
 
-  @{
-    const int DECIMAL_NUM = 2;
-    const double GST_TAX_RATE = 0.05;
-    const double QST_TAX_RATE = 0.09975;
-
-    double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
-    double gstTax = Math.Round(subTotal * GST_TAX_RATE, DECIMAL_NUM);
-    double qstTax = Math.Round(subTotal * QST_TAX_RATE, DECIMAL_NUM);
-    double finalPrice = Math.Round(subTotal + gstTax + qstTax, DECIMAL_NUM);
-  }
   <!--Order Summary Section-->
   <section id="order-summary">
     <div id="summary-content">
