@@ -1,6 +1,3 @@
-@using Microsoft.Extensions.Options
-@using PizzaCore.Services
-@inject IOptions<GoogleServicesOptions> GoogleServicesOptions
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,12 +14,12 @@
   <header id="main-navbar">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
       <div class="text-light" id="phone-info">
-        Delivery in Montreal: <a href="tel:5144575036">(514) 457-5036</a>
+        Delivery&nbsp;in&nbsp;Montreal: <a href="tel:5144575036">(514)&nbsp;457-5036</a>
       </div>
       <div class="container">
         <p class="navbar-brand" id="nav-logo">
           <a href="@Url.Action("Index", "Home")">
-            <img src="~/images/logo.png" width="100" alt="" />
+            <img src="~/images/logo.png" alt="PizzaCore" />
           </a>
         </p>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -31,7 +28,7 @@
               <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
+              <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact&nbsp;Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
@@ -41,9 +38,6 @@
             </li>
           </ul>
           <partial name="_LoginPartial" />
-          <div>
-            <a class="nav-link text-light" href="/checkout">🛒Cart</a>
-          </div>
         </div>
       </div>
     </nav>
@@ -54,6 +48,15 @@
       @RenderBody()
     </main>
     <div class="spacer"></div>
+  </div>
+
+  <div id="checkout-warning">
+    <div id="checkout-warning-options">
+      <h2 class="text-light">You are currently not signed in!</h2>
+      <h3 class="text-light">What would you like to do?</h3>
+      <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
+      <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
+    </div>
   </div>
 
   <footer class="border-top footer text-muted">
@@ -78,9 +81,6 @@
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=@GoogleServicesOptions.Value.MapsApiKey&callback=initMap"
-          async defer></script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

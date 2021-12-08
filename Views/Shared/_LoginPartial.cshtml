@@ -35,3 +35,10 @@
     </ul>
   </li>
 </ul>
+<div>
+  @if (SignInManager.IsSignedIn(User)) {
+    <a class="sleek-button checkout-button" href="/checkout">🛒&nbsp;Cart</a>
+  } else {
+    <button class="sleek-button checkout-button" onclick="onCheckoutGuest()">🛒&nbsp;Cart</button>
+  }
+</div>

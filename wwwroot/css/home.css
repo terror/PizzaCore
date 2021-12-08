@@ -7,6 +7,8 @@
 
 #featured-items h2 {
   position: absolute;
+  width: 60%;
+  text-align: left;
   font-weight: bolder;
   top: 30px;
   left: 20px;
@@ -16,22 +18,19 @@
 
 #see-all-button {
   position: absolute;
-  font-weight: bolder;
   top: 20px;
   right: 20px;
-  padding: 15px 40px;
   z-index: 5;
+  font-weight: bolder;
   background-color: #dc3545;
   color: white;
-  border-radius: 100px;
-  text-decoration: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-  transition: 0.2s;
 }
 
 #see-all-button:hover {
   top: 25px;
   background-color: #931a26;
+  color: white;
 }
 
 .carousel-inner {

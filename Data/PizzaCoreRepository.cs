@@ -202,5 +202,9 @@ namespace PizzaCore.Data {
     public bool SaveAll() {
       return context.SaveChanges() > 0;
     }
+
+    public void ResetCart(ISession session) {
+      session.Remove(SESSION_KEY_CART);
+    }
   }
 }

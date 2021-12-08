@@ -14,6 +14,7 @@ namespace PizzaCore.Data {
     void UpdateCart(ISession session, CartItem cartItem);
     void SaveOrder(OrderModel order);
     IEnumerable<Product> GetFeaturedProducts();
+    void ResetCart(ISession session);
     bool SaveAll();
   }
 }
