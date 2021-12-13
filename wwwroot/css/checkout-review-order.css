@@ -16,6 +16,7 @@
 .order-item-image {
   flex: 1;
   padding: 5px;
+  max-height: 120px;
 }
 
 .order-item-info, .order-item-quantity, .order-item-subtotal {
@@ -42,6 +43,7 @@
   width: 100%;
   height: 100%;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .order-item button:disabled{
@@ -112,18 +114,3 @@
   background-color: var(--bs-tertiary);
   border-radius: 5px;
 }
-#empty-cart-div{
-  background-image:url("../images/checkout/empty-cart-background.jpg");
-  height:300px;
-  width:100%;
-  line-height:300px;
-  text-align:center;
-}
-#empty-cart-div img{
-  height:80px;
-  width:80px;
-  vertical-align:central;
-  opacity:0.5;
-}
-
-

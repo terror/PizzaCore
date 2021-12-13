@@ -66,7 +66,7 @@ namespace PizzaCore {
         options.MapsApiKey = Configuration["ExternalProviders:Google:MapsApiKey"];
       });
 
-      // Configure SendGrud service options
+      // Configure SendGrid service options
       services.AddTransient<IEmailSender, SendGridEmailSender>();
       services.Configure<SendGridEmailSenderOptions>(options => {
         options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];

@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace PizzaCore.Controllers {
   public class CheckoutController : Controller {
@@ -16,7 +17,6 @@ namespace PizzaCore.Controllers {
     private readonly IEmailSender emailSender;
 
     private const string emailTopic = "Order confirmation";
-    private const string emailMessage = "Thank you for placing your order at PizzaCore!\nIf you have any questions about your order, please call the store directly at (514) 457-5036";
 
     // All valid postal code prefixes
     private List<string> postalCodes = new List<string> { "H8Y", "H9A", "H9B", "H9C", "H9H", "H9J", "H9W", "H9X", };
@@ -45,11 +45,29 @@ namespace PizzaCore.Controllers {
           Message = $"Invalid order location. Valid postal code prefixes include: {string.Join(", ", postalCodes.ToArray())}" }
         );
 
-      // TODO: Save cart items, process payment
+      // TODO: Save cart items
       repository.SaveOrder(order.setDate(DateTime.Now));
 
       // Send confirmation email to customer
-      await emailSender.SendEmailAsync(order.Email, emailTopic, emailMessage);
+      IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
+
+      StringBuilder emailMessage = new StringBuilder();
+      emailMessage.Append("Thank you for placing your order at PizzaCore!<br><br>");
+      emailMessage.Append("Your Order:<br>");
+      foreach (CartItem item in cart) {
+        string cost = (item.ProductSize.Price * item.Quantity).ToString("C2");
+        emailMessage.Append($"{cost} | {item.Quantity} {item.ProductSize.Size} {item.ProductSize.Product.Name}<br>");
+      }
+      emailMessage.AppendFormat("<br>Subtotal: {0}<br>", order.SubTotal.ToString("C2"));
+      //emailMessage.AppendFormat("Shipping Cost: {0}<br>", order.ShippingCost.ToString("C2"));
+      emailMessage.AppendFormat("Taxes: {0}<br>", order.Taxes.ToString("C2"));
+      emailMessage.AppendFormat("Total: {0}<br><br>", order.GetTotal().ToString("C2"));
+      emailMessage.Append("If you have any questions about your order, please call the store directly at (514) 457-5036.");
+      
+      await emailSender.SendEmailAsync(order.Email, emailTopic, emailMessage.ToString());
+
+      // Remove all items from the cart
+      repository.ResetCart(HttpContext.Session);
 
       return View("Success", order);
     }

@@ -50,9 +50,31 @@ namespace PizzaCore.Models {
 
     public DateTime Date { get; set; }
 
+    public double SubTotal { get; set; }
+
+    public double ShippingCost { get; set; }
+
+    public double Taxes { get; set; }
+
     public OrderModel setDate(DateTime date) {
       Date = date;
       return this;
+    }
+
+    public double GetTotal() {
+      return SubTotal + ShippingCost + Taxes;
+    }
+
+    public const int DECIMAL_NUM = 2;
+    public const double GST_TAX_RATE = 0.05;
+    public const double QST_TAX_RATE = 0.09975;
+
+    public static double[] generateSummary(double cartTotal) {
+      double subTotal = Math.Round(cartTotal, DECIMAL_NUM);
+      double gstTax = Math.Round(subTotal * GST_TAX_RATE, DECIMAL_NUM);
+      double qstTax = Math.Round(subTotal * QST_TAX_RATE, DECIMAL_NUM);
+      double finalPrice = Math.Round(subTotal + gstTax + qstTax, DECIMAL_NUM);
+      return new double[] { subTotal, gstTax, qstTax, finalPrice };
     }
   }
 }
