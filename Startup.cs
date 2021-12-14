@@ -22,7 +22,7 @@ namespace PizzaCore {
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
       // Add and configure the application database context
-      services.AddDbContext<ApplicationDbContext>(options =>
+      services.AddDbContext<UserIdentityContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
       );
 
@@ -33,7 +33,8 @@ namespace PizzaCore {
 
       // Configure user options
       services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-          .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<UserIdentityContext>();
 
       // Add a recaptcha http client service
       services.AddHttpClient<ReCaptcha>(x => {
@@ -45,6 +46,9 @@ namespace PizzaCore {
 
       // Add the database seeder
       services.AddTransient<PizzaCoreSeeder>();
+
+      // Add the identity seeder
+      services.AddTransient<IdentitySeeder>();
 
       // Prettify errors in development
       services.AddDatabaseDeveloperPageExceptionFilter();
