@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PizzaCore.Data;
 using PizzaCore.Data.Entities;
+using PizzaCore.Data;
 using PizzaCore.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,31 +31,50 @@ namespace PizzaCore.Controllers {
       this.repository = repository; ;
     }
 
-    [HttpGet("profile")]
     [Authorize]
+    [HttpGet("profile")]
     public async Task<IActionResult> Index() {
+      // Grab the current user
       var user = await userManager.GetUserAsync(User);
+
+      // Grab a list of the users roles
       List<string> roles = (await userManager.GetRolesAsync(user)).ToList();
 
-      var data = repository.GetUserDataByIdentityUserId(user.Id);
-      if (data == null) {
-        // Create user data on first use
-        data = new UserData {
+      // Populate user data if it doesn't exist
+      var data = repository.GetUserDataByIdentityUserId(user.Id) ?? 
+        new UserData {
           IdentityUserId = user.Id,
-          Address = "Unknown",
+          FirstName = "",
+          LastName = "",
+          Address = "",
+          City = "",
+          PostalCode = "",
           Orders = new List<OrderModel>()
         };
-      }
 
-      var model = new ShowProfileModel {
+      // Show the view with the constructed model
+      return View(new ShowProfileModel {
         UserDataId = data.UserDataId,
-        Address = data.Address,
-        Orders = data.Orders,
+        FirstName = data.FirstName,
+        LastName = data.LastName,
         Email = user.Email,
+        Address = data.Address,
+        City = data.City,
+        PostalCode = data.PostalCode,
+        Orders = data.Orders,
         Roles = roleManager.Roles.Where(x => x.Name == user.UserName).ToList()
-      };
+      });
+    }
 
-      return View(model);
+    [Authorize]
+    [HttpPost("profile")]
+    public async Task<IActionResult> Index(ShowProfileModel model) {
+      // Grab the current user
+      var user = await userManager.GetUserAsync(User);
+
+      // TODO: Update user data based on model
+
+      return View();
     }
   }
 }

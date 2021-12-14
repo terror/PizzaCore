@@ -1,26 +1,24 @@
 @model PizzaCore.Models.ShowProfileModel
 
 @{
-  ViewData["Title"] = "Index";
+  ViewData["Title"] = "Profile";
 }
 
-<h1>Index</h1>
-
-<h4>ShowProfileModel</h4>
+<h2>Profile</h2>
 <hr />
 <div class="row">
   <div class="col-md-4">
     <form asp-action="Index">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
-        <label asp-for="UserDataId" class="control-label"></label>
-        <input asp-for="UserDataId" class="form-control" />
-        <span asp-validation-for="UserDataId" class="text-danger"></span>
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
       </div>
       <div class="form-group">
-        <label asp-for="Address" class="control-label"></label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Email" class="control-label"></label>
@@ -28,14 +26,25 @@
         <span asp-validation-for="Email" class="text-danger"></span>
       </div>
       <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <label asp-for="Address" class="control-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="City" class="control-label"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="PostalCode" class="control-label"></label>
+        <input asp-for="PostalCode" class="form-control" />
+        <span asp-validation-for="PostalCode" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Update" class="btn btn-primary" />
       </div>
     </form>
   </div>
-</div>
-
-<div>
-  <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

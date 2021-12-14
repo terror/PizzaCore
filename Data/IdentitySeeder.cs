@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace PizzaCore.Data {
@@ -16,22 +15,42 @@ namespace PizzaCore.Data {
     }
 
     public async Task SeedAsync() {
+      await SeedRoles();
+      await SeedUsers();
+    }
+
+    public async Task SeedRoles() {
+      // If roles exist, don't seed
+      if (await context.Roles.AnyAsync())
+        return;
+
+      // Define all roles
+      var roles = new string[] { "Owner", "Manager", "Cook", "Delivery", "Service" };
+
+      // Create all roles
+      foreach (var roleName in roles) {
+        var role = await roleManager.RoleExistsAsync(roleName);
+        // Create the role if it doesn't exist
+        if (!role)
+          await roleManager.CreateAsync(new IdentityRole { Name = roleName });
+      }
+    }
+
+    public async Task SeedUsers() {
       context.Database.EnsureCreated();
+      await CreateUser("owner@example.com", "Password123!", "Owner");
+      await CreateUser("manager@example.com", "Password123!", "Manager");
+      await CreateUser("cook@example.com", "Password123!", "Cook");
+      await CreateUser("delivery@example.com", "Password123!", "Delivery");
+      await CreateUser("service@example.com", "Password123!", "Service");
+    }
 
-      IdentityUser user = await userManager.FindByEmailAsync("test@user.com");
-      if (user == null) {
-        user = new IdentityUser() { UserName = "test@user.com", Email = "test@user.com" };
-
-        var result = await userManager.CreateAsync(user, "Password123!");
-        // Error out if failed to add
-        if (result != IdentityResult.Success)
-          throw new InvalidOperationException("Could not create new user in Identity Seeder.");
-
-        // Add the `Admin` role
-        if (!context.Roles.Any(result => result.Name == "Admin"))
-          await roleManager.CreateAsync(new IdentityRole { Name = "Admin", NormalizedName = "Admin" });
-
-        await userManager.AddToRoleAsync(user, "Admin");
+    private async Task CreateUser(string email, string password, string role) {
+      var user = new IdentityUser { UserName = email, Email = email };
+      if (await userManager.FindByEmailAsync(email) == null) {
+        var createdUser = await userManager.CreateAsync(user, password);
+        if (createdUser.Succeeded)
+          await userManager.AddToRoleAsync(user, role);
       }
     }
   }
