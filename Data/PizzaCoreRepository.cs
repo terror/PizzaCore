@@ -5,6 +5,7 @@ using PizzaCore.Helpers;
 using PizzaCore.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -189,9 +190,21 @@ namespace PizzaCore.Data {
       return cart.FindIndex(item => item.ProductSize.Id == productSizeId);
     }
 
-    public void SaveOrder(OrderModel order) {
+    public void SaveOrder(OrderModel order, IEnumerable<CartItem> items = null) {
       try {
         logger.LogInformation("[PizzaCoreRepository::SaveOrder] Saving order...");
+
+        if (items != null) {
+          foreach (CartItem item in items) {
+            order.Items.Add(new OrderItem() {
+              Size = item.ProductSize.Size,
+              Price = item.ProductSize.Price,
+              Quantity = item.Quantity,
+              ProductId = item.ProductSize.Product.Id
+            });
+          }
+        }
+
         context.Add(order);
         SaveAll();
       } catch(Exception ex) {
@@ -205,6 +218,201 @@ namespace PizzaCore.Data {
 
     public void ResetCart(ISession session) {
       session.Remove(SESSION_KEY_CART);
+    }
+
+    public IEnumerable<OrderModel> GetAllOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetAllOrders] Getting all orders...");
+
+        var orders = context.OrderModels.ToList();
+
+        var orderItems = context.OrderItems.ToList();
+
+        foreach (var order in orders) {
+          order.Items = orderItems.Where(oi => oi.Order.Id == order.Id).ToList();
+        }
+
+        return orders;
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get all orders: {ex.Message}");
+        return null;
+      }
+    }
+
+    public Dictionary<string, int> GetDailyProductOrderFrequency() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetDailyProductOrderFrequency] Getting daily product order frequency...");
+        return GetProductOrderFrequency(GetAllOrders().Where(o => o.Date.Date == DateTime.Today).Select(o => o.Items).ToList());
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get daily product order frequency: {ex.Message}");
+        return null;
+      }
+    }
+
+    public Dictionary<string, int> GetWeeklyProductOrderFrequency() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetWeeklyProductOrderFrequency] Getting weekly product order frequency...");
+
+        CultureInfo cultureInfo = new CultureInfo("en-US");
+        CalendarWeekRule rule = cultureInfo.DateTimeFormat.CalendarWeekRule;
+        DayOfWeek firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+        return GetProductOrderFrequency(GetAllOrders()
+          .Where(o => cultureInfo.Calendar.GetWeekOfYear(o.Date, rule, firstDayOfWeek) == cultureInfo.Calendar.GetWeekOfYear(DateTime.Today, rule, firstDayOfWeek))
+          .Select(o => o.Items)
+          .ToList());
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get weekly product order frequency: {ex.Message}");
+        return null;
+      }
+    }
+
+    public Dictionary<string, int> GetMonthlyProductOrderFrequency() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetMonthlyProductOrderFrequency] Getting monthly product order frequency...");
+        return GetProductOrderFrequency(GetAllOrders().Where(o => o.Date.ToString("MM-yy") == DateTime.Today.ToString("MM-yy")).Select(o => o.Items).ToList());
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get monthly product order frequency: {ex.Message}");
+        return null;
+      }
+    }
+
+    public Dictionary<string, int> GetYearlyProductOrderFrequency() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetYearlyProductOrderFrequency] Getting yearly product order frequency...");
+        return GetProductOrderFrequency(GetAllOrders().Where(o => o.Date.Year == DateTime.Today.Year).Select(o => o.Items).ToList());
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get yearly product order frequency: {ex.Message}");
+        return null;
+      }
+    }
+
+    private Dictionary<string, int> GetProductOrderFrequency(IEnumerable<IEnumerable<OrderItem>> itemsbyOrder) {
+      Dictionary<string, int> productOrderFrequency = new Dictionary<string, int>();
+      string key;
+
+      foreach (var order in itemsbyOrder) {
+        foreach (var item in order) {
+          key = GetAllProducts().Where(p => p.Id == item.ProductId).Select(p => p.Name).ToList()[0];
+
+          if (productOrderFrequency.ContainsKey(key)) {
+            productOrderFrequency[key] += 1;
+          }
+          else {
+            productOrderFrequency.Add(key, 1);
+          }
+        }
+      }
+
+      return productOrderFrequency;
+    }
+
+    public double GetTotalDailySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalDailySales] Getting total daily sales...");
+        return GetAllOrders().Where(o => o.Date.Date == DateTime.Today).Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total daily sales: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public double GetTotalWeeklySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalWeeklySales] Getting total weekly sales...");
+
+        CultureInfo cultureInfo = new CultureInfo("en-US");
+        CalendarWeekRule rule = cultureInfo.DateTimeFormat.CalendarWeekRule;
+        DayOfWeek firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+        return GetAllOrders()
+          .Where(o => cultureInfo.Calendar.GetWeekOfYear(o.Date, rule, firstDayOfWeek) == cultureInfo.Calendar.GetWeekOfYear(DateTime.Today, rule, firstDayOfWeek))
+          .Select(o => o.SubTotal)
+          .Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total weekly sales: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public double GetTotalMonthlySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalMonthlySales] Getting total monthly sales...");
+        return GetAllOrders().Where(o => o.Date.ToString("MM-yy") == DateTime.Today.ToString("MM-yy")).Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total monthly sales: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public double GetTotalYearlySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalYearlySales] Getting total yearly sales...");
+        return GetAllOrders().Where(o => o.Date.Year == DateTime.Today.Year).Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total yearly sales: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public int GetTotalDailyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalDailyOrders] Getting total daily orders...");
+        return GetAllOrders().Where(o => o.Date.Date == DateTime.Today).Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total daily orders: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public int GetTotalWeeklyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalWeeklyOrders] Getting total weekly orders...");
+
+        CultureInfo cultureInfo = new CultureInfo("en-US");
+        CalendarWeekRule rule = cultureInfo.DateTimeFormat.CalendarWeekRule;
+        DayOfWeek firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+
+        return GetAllOrders()
+          .Where(o => cultureInfo.Calendar.GetWeekOfYear(o.Date, rule, firstDayOfWeek) == cultureInfo.Calendar.GetWeekOfYear(DateTime.Today, rule, firstDayOfWeek))
+          .Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total weekly orders: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public int GetTotalMonthlyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalMonthlyOrders] Getting total monthly orders...");
+        return GetAllOrders().Where(o => o.Date.ToString("MM-yy") == DateTime.Today.ToString("MM-yy")).Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total monthly orders: {ex.Message}");
+        return -1;
+      }
+    }
+
+    public int GetTotalYearlyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalYearlyOrders] Getting total yearly orders...");
+        return GetAllOrders().Where(o => o.Date.Year == DateTime.Today.Year).Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total yearly orders: {ex.Message}");
+        return -1;
+      }
     }
   }
 }

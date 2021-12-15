@@ -1,0 +1,51 @@
+.container {
+    margin: auto;
+    max-width: 90%;
+}
+
+.header-container {
+    display: flex;
+    margin: 50px 70px 25px 70px;
+    align-items: center;
+}
+
+#dashboard-header {
+    margin: 0;
+}
+
+#time-unit {
+    margin-left: auto;
+}
+
+#dashboard-data {
+    display: flex;
+    margin: auto;
+    margin-bottom: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.unit-data {
+    text-align: center;
+    border-radius: 10px;
+    padding: 50px 0px 50px 0px;
+    margin-right: 50px;
+    width: 300px;
+}
+
+.unit-chart {
+    height: 300px;
+    width: 500px;
+}
+
+#product-frequency {
+    height: 600px;
+    width: 600px;
+    margin-left: 100px;
+}
