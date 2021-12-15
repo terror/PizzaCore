@@ -5,29 +5,29 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
   <script>
     var salesData = {
-      labels: @Html.Raw(ViewBag.timeUnits),
+      labels: @Html.Raw(Model.TimeUnits),
       datasets: [{
         label: 'Sales (Dollars)',
         borderWidth: 2,
-        data: [@ViewBag.salesPerTimeUnit]
+        data: [@Model.SalesPerTimeUnit]
       }]
     };
 
     var ordersData = {
-      labels: @Html.Raw(ViewBag.timeUnits),
+      labels: @Html.Raw(Model.TimeUnits),
       datasets: [{
         label: 'Orders',
         borderWidth: 2,
-        data: [@ViewBag.ordersPerTimeUnit]
+        data: [@Model.OrdersPerTimeUnit]
       }]
     };
 
     var productFrequencyData = {
-      labels: @Html.Raw(ViewBag.productNames),
+      labels: @Html.Raw(Model.ProductNames),
       datasets: [{
         label: 'Product Frequency',
         borderWidth: 2,
-        data: [@ViewBag.productOrderFrequencies]
+        data: [@Model.ProductOrderFrequencies]
       }]
     };
 
@@ -78,7 +78,7 @@
 }
 
 <div class="header-container">
-  <h3 id="dashboard-header">@(ViewBag.timeFrame) Sales and Order Overview</h3>
+  <h3 id="dashboard-header">@(Model.TimeFrame) Sales and Order Overview</h3>
 
   <form asp-action="Index" id="time-unit">
     <select name="timeUnit" onchange="this.form.submit();">
@@ -97,8 +97,8 @@
 
     <div id="sales-data" class="data-container">
       <div id="unit-sales" class="unit-data bg-light">
-        <h5 class="font-weight-bold">Total Sales: @ViewBag.timeFrameSales</h5>
-        <h6>Average sales: @ViewBag.averageTimeFrameSales</h6>
+        <h5 class="font-weight-bold">Total Sales: @(Model.TimeFrameSales)</h5>
+        <h6>Average sales: @(Model.AverageTimeFrameSales)</h6>
       </div>
       <div id="sales-by-unit" class="unit-chart" style="text-align: center">
         <canvas id="sales-chart"></canvas>
@@ -107,8 +107,8 @@
 
     <div id="order-data" class="data-container">
       <div id="unit-orders" class="unit-data bg-light">
-        <h5 class="font-weight-bold">Total Orders: @ViewBag.timeFrameOrders</h5>
-        <h6>Average orders: @ViewBag.averageTimeFrameOrders</h6>
+        <h5 class="font-weight-bold">Total Orders: @(Model.TimeFrameOrders)</h5>
+        <h6>Average orders: @(Model.AverageTimeFrameOrders)</h6>
       </div>
       <div id="orders-by-unit" class="unit-chart" style="text-align: center">
         <canvas id="orders-chart"></canvas>
