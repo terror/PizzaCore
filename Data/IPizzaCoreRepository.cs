@@ -30,6 +30,8 @@ namespace PizzaCore.Data {
     void SaveOrder(OrderModel order, IEnumerable<CartItem> items = null);
     IEnumerable<Product> GetFeaturedProducts();
     void ResetCart(ISession session);
+    UserData GetUserDataById(int id);
+    UserData GetUserDataByIdentityUserId(string currentUserId);
     bool SaveAll();
   }
 }

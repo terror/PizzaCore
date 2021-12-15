@@ -212,6 +212,14 @@ namespace PizzaCore.Data {
       }
     }
 
+    public UserData GetUserDataById(int id) {
+      return context.UserDatas.SingleOrDefault(p => p.UserDataId == id);
+    }
+
+    public UserData GetUserDataByIdentityUserId(string currentUserId) {
+      return context.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId);
+    }
+
     public bool SaveAll() {
       return context.SaveChanges() > 0;
     }

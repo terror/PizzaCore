@@ -8,7 +8,7 @@ using PizzaCore.Data;
 using System;
 
 namespace PizzaCore.Data.Migrations {
-  [DbContext(typeof(ApplicationDbContext))]
+  [DbContext(typeof(UserIdentityContext))]
   [Migration("00000000000000_CreateIdentitySchema")]
   partial class CreateIdentitySchema {
     protected override void BuildTargetModel(ModelBuilder modelBuilder) {
