@@ -207,6 +207,17 @@ namespace PizzaCore.Data {
       return context.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId);
     }
 
+    public void DeleteUserDataByIdentityUserId(string id) {
+      try {
+        logger.LogInformation("[PizzaCoreRepository::DeleteUserDataByIdentityUserId] Removing UserData...");
+        var data = context.UserDatas.FirstOrDefault(p => p.IdentityUserId == id);
+        context.UserDatas.Remove(data);
+        SaveAll();
+      } catch (Exception ex) {
+        logger.LogError($"Failed to remove user data: {ex.Message}");
+      }
+    }
+
     public bool SaveAll() {
       return context.SaveChanges() > 0;
     }

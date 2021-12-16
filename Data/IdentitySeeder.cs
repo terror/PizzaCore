@@ -47,7 +47,7 @@ namespace PizzaCore.Data {
 
     private async Task CreateUser(string email, string password, string role) {
       var user = new IdentityUser { UserName = email, Email = email };
-      if (await userManager.FindByEmailAsync(email) == null) {
+      if ((await userManager.FindByEmailAsync(email)) == null) {
         var createdUser = await userManager.CreateAsync(user, password);
         if (createdUser.Succeeded)
           await userManager.AddToRoleAsync(user, role);
