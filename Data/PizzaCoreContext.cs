@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PizzaCore.Data.Entities;
 using PizzaCore.Models;
@@ -21,7 +21,5 @@ namespace PizzaCore.Data {
         LogLevel.Information
       );
     }
-
-    public DbSet<PizzaCore.Models.ShowProfileModel> ShowProfileModel { get; set; }
   }
 }
