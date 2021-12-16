@@ -194,6 +194,7 @@ namespace PizzaCore.Data {
       try {
         logger.LogInformation("[PizzaCoreRepository::SaveOrder] Saving order...");
 
+        // If items is not null, add each cart item as an order item in the order
         if (items != null) {
           foreach (CartItem item in items) {
             order.Items.Add(new OrderItem() {
@@ -232,12 +233,13 @@ namespace PizzaCore.Data {
       try {
         logger.LogInformation("[PizzaRepository::GetAllOrders] Getting all orders...");
 
+        // Get all orders and order items
         var orders = context.OrderModels.ToList();
-
         var orderItems = context.OrderItems.ToList();
 
+        // Add the order items to their respective order
         foreach (var order in orders) {
-          order.Items = orderItems.Where(oi => oi.Order.Id == order.Id).ToList();
+          order.Items = orderItems.Where(i => i.Order.Id == order.Id).ToList();
         }
 
         return orders;
@@ -296,8 +298,10 @@ namespace PizzaCore.Data {
       Dictionary<string, int> productOrderFrequency = new Dictionary<string, int>();
       string key;
 
+      // Get the order frequency for each product
       foreach (var order in itemsbyOrder) {
         foreach (var item in order) {
+          // Get the key by finding the name of the product whose ID matches the order items product ID
           key = GetAllProducts().Where(p => p.Id == item.ProductId).Select(p => p.Name).ToList()[0];
 
           // If the dictionary already contains the product, increment its value, otherwise add it to the dictionary
@@ -339,6 +343,7 @@ namespace PizzaCore.Data {
       try {
         logger.LogInformation("[PizzaRepository::GetLastWeekOrders] Getting orders from the last week...");
 
+        // Get calendar info
         CultureInfo cultureInfo = new CultureInfo("en-US");
         CalendarWeekRule rule = cultureInfo.DateTimeFormat.CalendarWeekRule;
         DayOfWeek firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
