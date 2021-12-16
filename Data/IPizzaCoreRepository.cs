@@ -9,6 +9,8 @@ namespace PizzaCore.Data {
   public interface IPizzaCoreRepository {
     IEnumerable<Product> GetAllProducts();
     IEnumerable<ProductByCategory> GetProductsGroupedByCategory();
+    void UpdateOrderStatus(int orderId, Status status);
+    void DeleteOrder(int orderId);
     IEnumerable<OrderModel> GetAllOrders();
     IEnumerable<OrderModel> GetTodayOrders();
     IEnumerable<OrderModel> GetYesterdaysOrders();

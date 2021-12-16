@@ -478,5 +478,45 @@ namespace PizzaCore.Data {
         return 0;
       }
     }
+
+    public void UpdateOrderStatus(int orderId, Status status) {
+      try {
+        logger.LogInformation("[PizzaRepository::UpdateOrderStatus] Updating order status...");
+
+        // Get the order with the provided order ID and update its status to the provided status
+        var order = GetAllOrders().Where(o => o.Id == orderId).ToList()[0];
+        order.Status = status;
+
+        // Update the order and save
+        context.Update(order);
+        SaveAll();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to update order status: {ex.Message}");
+      }
+    }
+
+    public void DeleteOrder(int orderId) {
+      try {
+        logger.LogInformation("[PizzaRepository::DeleteOrder] Deleting order...");
+
+        // Get the order with the provided order ID and all of its order items
+        var order = GetAllOrders().Where(o => o.Id == orderId).ToList()[0];
+        var orderItems = context.OrderItems.Where(i => i.Order.Id == orderId).ToList();
+
+        // Remove the order 
+        context.Remove(order);
+
+        // Remove each of the order items included in the order
+        foreach (var orderItem in orderItems) {
+          context.Remove(orderItem);
+        }
+
+        SaveAll();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to delete order: {ex.Message}");
+      }
+    }
   }
 }
