@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace PizzaCore.Data {
-  public class ApplicationDbContext : IdentityDbContext {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+  public class UserIdentityContext : IdentityDbContext {
+    public UserIdentityContext(DbContextOptions<UserIdentityContext> options)
         : base(options) {
     }
   }

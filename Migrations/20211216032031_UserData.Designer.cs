@@ -9,8 +9,8 @@ using PizzaCore.Data;
 
 namespace PizzaCore.Migrations {
   [DbContext(typeof(PizzaCoreContext))]
-  [Migration("20211208031431_Order-Cost")]
-  partial class OrderCost {
+  [Migration("20211216032031_UserData")]
+  partial class UserData {
     protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
       modelBuilder
@@ -64,6 +64,35 @@ namespace PizzaCore.Migrations {
         b.HasIndex("ProductId");
 
         b.ToTable("ProductSizes");
+      });
+
+      modelBuilder.Entity("PizzaCore.Data.Entities.UserData", b => {
+        b.Property<int>("UserDataId")
+            .ValueGeneratedOnAdd()
+            .HasColumnType("int")
+            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+        b.Property<string>("Address")
+            .HasColumnType("nvarchar(max)");
+
+        b.Property<string>("City")
+            .HasColumnType("nvarchar(max)");
+
+        b.Property<string>("FirstName")
+            .HasColumnType("nvarchar(max)");
+
+        b.Property<string>("IdentityUserId")
+            .HasColumnType("nvarchar(max)");
+
+        b.Property<string>("LastName")
+            .HasColumnType("nvarchar(max)");
+
+        b.Property<string>("PostalCode")
+            .HasColumnType("nvarchar(max)");
+
+        b.HasKey("UserDataId");
+
+        b.ToTable("UserDatas");
       });
 
       modelBuilder.Entity("PizzaCore.Models.CareersModel", b => {
@@ -193,7 +222,12 @@ namespace PizzaCore.Migrations {
         b.Property<double>("Taxes")
             .HasColumnType("float");
 
+        b.Property<int?>("UserDataId")
+            .HasColumnType("int");
+
         b.HasKey("Id");
+
+        b.HasIndex("UserDataId");
 
         b.ToTable("OrderModels");
       });
@@ -208,8 +242,18 @@ namespace PizzaCore.Migrations {
         b.Navigation("Product");
       });
 
+      modelBuilder.Entity("PizzaCore.Models.OrderModel", b => {
+        b.HasOne("PizzaCore.Data.Entities.UserData", null)
+            .WithMany("Orders")
+            .HasForeignKey("UserDataId");
+      });
+
       modelBuilder.Entity("PizzaCore.Data.Entities.Product", b => {
         b.Navigation("ProductSizes");
+      });
+
+      modelBuilder.Entity("PizzaCore.Data.Entities.UserData", b => {
+        b.Navigation("Orders");
       });
 #pragma warning restore 612, 618
     }

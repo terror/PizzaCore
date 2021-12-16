@@ -10,7 +10,9 @@ namespace PizzaCore.Data {
     public DbSet<ContactModel> ContactModels { get; set; }
     public DbSet<ProductSize> ProductSizes { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<OrderModel> OrderModels { get; set; }
+    public DbSet<UserData> UserDatas { get; set; }
 
     public PizzaCoreContext(DbContextOptions<PizzaCoreContext> options) : base(options) { }
 

@@ -1,4 +1,6 @@
+using PizzaCore.Data.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -55,6 +57,8 @@ namespace PizzaCore.Models {
     public double ShippingCost { get; set; }
 
     public double Taxes { get; set; }
+
+    public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
     public OrderModel setDate(DateTime date) {
       Date = date;

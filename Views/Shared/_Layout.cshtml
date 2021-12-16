@@ -36,51 +36,60 @@
             <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
+            </li>
+            @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
+            {
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+              </li>
+            }
           </ul>
-          <partial name="_LoginPartial" />
+            <partial name="_LoginPartial" />
+          </div>
         </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <main role="main" class="pb-3">
+        @RenderBody()
+      </main>
+      <div class="spacer"></div>
+    </div>
+
+    <div id="checkout-warning">
+      <div id="checkout-warning-options">
+        <h2 class="text-light">You are currently not signed in!</h2>
+        <h3 class="text-light">What would you like to do?</h3>
+        <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
+        <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
       </div>
-    </nav>
-  </header>
-
-  <div class="container">
-    <main role="main" class="pb-3">
-      @RenderBody()
-    </main>
-    <div class="spacer"></div>
-  </div>
-
-  <div id="checkout-warning">
-    <div id="checkout-warning-options">
-      <h2 class="text-light">You are currently not signed in!</h2>
-      <h3 class="text-light">What would you like to do?</h3>
-      <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
-      <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
     </div>
-  </div>
 
-  <footer class="border-top footer text-muted">
-    <section>
-      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
-      <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
-      <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
-      <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Covid">COVID-19</a>
-    </section>
-    <section>
-      <a href="https://www.facebook.com/pizzahutcanada/" target="_blank" class="icon"><i class="fa fa-facebook"></i></a>
-      <a href="https://play.google.com/store/apps/details?id=com.pizzahut.canada" target="_blank" class="icon"><i class="fa fa-google"></i></a>
-      <a href="https://www.instagram.com/pizza__core/" target="_blank" class="icon"><i class="fa fa-instagram"></i></a>
-      <a href="https://www.youtube.com/user/pizzahut" target="_blank" class="icon"><i class="fa fa-youtube"></i></a>
-    </section>
-    <div class="copyright">
-      <p>Copyright © Abstract Connoisseurs 2021</p>
-    </div>
-  </footer>
+    <footer class="border-top footer text-muted">
+      <section>
+        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Covid">COVID-19</a>
+      </section>
+      <section>
+        <a href="https://www.facebook.com/pizzahutcanada/" target="_blank" class="icon"><i class="fa fa-facebook"></i></a>
+        <a href="https://play.google.com/store/apps/details?id=com.pizzahut.canada" target="_blank" class="icon"><i class="fa fa-google"></i></a>
+        <a href="https://www.instagram.com/pizza__core/" target="_blank" class="icon"><i class="fa fa-instagram"></i></a>
+        <a href="https://www.youtube.com/user/pizzahut" target="_blank" class="icon"><i class="fa fa-youtube"></i></a>
+      </section>
+      <div class="copyright">
+        <p>Copyright © Abstract Connoisseurs 2021</p>
+      </div>
+    </footer>
 
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script>
-  @await RenderSectionAsync("Scripts", required: false)
-</body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+  </body>
 </html>
