@@ -77,11 +77,15 @@
   </script>
 }
 
+@{
+  ViewData["Title"] = "Dashboard";
+}
+
 <div class="header-container">
   <h3 id="dashboard-header">@(Model.TimeFrame) Sales and Order Overview</h3>
 
-  <form asp-action="Index" id="time-unit">
-    <select name="timeUnit" onchange="this.form.submit();">
+  <form asp-action="Index" id="time-frame">
+    <select name="timeFrame" onchange="this.form.submit();">
       <option disabled selected>Choose time frame</option>
       <option value="daily">Daily</option>
       <option value="weekly">Weekly</option>

@@ -22,18 +22,18 @@ namespace PizzaCore.Controllers {
     }
 
     [HttpPost]
-    public ActionResult Index(string timeUnit) {
-      return View(GetChartData(timeUnit));
+    public ActionResult Index(string timeFrame) {
+      return View(GetChartData(timeFrame));
     }
 
-    private DashboardModel GetChartData(string timeUnit = "daily") {
+    private DashboardModel GetChartData(string timeFrame = "daily") {
       // Set the time unit to empty if no orders have been made
       if (repository.GetAllOrders() == null) {
-        timeUnit = string.Empty;
+        timeFrame = string.Empty;
       }
 
       // Return the appropriate chart data based on the specified time unit
-      switch (timeUnit) {
+      switch (timeFrame) {
         case "daily":
           return GetDailyChartData();
         case "weekly":
