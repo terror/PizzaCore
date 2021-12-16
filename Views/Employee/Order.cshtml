@@ -1,0 +1,165 @@
+@model OrderModel
+
+@section Styles{
+  <link rel="stylesheet" href="~/css/menu.css" /> 
+  <link rel="stylesheet" href="~/css/checkout.css" />
+}
+
+@{
+  ViewData["Title"] = "Order";
+  const int DECIMAL_NUM = OrderModel.DECIMAL_NUM;
+}
+
+<div id="checkout-container">
+
+  <section id="general-info">
+
+    <form asp-action="Index" id="order-info-form">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <select asp-for="Method" class="form-control" hidden>
+          <option disabled selected>Select delivery method</option>
+          @if ((bool)ViewData["isDelivery"] == true)
+          {
+    <option value="Pickup">Pickup</option>
+    <option value="Delivery" selected>Delivery</option> }
+          else
+          {
+    <option value="Pickup" selected>Pickup</option>
+    <option value="Delivery">Delivery</option>}
+
+        </select>
+        <span asp-validation-for="Method" class="text-danger"></span>
+      </div>
+
+      @if ((bool)ViewData["isDelivery"])
+      {
+    <div class="form-group">
+      <label asp-for="Address" class="control-label"></label>
+      <input asp-for="Address" class="form-control order-location" />
+      <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="City" class="control-label"></label>
+      <input asp-for="City" class="form-control order-location" />
+      <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+      <label asp-for="PostalCode" class="control-label"></label>
+      <input asp-for="PostalCode" class="form-control order-location" />
+      <span asp-validation-for="PostalCode" class="text-danger"></span>
+    </div>      }
+
+      <button class="btn btn-primary text-light" type="submit" form="order-info-form" disabled="@(ViewBag.cart == null || ViewBag.cart.Count == 0)">PLACE ORDER</button>
+
+    </form>
+
+
+
+
+  </section>
+
+  <!--Cart as a side panel-->
+  <section class="the-cart">
+    <h2>Your Cart</h2>
+    @{ int numOfItems = 0;}
+    <div id="cart-item-container">
+      @if (ViewBag.cart != null)
+      {
+        foreach (var item in ViewBag.cart)
+        {
+          numOfItems += item.Quantity;
+          <div class="cart-item">
+
+            <section class="item-cart-image">
+              <img src="~/images/products/@(item.ProductSize.Product.ImageId).jpg" />
+            </section>
+
+            <section class="cart-item-info">
+
+              <div class="size-remove-container">
+                <span>@(item.ProductSize.Size)</span>
+
+                @using (Html.BeginForm("DeleteCart", "Menu", FormMethod.Post))
+                {
+                  <input type="hidden" name="method" value="DELETE">
+                  <button name="productSizeId" value="@item.ProductSize.Id">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                }
+              </div>
+
+              <div class="cart-item-title-price">
+                <span>@(item.ProductSize.Product.Name)</span>
+                @{double roundedPrice = Math.Round(item.ProductSize.Price * item.Quantity, DECIMAL_NUM);}
+                <strong>@(roundedPrice.ToString("C2"))</strong>
+              </div>
+
+              <div class="cart-item-quantity-remove">
+                <div class="item-quantity-container">
+                  @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, new { Quantity = 0, ProductSizeId = 0 }))
+                  {
+                    <input type="hidden" name="Quantity" value="@(item.Quantity-1)" />
+                    <input type="hidden" name="ProductSizeId" value="@(item.ProductSize.Id)" />
+                    <button disabled="@(item.Quantity <= 1)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                  }
+                  <i>@(item.Quantity)</i>
+                  @using (Html.BeginForm("EditCart", "Menu", FormMethod.Post, new { Quantity = 0, ProductSizeId = 0 }))
+                  {
+                    <input type="hidden" name="Quantity" value="@(item.Quantity+1)" />
+                    <input type="hidden" name="ProductSizeId" value="@(item.ProductSize.Id)" />
+                    <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></button>
+                  }
+                </div>
+              </div>
+
+            </section>
+
+          </div>
+        }
+      }
+    </div>
+    @{
+      const double TAX_RATE = OrderModel.GST_TAX_RATE + OrderModel.QST_TAX_RATE;
+
+      double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
+      double taxAmount = Math.Round(subTotal * TAX_RATE, DECIMAL_NUM);
+      double finalPrice = Math.Round(subTotal + taxAmount, DECIMAL_NUM);
+    }
+    <div class="cart-price-breakdown">
+      <div class="sub-total">
+        <label>Sub Total:</label>
+        <strong>@(subTotal.ToString("C2"))</strong>
+      </div>
+      <div class="tax-info">
+        <label>Taxes:</label>
+        <span>@(taxAmount.ToString("C2"))</span>
+      </div>
+      <div class="total-price">
+        <label>Total:</label>
+        <strong>@(finalPrice.ToString("C2"))</strong>
+      </div>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

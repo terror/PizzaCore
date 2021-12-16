@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,21 +28,30 @@
         </p>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact&nbsp;Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
-            </li>
+            @if (User.IsInRole("Service"))
+            {
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
+              </li> }
+                    else
+                    {
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Contact" asp-action="Index">Contact&nbsp;Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
+              </li>}
+
             <li class="nav-item">
               <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
             </li>
+
           </ul>
           <partial name="_LoginPartial" />
         </div>
@@ -53,12 +66,21 @@
     <div class="spacer"></div>
   </div>
 
-  <div id="checkout-warning">
-    <div id="checkout-warning-options">
+  <div id="checkout-warning" class="warning-box">
+    <div id="checkout-warning-options" class="warning-box-option-container">
       <h2 class="text-light">You are currently not signed in!</h2>
       <h3 class="text-light">What would you like to do?</h3>
       <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
       <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
+    </div>
+  </div>
+
+  <div id="employee-checkout-type-box" class="warning-box">
+    <div id="checkout-type-options" class="warning-box-option-container">
+      <h3 class="text-light">Choose checkout type</h3>
+      <a class="checkout-warning-option sleek-button" href="/employee/order/pickup">Pick-Up</a>
+      <a class="checkout-warning-option sleek-button" href="/employee/order/delivery">Delivery</a>
+      <button class="checkout-warning-option sleek-button" onclick="onEmployeeCheckoutCancel()">Go Back</button>
     </div>
   </div>
 
