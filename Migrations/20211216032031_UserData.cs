@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PizzaCore.Migrations {
   public partial class UserData : Migration {
     protected override void Up(MigrationBuilder migrationBuilder) {
-      migrationBuilder.DropTable(
-          name: "UserDatas");
-
       migrationBuilder.CreateTable(
           name: "UserDatas",
           columns: table => new {

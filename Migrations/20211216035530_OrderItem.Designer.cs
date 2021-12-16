@@ -10,7 +10,7 @@ using PizzaCore.Data;
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-    [Migration("20211215223939_OrderItem")]
+    [Migration("20211216035530_OrderItem")]
     partial class OrderItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
