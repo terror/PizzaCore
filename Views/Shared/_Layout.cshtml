@@ -32,9 +32,10 @@
             {
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
-              </li> }
-                    else
-                    {
+              </li>
+ }
+            else
+            {
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
               </li>
@@ -46,7 +47,8 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Careers" asp-action="Index">Careers</a>
-              </li>}
+              </li>
+}
 
             <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
@@ -83,6 +85,15 @@
       <button class="checkout-warning-option sleek-button" onclick="onEmployeeCheckoutCancel()">Go Back</button>
     </div>
   </div>
+
+ @* <div id="employee-payment-decision" class="warning-box">
+    <div id="payment-decision-options" class="warning-box-option-container">
+      <h3 class="text-light">Choose checkout type</h3>
+      <a class="checkout-warning-option sleek-button" href="/employee/order/pickup">Pay Now</a>
+      <a class="checkout-warning-option sleek-button" href="/employee/order/delivery">Pay Later</a>
+      <button class="checkout-warning-option sleek-button" onclick="onEmployeeCheckoutCancel()">Go Back</button>
+    </div>
+  </div>*@
 
   <footer class="border-top footer text-muted">
     <section>

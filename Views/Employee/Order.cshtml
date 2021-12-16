@@ -7,15 +7,27 @@
 }
 
 @{
-  ViewData["Title"] = "Order";
-  const int DECIMAL_NUM = OrderModel.DECIMAL_NUM;
+    ViewData["Title"] = "Order";
+    const int DECIMAL_NUM = OrderModel.DECIMAL_NUM;
+    bool isDelivery = (bool)ViewData["isDelivery"];
+    bool? askPayment = ViewData["askPayment"] as bool?;
 }
 
 <div id="checkout-container">
 
   <section id="general-info">
+    @*<div class="col-md-10 offset-md-2">
+      <h3 class="text-danger"> Errors!</h3>
+      <div asp-validation-summary="All"></div>
+      <hr />
+    </div>*@
 
-    <form asp-action="Index" id="order-info-form">
+    @if(isDelivery && askPayment == true)
+    {
+
+    }
+
+    <form asp-action="@(isDelivery ? "Delivery" : "PickUp")" id="order-info-form" method="post">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
         <label asp-for="FirstName" class="control-label"></label>
@@ -29,7 +41,7 @@
       </div>
       <div class="form-group">
         <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" value="@Context.User.Identity.Name" />
+        <input asp-for="Email" class="form-control"/>
         <span asp-validation-for="Email" class="text-danger"></span>
       </div>
 
