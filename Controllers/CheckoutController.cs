@@ -45,7 +45,13 @@ namespace PizzaCore.Controllers {
           Message = $"Invalid order location. Valid postal code prefixes include: {string.Join(", ", postalCodes.ToArray())}" }
         );
 
+      // Grab the cart
       IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
+
+      // Set the order status to ordered
+      order.Status = Status.Ordered;
+
+      // Save the order
       repository.SaveOrder(order.setDate(DateTime.Now), cart);
 
       // Send confirmation email to customer

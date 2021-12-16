@@ -1,0 +1,83 @@
+@model IEnumerable<OrderModel>
+@section Styles{
+  <link rel="stylesheet" href="~/css/manage-order.css" /> }
+
+@{
+  ViewData["Title"] = "Manage Orders";
+}
+
+<div class="header-container">
+  <h3>Manage Orders</h3>
+
+  <form asp-action="Index" id="time-frame">
+    <select name="timeFrame" onchange="this.form.submit();">
+      <option disabled selected>Choose time frame</option>
+      <option value="today">Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="week">Last Week</option>
+      <option value="month">Last Month</option>
+      <option value="year">Last Year</option>
+    </select>
+  </form>
+</div>
+
+<div class="order-manager-container">
+  <h5 id="orders-table-header">
+    @if (ViewBag.timeFrame != "Today" && ViewBag.timeFrame != "Yesterday")
+    {
+      @:Last
+    }
+    @(ViewBag.timeFrame)'s Orders
+  </h5>
+  @if (Model == null || Model.Count() == 0)
+  {
+    <p>No orders have been placed in the selected time frame.</p>
+  }
+  else
+  {
+    <table id="orders-table">
+      <tr>
+        <th>Order</th>
+         <th>Customer</th>
+         <th>Email</th>
+         <th>Total</th>
+         <th>Status</th>
+         <th></th>
+      </tr>
+      @foreach (var order in Model)
+      {
+        <tr>
+          <td>@(order.Id)</td>
+          <td>@(order.FirstName) @(order.LastName)</td>
+          <td>@(order.Email)</td>
+          <td>@(order.GetTotal().ToString("C2"))</td>
+          <td>
+            @using (Html.BeginForm("UpdateStatus", "ManageOrder", FormMethod.Post, new { orderId = 0, status = "", timeFrame = "" }))
+            {
+              <input type="hidden" name="orderId" value="@(order.Id)"/>
+              <input type="hidden" name="timeFrame" value="@ViewBag.timeFrame"/>
+              <select name="status" onchange="this.form.submit()">
+                <option value="@(order.Status)">@(order.Status.ToString() == Status.InTransit.ToString() ? "Out for delivery" : order.Status.ToString())</option>
+                @foreach (var status in Enum.GetNames(typeof(Status)).ToList())
+                {
+                  @if (status != @order.Status.ToString())
+                  {
+                    <option value="@status">@(status == Status.InTransit.ToString() ? "Out for delivery" : status)</option>
+                  }
+                }
+              </select>
+            }
+          </td>
+          <td id="cancel-cell">
+            @using (Html.BeginForm("CancelOrder", "ManageOrder", FormMethod.Post, new { orderId = 0, status = "", timeFrame = "" }))
+            {
+              <input type="hidden" name="orderId" value="@(order.Id)"/>
+              <input type="hidden" name="timeFrame" value="@ViewBag.timeFrame"/>
+              <button class="btn btn-secondary">Cancel Order</button>
+            }
+          </td>
+        </tr>
+      }
+    </table>
+  }
+</div>
