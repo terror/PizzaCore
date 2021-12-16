@@ -379,5 +379,93 @@ namespace PizzaCore.Data {
         return null;
       }
     }
+
+    public double GetTotalDailySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalDailySales] Getting total daily sales...");
+        return GetTodayOrders().Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total daily sales: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public double GetTotalWeeklySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalWeeklySales] Getting total weekly sales...");
+        return GetLastWeekOrders().Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total daily sales: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public double GetTotalMonthlySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalMonthlySales] Getting total monthly sales...");
+        return GetLastMonthOrders().Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total monthly sales: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public double GetTotalYearlySales() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalYearlySales] Getting total yearly sales...");
+        return GetLastYearOrders().Select(o => o.SubTotal).Sum();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total monthly sales: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public int GetTotalDailyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalDailyOrder] Getting total daily orders...");
+        return GetTodayOrders().Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total daily orders: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public int GetTotalWeeklyOrder() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalWeeklyOrder] Getting total weekly orders...");
+        return GetLastWeekOrders().Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total weekly orders: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public int GetTotalMonthlyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalMonthlyOrder] Getting total monthly orders...");
+        return GetLastMonthOrders().Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total monthly orders: {ex.Message}");
+        return 0;
+      }
+    }
+
+    public int GetTotalYearlyOrders() {
+      try {
+        logger.LogInformation("[PizzaRepository::GetTotalYearlyOrder] Getting total yearly orders...");
+        return GetLastYearOrders().Count();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to get total yearly orders: {ex.Message}");
+        return 0;
+      }
+    }
   }
 }

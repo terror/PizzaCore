@@ -67,10 +67,10 @@ namespace PizzaCore.Controllers {
         TimeUnits = JsonSerializer.Serialize(ordersByDate.Select(o => o.Key.ToString("MM-dd")).ToList()),
         ProductNames = JsonSerializer.Serialize(productOrderFrequency.Select(p => p.Key)),
         ProductOrderFrequencies = string.Join(",", productOrderFrequency.Select(p => p.Value)),
-        TimeFrameSales = repository.GetTodayOrders().Select(o => o.SubTotal).Sum().ToString("C2"),
+        TimeFrameSales = repository.GetTotalDailySales().ToString("C2"),
         AverageTimeFrameSales = (dailySales.Sum() / dailySales.Count).ToString("C2"),
         SalesPerTimeUnit = string.Join(",", dailySales),
-        TimeFrameOrders = repository.GetTodayOrders().Count().ToString(),
+        TimeFrameOrders = repository.GetTotalDailyOrders().ToString(),
         AverageTimeFrameOrders = Math.Round(Convert.ToDouble(dailyOrders.Sum()) / dailyOrders.Count, 2).ToString(),
         OrdersPerTimeUnit = string.Join(",", dailyOrders)
       };
@@ -100,10 +100,10 @@ namespace PizzaCore.Controllers {
         TimeUnits = JsonSerializer.Serialize(ordersByWeek.Select(o => $"Week {o.Key}").ToList()),
         ProductNames = JsonSerializer.Serialize(productOrderFrequency.Select(p => p.Key)),
         ProductOrderFrequencies = string.Join(",", productOrderFrequency.Select(p => p.Value)),
-        TimeFrameSales = repository.GetLastWeekOrders().Select(o => o.SubTotal).Sum().ToString("C2"),
+        TimeFrameSales = repository.GetTotalWeeklySales().ToString("C2"),
         AverageTimeFrameSales = (weeklySales.Sum() / weeklySales.Count).ToString("C2"),
         SalesPerTimeUnit = string.Join(",", weeklySales),
-        TimeFrameOrders = repository.GetLastWeekOrders().Count().ToString(),
+        TimeFrameOrders = repository.GetTotalWeeklyOrder().ToString(),
         AverageTimeFrameOrders = Math.Round(Convert.ToDouble(weeklyOrders.Sum()) / weeklyOrders.Count, 2).ToString(),
         OrdersPerTimeUnit = string.Join(",", weeklyOrders)
       };
@@ -129,10 +129,10 @@ namespace PizzaCore.Controllers {
         TimeUnits = JsonSerializer.Serialize(ordersByMonth.Select(o => o.Key).ToList()),
         ProductNames = JsonSerializer.Serialize(productOrderFrequency.Select(p => p.Key)),
         ProductOrderFrequencies = string.Join(",", productOrderFrequency.Select(p => p.Value)),
-        TimeFrameSales = repository.GetLastMonthOrders().Select(o => o.SubTotal).Sum().ToString("C2"),
+        TimeFrameSales = repository.GetTotalMonthlySales().ToString("C2"),
         AverageTimeFrameSales = (monthlySales.Sum() / monthlySales.Count).ToString("C2"),
         SalesPerTimeUnit = string.Join(",", monthlySales),
-        TimeFrameOrders = repository.GetLastMonthOrders().Count().ToString(),
+        TimeFrameOrders = repository.GetTotalMonthlyOrders().ToString(),
         AverageTimeFrameOrders = Math.Round(Convert.ToDouble(monthlyOrders.Sum()) / monthlyOrders.Count, 2).ToString(),
         OrdersPerTimeUnit = string.Join(",", monthlyOrders)
       };
@@ -158,10 +158,10 @@ namespace PizzaCore.Controllers {
         TimeUnits = JsonSerializer.Serialize(ordersByYear.Select(o => o.Key).ToList()),
         ProductNames = JsonSerializer.Serialize(productOrderFrequency.Select(p => p.Key)),
         ProductOrderFrequencies = string.Join(",", productOrderFrequency.Select(p => p.Value)),
-        TimeFrameSales = repository.GetLastYearOrders().Select(o => o.SubTotal).Sum().ToString("C2"),
+        TimeFrameSales = repository.GetTotalYearlySales().ToString("C2"),
         AverageTimeFrameSales = (yearlySales.Sum() / yearlySales.Count).ToString("C2"),
         SalesPerTimeUnit = string.Join(",", yearlySales),
-        TimeFrameOrders = repository.GetLastYearOrders().Count().ToString(),
+        TimeFrameOrders = repository.GetTotalYearlyOrders().ToString(),
         AverageTimeFrameOrders = Math.Round(Convert.ToDouble(yearlyOrders.Sum()) / yearlyOrders.Count, 2).ToString(),
         OrdersPerTimeUnit = string.Join(",", yearlyOrders)
       };

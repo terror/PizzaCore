@@ -16,6 +16,7 @@ namespace PizzaCore.Controllers {
 
     // GET: /
     public IActionResult Index() {
+      repository.GetTodayOrders();
       var products = repository.GetFeaturedProducts();
       return View(products);
     }
