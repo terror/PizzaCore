@@ -73,7 +73,7 @@
             {
               <input type="hidden" name="orderId" value="@(order.Id)"/>
               <input type="hidden" name="timeFrame" value="@ViewBag.timeFrame"/>
-              <button class="btn btn-secondary">Cancel Order</button>
+              <button class="btn btn-secondary" disabled="@(order.Status == Status.Complete)">Cancel Order</button>
             }
           </td>
         </tr>
