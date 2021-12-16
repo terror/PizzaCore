@@ -38,18 +38,22 @@
     <table id="orders-table">
       <tr>
         <th>Order</th>
-         <th>Customer</th>
-         <th>Email</th>
-         <th>Total</th>
-         <th>Status</th>
-         <th></th>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Email</th>
+        <th>Method</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th></th>
       </tr>
       @foreach (var order in Model)
       {
         <tr>
           <td>@(order.Id)</td>
+          <td>@(order.Date.ToString("MM-dd-yy hh:mm tt"))</td>
           <td>@(order.FirstName) @(order.LastName)</td>
           <td>@(order.Email)</td>
+          <td>@(order.Method)</td>
           <td>@(order.GetTotal().ToString("C2"))</td>
           <td>
             @using (Html.BeginForm("UpdateStatus", "ManageOrder", FormMethod.Post, new { orderId = 0, status = "", timeFrame = "" }))
