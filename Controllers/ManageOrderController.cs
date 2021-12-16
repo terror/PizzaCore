@@ -21,6 +21,9 @@ namespace PizzaCore.Controllers {
 
     [HttpPost]
     public ActionResult Index(string timeFrame) {
+      // Set the time frame so that the approprite orders are included in the view
+      ManageOrderController.timeFrame = timeFrame.ToLower();
+
       return View(GetTimeFrameOrders());
     }
 
