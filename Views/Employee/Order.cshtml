@@ -3,6 +3,7 @@
 @section Styles{
   <link rel="stylesheet" href="~/css/menu.css" /> 
   <link rel="stylesheet" href="~/css/checkout.css" />
+  <link rel="stylesheet" href="~/css/employee-checkout.css" />
 }
 
 @{
@@ -36,38 +37,44 @@
       <div class="form-group">
         <select asp-for="Method" class="form-control" hidden>
           <option disabled selected>Select delivery method</option>
-          @if ((bool)ViewData["isDelivery"] == true)
-          {
-    <option value="Pickup">Pickup</option>
-    <option value="Delivery" selected>Delivery</option> }
-          else
-          {
-    <option value="Pickup" selected>Pickup</option>
-    <option value="Delivery">Delivery</option>}
+          @if ((bool)ViewData["isDelivery"] == true) {
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery" selected>Delivery</option>
+          }
+          else {
+            <option value="Pickup" selected>Pickup</option>
+            <option value="Delivery">Delivery</option>
+          }
 
         </select>
         <span asp-validation-for="Method" class="text-danger"></span>
       </div>
 
-      @if ((bool)ViewData["isDelivery"])
-      {
-    <div class="form-group">
-      <label asp-for="Address" class="control-label"></label>
-      <input asp-for="Address" class="form-control order-location" />
-      <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-      <label asp-for="City" class="control-label"></label>
-      <input asp-for="City" class="form-control order-location" />
-      <span asp-validation-for="City" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-      <label asp-for="PostalCode" class="control-label"></label>
-      <input asp-for="PostalCode" class="form-control order-location" />
-      <span asp-validation-for="PostalCode" class="text-danger"></span>
-    </div>      }
+      @if ((bool)ViewData["isDelivery"]) {
+        <div class="form-group">
+          <label asp-for="Phone" class="control-label"></label>
+          <input asp-for="Phone" class="form-control"/>
+          <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="Address" class="control-label"></label>
+          <input asp-for="Address" class="form-control order-location" />
+          <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="City" class="control-label"></label>
+          <input asp-for="City" class="form-control order-location" />
+          <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          <label asp-for="PostalCode" class="control-label"></label>
+          <input asp-for="PostalCode" class="form-control order-location" />
+          <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        
+      }
 
-      <button class="btn btn-primary text-light" type="submit" form="order-info-form" disabled="@(ViewBag.cart == null || ViewBag.cart.Count == 0)">PLACE ORDER</button>
+      <button class="btn btn-secondary text-light" type="submit" form="order-info-form" disabled="@(ViewBag.cart == null || ViewBag.cart.Count == 0)">PLACE ORDER</button>
 
     </form>
 
