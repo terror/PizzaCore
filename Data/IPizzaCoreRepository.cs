@@ -37,6 +37,7 @@ namespace PizzaCore.Data {
     void ResetCart(ISession session);
     UserData GetUserDataById(int id);
     UserData GetUserDataByIdentityUserId(string currentUserId);
+    void DeleteUserDataByIdentityUserId(string id);
     bool SaveAll();
   }
 }

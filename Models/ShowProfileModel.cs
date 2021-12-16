@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PizzaCore.Models {
   public class ShowProfileModel {
+    [Key]
     [HiddenInput(DisplayValue = false)]
     public int UserDataId { get; set; }
 

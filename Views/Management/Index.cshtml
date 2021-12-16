@@ -1,0 +1,59 @@
+@model IEnumerable<IdentityUser>
+@inject UserManager<IdentityUser> UserManager
+
+@{
+  ViewData["Title"] = "Management - All Employees";
+}
+
+<h1>All Employees</h1>
+<p>
+  <a asp-action="Create">Create a New Employee</a>
+</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.Id)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.UserName)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Email)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.EmailConfirmed)
+      </th>
+      <th>
+        Role
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model) {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+          @if (item.EmailConfirmed) {<p>Yes</p> } else { <p>No</p>}
+        </td>
+        <td>
+          @string.Join(",", (await UserManager.GetRolesAsync(item)))
+        </td>
+        <td>
+          <a asp-action="Details" asp-route-id="@item.Id">View</a> |
+          <a asp-action="Edit" asp-route-id="@item.Id">Re-assign</a> |
+          <a asp-action="Delete" asp-route-id="@item.Id">Terminate</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
