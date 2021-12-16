@@ -1,0 +1,129 @@
+@model PizzaCore.Models.DashboardModel
+@section Styles{
+  <link rel="stylesheet" href="~/css/dashboard.css" /> }
+@section Scripts{
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+  <script>
+    var salesData = {
+      labels: @Html.Raw(Model.TimeUnits),
+      datasets: [{
+        label: 'Sales (Dollars)',
+        borderWidth: 2,
+        data: [@Model.SalesPerTimeUnit]
+      }]
+    };
+
+    var ordersData = {
+      labels: @Html.Raw(Model.TimeUnits),
+      datasets: [{
+        label: 'Orders',
+        borderWidth: 2,
+        data: [@Model.OrdersPerTimeUnit]
+      }]
+    };
+
+    var productFrequencyData = {
+      labels: @Html.Raw(Model.ProductNames),
+      datasets: [{
+        label: 'Product Frequency',
+        borderWidth: 2,
+        data: [@Model.ProductOrderFrequencies]
+      }]
+    };
+
+    window.onload = function () {
+      var salesChart = document.getElementById("sales-chart").getContext("2d");
+      window.salesChart = new Chart(salesChart, {
+        type: 'line',
+        data: salesData,
+        options: {
+          title: {
+            display: true,
+            text: "Sales by Unit of Time"
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
+      var ordersChart = document.getElementById("orders-chart").getContext("2d");
+      window.ordersChart = new Chart(ordersChart, {
+        type: 'line',
+        data: ordersData,
+        options: {
+          title: {
+            display: true,
+            text: "Orders by Unit of Time"
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
+      var productFrequencyChart = document.getElementById("product-frequency-chart").getContext("2d");
+      window.productFrequencyChart = new Chart(productFrequencyChart, {
+        type: 'bar',
+        data: productFrequencyData,
+        options: {
+          title: {
+            display: true,
+            text: "Product Order Frequency"
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+  </script>
+}
+
+@{
+  ViewData["Title"] = "Dashboard";
+}
+
+<div class="header-container">
+  <h3 id="dashboard-header">@(Model.TimeFrame) Sales and Order Overview</h3>
+
+  <form asp-action="Index" id="time-frame">
+    <select name="timeFrame" onchange="this.form.submit();">
+      <option disabled selected>Choose time frame</option>
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+  </form>
+</div>
+
+<div id="dashboard-data">
+
+  <div id="sales-order-data">
+
+    <div id="sales-data" class="data-container">
+      <div id="unit-sales" class="unit-data bg-light">
+        <h5 class="font-weight-bold">Total Sales: @(Model.TimeFrameSales)</h5>
+        <h6>Average sales: @(Model.AverageTimeFrameSales)</h6>
+      </div>
+      <div id="sales-by-unit" class="unit-chart" style="text-align: center">
+        <canvas id="sales-chart"></canvas>
+      </div>
+    </div>
+
+    <div id="order-data" class="data-container">
+      <div id="unit-orders" class="unit-data bg-light">
+        <h5 class="font-weight-bold">Total Orders: @(Model.TimeFrameOrders)</h5>
+        <h6>Average orders: @(Model.AverageTimeFrameOrders)</h6>
+      </div>
+      <div id="orders-by-unit" class="unit-chart" style="text-align: center">
+        <canvas id="orders-chart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="product-frequency">
+    <canvas id="product-frequency-chart"></canvas>
+  </div>
+</div>
+
+
