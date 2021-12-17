@@ -41,7 +41,7 @@ namespace PizzaCore.Data {
       }
     }
 
-    private Product GetProduct(int id) {
+    public Product GetProduct(int id) {
         return context.Products.Find(id);
     }
 
@@ -190,7 +190,13 @@ namespace PizzaCore.Data {
       return cart.FindIndex(item => item.ProductSize.Id == productSizeId);
     }
 
-    public void SaveOrder(OrderModel order, IEnumerable<CartItem> items = null) {
+    private IEnumerable<OrderItem> GetOrderItemsByOrderId(int orderId) {
+      IEnumerable<OrderItem> orderItems = context.OrderItems.Where(o => o.Order.Id == orderId);
+
+      return orderItems;
+    }
+
+    public int SaveOrder(OrderModel order, IEnumerable<CartItem> items = null) {
       try {
         logger.LogInformation("[PizzaCoreRepository::SaveOrder] Saving order...");
 
@@ -205,11 +211,30 @@ namespace PizzaCore.Data {
             });
           }
         }
-
+       
         context.Add(order);
         SaveAll();
+
+        return order.Id;
       } catch(Exception ex) {
         logger.LogError($"Failed to save order: {ex.Message}");
+      }
+
+      return -1;
+    }
+
+    public void UpdateOrder(OrderModel order) {
+      try
+      {
+        logger.LogInformation("[PizzaCoreRepository::UpdateOrder] Updating order...");
+
+        context.Update(order);
+        SaveAll();
+
+      }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to update order: {ex.Message}");
       }
     }
 
@@ -257,6 +282,31 @@ namespace PizzaCore.Data {
       }
       catch (Exception ex) {
         logger.LogError($"Failed to get all orders: {ex.Message}");
+        return null;
+      }
+    }
+
+    public OrderModel GetOrderById(int orderId)
+    {
+      try
+      {
+        logger.LogInformation($"[PizzaRepository::GetOrderById] Getting order of id {orderId}");
+
+        // Get order of given id
+        OrderModel order = context.OrderModels.Find(orderId);
+        order.Items = GetOrderItemsByOrderId(order.Id).ToList();
+
+        if(order == null)
+        {
+          throw new ArgumentException($"Order of id {orderId} does not exist", "orderId");
+        }
+
+        return order;
+      }
+      catch (Exception ex)
+      {
+
+        logger.LogError($"Failed to get order: {ex.Message}");
         return null;
       }
     }

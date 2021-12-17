@@ -66,6 +66,9 @@ namespace PizzaCore.Models {
 
     public double Taxes { get; set; }
 
+    [Required]
+    public bool isPaid { get; set; }
+
     public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
     public Status Status { get; set; }

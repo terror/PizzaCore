@@ -1,0 +1,64 @@
+@model IEnumerable<PizzaCore.Models.OrderModel>
+
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<h1>All Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                Service
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+              Payment
+            </th>
+            <th>
+              Action
+            </th>
+            <th>
+              Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(item.FirstName + " " + item.LastName)
+            </td>
+            <td>
+                @(item.Phone == null ? "" : item.Phone)
+            </td>
+            <td>
+                @(item.Method)
+            </td>
+            <td>
+               @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
+            </td>
+            <td>
+                @(item.isPaid ? "PAID" : "NOT PAID")
+            </td>
+          <td>
+            @if (!item.isPaid) {
+              <a  class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
+            }
+          </td>
+          <td>
+            .
+          </td>
+        </tr>
+}
+    </tbody>
+</table>
