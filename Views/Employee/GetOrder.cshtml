@@ -1,0 +1,155 @@
+@model OrderModel
+@using PizzaCore.Data.Entities;
+@section Styles{
+  <link rel="stylesheet" href="~/css/checkout.css" />
+  <link rel="stylesheet" href="~/css/checkout-review-order.css" />
+}
+@{
+    ViewData["Title"] = "Payment";
+    List<Product> products = ViewBag.Products;
+    double[] summary = OrderModel.generateSummary(ViewBag.CartTotal);
+
+    double subTotal = summary[0];
+    double gstTax = summary[1];
+    double qstTax = summary[2];
+    double allTaxes = Math.Round(gstTax + qstTax, OrderModel.DECIMAL_NUM);
+    double finalPrice = summary[3];
+}
+
+<h1> @ViewData["Title"]</h1>
+
+<div id="checkout-container">
+  <section id="general-info">
+
+    <!-- Order Item Display -->
+    <h2>Review Order</h2>
+    <div id="order-container">
+      @{ OrderItem item = null; }
+      @for (int i = 0; i < Model.Items.Count; i++)
+      {
+        { item = Model.Items[i]; }
+        <div class="order-item">
+          <section class="order-item-info">
+            <div>
+              <span>@item.Size</span>
+              <label>@products[i].Name</label>
+            </div>
+          </section>
+
+          <section class="order-item-quantity">
+            <label>Quantity</label>
+            <div>
+              <strong>@(item.Quantity)</strong>
+            </div>
+          </section>
+          @{double roundedPrice = Math.Round(item.Price * item.Quantity, OrderModel.DECIMAL_NUM);}
+          <section class="order-item-subtotal">
+            <label>Item Total</label>
+            <strong>@(roundedPrice.ToString("C2"))</strong>
+          </section>
+        </div>
+      }
+    </div>
+
+    <h2>Payment</h2>
+    <form asp-action="order" id="order-info-form" method="post">
+
+      <div class="form-group">
+        <input asp-for="Id" class="form-control" value="@Model.Id" hidden />
+        <span asp-validation-for="Id" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="Items" class="form-control" value="@Model.Items" hidden />
+        <span asp-validation-for="Items" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="Phone" class="form-control" value="@Model.Phone" hidden />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="Date" class="form-control" value="@Model.Date" hidden />
+        <span asp-validation-for="Date" class="text-danger"></span>
+      </div>
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <input asp-for="FirstName" class="form-control" value="@Model.FirstName" hidden />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="LastName" class="form-control" value="@Model.LastName" hidden />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="Email" class="form-control" value="@Model.Email" hidden />
+        <span asp-validation-for="Email" class="text-danger"></span>
+      </div>
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <select asp-for="Method" class="form-control" hidden>
+          @if (Model.Method == "Delivery")
+          {
+    <option value="Pickup">Pickup</option>
+            <option value="Delivery" selected>Delivery</option>
+ }
+          else
+          {
+    <option value="Pickup" selected>Pickup</option>
+            <option value="Delivery">Delivery</option>
+}
+        </select>
+        <span asp-validation-for="Method" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="Address" class="form-control order-location" value="@Model.Address" hidden />
+        <span asp-validation-for="Address" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="City" class="form-control order-location" value="@Model.City" hidden />
+        <span asp-validation-for="City" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input asp-for="PostalCode" class="form-control order-location" value="@Model.PostalCode" hidden />
+        <span asp-validation-for="PostalCode" class="text-danger"></span>
+      </div>
+
+      <!-- Payment Information -->
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <select asp-for="Payment" class="form-control" required>
+          <option value="Cash" selected>Cash</option>
+          <option value="Debit">Debit</option>
+        </select>
+        <span asp-validation-for="Payment" class="text-danger"></span>
+      </div>
+
+      <input asp-for="SubTotal" type="hidden" value="@subTotal" />
+      <input asp-for="ShippingCost" type="hidden" value="0" />
+      <input asp-for="Taxes" type="hidden" value="@allTaxes" />
+    </form>
+  </section>
+
+  <!--Order Summary Section-->
+  <section id="order-summary">
+    <div id="summary-content">
+      <h2>Order Summary</h2>
+      <div class="sumary-detail">
+        <label>Sub total:</label>
+        <strong>@(subTotal.ToString("C2"))</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>GST:</label>
+        <strong>@gstTax.ToString("C2")</strong>
+      </div>
+      <div class="sumary-detail">
+        <label>QST:</label>
+        <strong>@qstTax.ToString("C2")</strong>
+      </div>
+      <div id="order-total" class="sumary-detail">
+        <label>Total: </label>
+        <strong>@finalPrice.ToString("C2")</strong>
+      </div>
+      <button class="btn btn-secondary text-light" type="submit" form="order-info-form">PAY</button>
+    </div>
+  </section>
+</div>
+

@@ -16,6 +16,10 @@ namespace PizzaCore.Controllers {
 
     // GET: /
     public IActionResult Index() {
+      if (User.IsInRole("Staff"))
+      {
+        return RedirectToAction("Index", "Employee");
+      }
       var products = repository.GetFeaturedProducts();
       return View(products);
     }

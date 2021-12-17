@@ -81,3 +81,11 @@ function onCheckoutGuest() {
 function onCheckoutGuestCancel() {
   document.getElementById("checkout-warning").style.visibility = "hidden";
 }
+
+function onEmployeeCheckout() {
+  document.getElementById('employee-checkout-type-box').style.visibility = "visible";
+}
+
+function onEmployeeCheckoutCancel() {
+  document.getElementById('employee-checkout-type-box').style.visibility = "hidden";
+}
