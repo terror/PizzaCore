@@ -9,30 +9,53 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Threading.Tasks;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace PizzaCore.Controllers {
   public class CheckoutController : Controller {
     private readonly IPizzaCoreRepository repository;
     private readonly ILogger<CheckoutController> logger;
     private readonly IEmailSender emailSender;
+    private readonly UserManager<IdentityUser> userManager;
 
     private const string emailTopic = "Order confirmation";
 
     // All valid postal code prefixes
     private List<string> postalCodes = new List<string> { "H8Y", "H9A", "H9B", "H9C", "H9H", "H9J", "H9W", "H9X", };
 
-    public CheckoutController(IPizzaCoreRepository repository, ILogger<CheckoutController> logger, IEmailSender emailSender) {
+    public CheckoutController(IPizzaCoreRepository repository, ILogger<CheckoutController> logger, IEmailSender emailSender, UserManager<IdentityUser> userManager) {
       this.repository = repository;
       this.logger = logger;
       this.emailSender = emailSender;
+      this.userManager = userManager;
     }
 
     // GET: /checkout
-    public IActionResult Index() {
+    public async Task<IActionResult> Index() {
+      var user = await userManager.GetUserAsync(User);
+
+      UserData data = user == null ? null : repository.GetUserDataByIdentityUserId(user.Id);
+      if (data == null) {
+        data = new UserData {
+          FirstName = "",
+          LastName = "",
+          Address = "",
+          City = "",
+          PostalCode = ""
+        };
+      }
+
       IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
       ViewBag.cart = cart;
       ViewBag.cartTotal = cart != null ? cart.Sum(item => item.ProductSize.Price * item.Quantity) : default;
-      return View();
+      return View(new OrderModel {
+        FirstName = data.FirstName,
+        LastName = data.LastName,
+        Email = user == null ? "" : user.Email ?? "",
+        Address = data.Address,
+        City = data.City,
+        PostalCode = data.PostalCode
+      });
     }
 
     // POST: /checkout
