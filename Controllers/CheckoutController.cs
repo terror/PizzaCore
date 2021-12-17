@@ -53,7 +53,14 @@ namespace PizzaCore.Controllers {
         order.isPaid = false;
       }
 
+      // Grab the cart
       IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
+      repository.SaveOrder(order.setDate(DateTime.Now), cart);
+
+      // Set the order status to ordered
+      order.Status = Status.Ordered;
+
+      // Save the order
       repository.SaveOrder(order.setDate(DateTime.Now), cart);
 
       // Send confirmation email to customer

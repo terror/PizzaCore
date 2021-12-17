@@ -10,6 +10,8 @@ namespace PizzaCore.Data {
     IEnumerable<Product> GetAllProducts();
     Product GetProduct(int id);
     IEnumerable<ProductByCategory> GetProductsGroupedByCategory();
+    void UpdateOrderStatus(int orderId, Status status);
+    void DeleteOrder(int orderId);
     IEnumerable<OrderModel> GetAllOrders();
     OrderModel GetOrderById(int orderId);
     IEnumerable<OrderModel> GetTodayOrders();
@@ -40,6 +42,7 @@ namespace PizzaCore.Data {
     void ResetCart(ISession session);
     UserData GetUserDataById(int id);
     UserData GetUserDataByIdentityUserId(string currentUserId);
+    void DeleteUserDataByIdentityUserId(string id);
     bool SaveAll();
   }
 }
