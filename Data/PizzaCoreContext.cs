@@ -22,5 +22,11 @@ namespace PizzaCore.Data {
         LogLevel.Information
       );
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      modelBuilder.Entity<OrderModel>().Property(p => p.Payment).IsRequired(false);
+      base.OnModelCreating(modelBuilder);
+    }
   }
 }

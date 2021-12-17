@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PizzaCore.Data;
+using PizzaCore.Helpers;
 using PizzaCore.Models;
 using System.Diagnostics;
 
@@ -16,6 +17,25 @@ namespace PizzaCore.Controllers {
 
     // GET: /
     public IActionResult Index() {
+
+      
+      if(SessionHelper.GetObjectFromJson<bool?>(HttpContext.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == null || SessionHelper.GetObjectFromJson<bool?>(HttpContext.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == true)
+      {
+        if (User.IsInRole("Manager") || User.IsInRole("Owner"))
+        {
+          return RedirectToAction("Index", "Dashboard");
+        }
+        else if (User.IsInRole("Cook"))
+        {
+          return RedirectToAction("Index", "Cook");
+        }
+        else if (User.IsInRole("Staff"))
+        {
+          return RedirectToAction("Index", "Employee");
+        }
+      }
+      
+
       var products = repository.GetFeaturedProducts();
       return View(products);
     }

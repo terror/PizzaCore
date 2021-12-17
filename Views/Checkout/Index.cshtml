@@ -11,7 +11,7 @@
   double subTotal = summary[0];
   double gstTax = summary[1];
   double qstTax = summary[2];
-  double allTaxes = gstTax + qstTax;
+  double allTaxes = Math.Round(gstTax + qstTax, OrderModel.DECIMAL_NUM);
   double finalPrice = summary[3];
 }
 

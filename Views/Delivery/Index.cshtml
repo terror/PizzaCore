@@ -1,0 +1,90 @@
+@model IEnumerable<PizzaCore.Models.OrderModel>
+
+@{
+  ViewData["Title"] = "All Orders";
+}
+
+<h2 class="text-primary" style="text-align:center">Orders To Deliver</h2>
+@if(Model == null || Model.Count() == 0) {
+  <h5 style="text-align:center" class="text-secondary" >No Delivery Orders Remaining</h5>
+}
+else{
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Order
+      </th>
+      <th>
+        Payment
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Phone)
+      </th>
+      <th>
+        Address
+      </th>
+      <th>
+        Total Price
+      </th>
+      <th>
+        Status
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @(item.FirstName + " " + item.LastName)
+        </td>
+        <td>
+          @foreach(var product in item.Items) {
+            <span>@(product.Quantity + " X " + product.Name)</span><br />
+          }
+        </td>
+        <td>
+          @if (item.isPaid) {
+            <span style="color:var(--bs-green)">Paid Online</span>
+          }
+          else {
+            <span style="color:var(--bs-red)">Not Paid</span>
+          }
+        </td>
+        <td>
+          @(item.Phone == null ? "" : item.Phone)
+        </td>
+        <td>
+          @(item.Address + ", " + item.City + ", " + item.PostalCode)
+        </td>
+        <td>
+          @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
+        </td>
+        <td>
+          @using (Html.BeginForm("UpdateOrderStatus", "Delivery", FormMethod.Post, new { orderId = 0, status = "" }))
+          {
+            <input type="hidden" name="orderId" value="@(item.Id)" />
+            <select name="status" onchange="this.form.submit()">
+              <option value="@(item.Status)">@(item.Status)</option>
+              @if (item.Status == Status.Ready)
+              {
+                <option value="@Status.InTransit">@Status.InTransit</option>
+              }
+              @if (item.Status == Status.InTransit)
+              {
+                <option value="@Status.Complete">@(Status.Complete)</option>
+              }
+            </select>
+          }
+        </td>
+        
+      </tr>
+    }
+  </tbody>
+</table>
+}
+

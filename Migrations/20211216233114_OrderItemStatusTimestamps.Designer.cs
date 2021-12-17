@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaCore.Data;
 
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-    partial class PizzaCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20211216233114_OrderItemStatusTimestamps")]
+    partial class OrderItemStatusTimestamps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +39,6 @@ namespace PizzaCore.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -252,6 +251,7 @@ namespace PizzaCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Payment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -274,9 +274,6 @@ namespace PizzaCore.Migrations
 
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isPaid")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

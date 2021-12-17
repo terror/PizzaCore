@@ -30,6 +30,12 @@
               @Html.DisplayNameFor(m => m.Input.RememberMe)
             </label>
           </div>
+          <div class="checkbox">
+            <label asp-for="Input.LogInAsEmployee">
+              <input asp-for="Input.LogInAsEmployee" />
+              @Html.DisplayNameFor(m => m.Input.LogInAsEmployee)
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-secondary text-light">Log in</button>

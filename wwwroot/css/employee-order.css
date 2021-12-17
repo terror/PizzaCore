@@ -1,0 +1,44 @@
+.menu-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 230px));
+  grid-auto-rows: 200px;
+  grid-gap: 10px;
+  grid-auto-flow: row;
+  margin-top: 10px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  object-fit:cover;
+  box-shadow: 0px 1px;
+  justify-content: space-between;
+}
+
+.item-action-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.item-action-container form{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  
+}
+
+.item-cart-add {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.item-title {
+  display: block;
+  background-color: var(--bs-green);
+  color: var(--bs-tertiary);
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 0;
+  margin-bottom: 5px;
+}

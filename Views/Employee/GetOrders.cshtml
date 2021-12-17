@@ -1,0 +1,100 @@
+@model IEnumerable<PizzaCore.Models.OrderModel>
+
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<h2 class="text-primary" style="text-align: center">All Orders</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                Service
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+              Payment
+            </th>
+            <th>
+              Action
+            </th>
+            <th>
+              Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(item.FirstName + " " + item.LastName)
+            </td>
+            <td>
+                @(item.Phone == null ? "" : item.Phone)
+            </td>
+            <td>
+                @(item.Method)
+            </td>
+            <td>
+               @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
+            </td>
+            <td>
+              @if (item.isPaid)
+              {
+                <span style="color:var(--bs-green)">Paid</span>
+              }
+              else
+              {
+                <span style="color:var(--bs-red)">Not Paid</span>
+              }
+            </td>
+          <td>
+            @if (!item.isPaid) {
+              <a  style="color:var(--bs-blue);" class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
+            }
+          </td>
+          <td>
+
+            @if (item.Status == Status.Ready && item.isPaid)
+            {
+              @using (Html.BeginForm("UpdateOrderStatus", "Employee", FormMethod.Post, new { orderId = 0, status = "" }))
+              {
+                <input type="hidden" name="orderId" value="@(item.Id)" />
+                <select name="status" onchange="this.form.submit()">
+                  <option value="@(item.Status)">@(item.Status)</option>             
+                  <option value="@Status.Complete">@(Status.Complete)</option>
+                </select>
+              }
+            }
+            else
+            {
+              @if (item.Status == Status.Ready)
+              {
+                <a style="color:var(--bs-green);" class="sleek-button">@item.Status</a>
+              }
+              else if (item.Status == Status.Preparing)
+              {
+                <a style="color:var(--bs-orange);" class="sleek-button">@item.Status</a>
+              }
+              else
+              {
+                <a style="color:var(--bs-red);" class="sleek-button">@item.Status</a>
+              }
+            }
+
+
+            
+          </td>
+        </tr>
+}
+    </tbody>
+</table>

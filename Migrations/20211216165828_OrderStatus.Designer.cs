@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaCore.Data;
 
 namespace PizzaCore.Migrations
 {
     [DbContext(typeof(PizzaCoreContext))]
-    partial class PizzaCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20211216165828_OrderStatus")]
+    partial class OrderStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,14 +28,8 @@ namespace PizzaCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("PreparingTimeStamp")
-                        .HasColumnType("datetime2");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -44,14 +40,8 @@ namespace PizzaCore.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReadyTimeStamp")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -252,6 +242,7 @@ namespace PizzaCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Payment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -274,9 +265,6 @@ namespace PizzaCore.Migrations
 
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isPaid")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

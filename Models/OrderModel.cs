@@ -5,6 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaCore.Models {
+  public enum Status {
+    Ordered,
+    Preparing,
+    Ready,
+    InTransit,
+    Complete
+  }
+
   public class OrderModel {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -58,7 +66,12 @@ namespace PizzaCore.Models {
 
     public double Taxes { get; set; }
 
+    [Required]
+    public bool isPaid { get; set; }
+
     public List<OrderItem> Items { get; set; } = new List<OrderItem>();
+
+    public Status Status { get; set; }
 
     public OrderModel setDate(DateTime date) {
       Date = date;
