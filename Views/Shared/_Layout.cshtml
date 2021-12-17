@@ -79,12 +79,20 @@
       <div class="spacer"></div>
     </div>
 
-  <div id="employee-checkout-type-box" class="warning-box">
+  <div id="employee-checkout-type-box">
     <div id="checkout-type-options" class="warning-box-option-container">
       <h3 class="text-light">Choose checkout type</h3>
       <a class="checkout-warning-option sleek-button" href="/employee/order/pickup">Pick-Up</a>
       <a class="checkout-warning-option sleek-button" href="/employee/order/delivery">Delivery</a>
       <button class="checkout-warning-option sleek-button" onclick="onEmployeeCheckoutCancel()">Go Back</button>
+    </div>
+    <div id="checkout-warning">
+      <div id="checkout-warning-options">
+        <h2 class="text-light">You are currently not signed in!</h2>
+        <h3 class="text-light">What would you like to do?</h3>
+        <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
+        <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
+      </div>
     </div>
   </div>
 
@@ -106,16 +114,6 @@
       <p>Copyright © Abstract Connoisseurs 2021</p>
     </div>
     </footer>
-
-    <div id="checkout-warning">
-      <div id="checkout-warning-options">
-        <h2 class="text-light">You are currently not signed in!</h2>
-        <h3 class="text-light">What would you like to do?</h3>
-        <a class="checkout-warning-option sleek-button" href="/checkout">Continue as Guest</a>
-        <button class="checkout-warning-option sleek-button" onclick="onCheckoutGuestCancel()">Go Back</button>
-      </div>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
