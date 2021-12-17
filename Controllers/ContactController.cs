@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PizzaCore.Data;
+using PizzaCore.Data.Entities;
 using PizzaCore.Models;
 using PizzaCore.Services;
 using System;
@@ -9,15 +11,33 @@ namespace PizzaCore.Controllers {
   public class ContactController : Controller {
     private readonly PizzaCoreContext context;
     private readonly ReCaptcha captcha;
+    private readonly IPizzaCoreRepository repository;
+    private readonly UserManager<IdentityUser> userManager;
 
-    public ContactController(PizzaCoreContext context, ReCaptcha captcha) {
+    public ContactController(PizzaCoreContext context, ReCaptcha captcha, IPizzaCoreRepository repository, UserManager<IdentityUser> userManager) {
       this.context = context;
       this.captcha = captcha;
+      this.repository = repository;
+      this.userManager = userManager;
     }
 
     // GET: /contact
-    public IActionResult Index() {
-      return View();
+    public async Task<IActionResult> Index() {
+      var user = await userManager.GetUserAsync(User);
+
+      UserData data = user == null ? null : repository.GetUserDataByIdentityUserId(user.Id);
+      if (data == null) {
+        data = new UserData {
+          FirstName = "",
+          LastName = "",
+        };
+      }
+
+      return View(new ContactModel {
+        FirstName = data.FirstName,
+        LastName = data.LastName,
+        Email = user == null ? "" : user.Email ?? ""
+      });
     }
 
     // POST: /contact

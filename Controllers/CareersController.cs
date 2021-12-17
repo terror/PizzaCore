@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PizzaCore.Data;
+using PizzaCore.Data.Entities;
 using PizzaCore.Models;
 using PizzaCore.Services;
 using System;
@@ -12,15 +14,33 @@ namespace PizzaCore.Controllers {
 
     private readonly PizzaCoreContext context;
     private readonly ReCaptcha captcha;
+    private readonly IPizzaCoreRepository repository;
+    private readonly UserManager<IdentityUser> userManager;
 
-    public CareersController(PizzaCoreContext context, ReCaptcha captcha) {
+    public CareersController(PizzaCoreContext context, ReCaptcha captcha, IPizzaCoreRepository repository, UserManager<IdentityUser> userManager) {
       this.context = context;
       this.captcha = captcha;
+      this.repository = repository;
+      this.userManager = userManager;
     }
 
     // GET: /careers
-    public IActionResult Index() {
-      return View();
+    public async Task<IActionResult> Index() {
+      var user = await userManager.GetUserAsync(User);
+
+      UserData data = user == null ? null : repository.GetUserDataByIdentityUserId(user.Id);
+      if (data == null) {
+        data = new UserData {
+          FirstName = "",
+          LastName = "",
+        };
+      }
+
+      return View(new CareersModel {
+        FirstName = data.FirstName,
+        LastName = data.LastName,
+        Email = user == null ? "" : user.Email ?? ""
+      });
     }
 
     // POST: /careers

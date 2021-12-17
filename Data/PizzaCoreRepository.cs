@@ -247,6 +247,24 @@ namespace PizzaCore.Data {
       return context.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId);
     }
 
+    public void SetUserDataByUserId(string currentUserId, UserData userData) {
+      try {
+        var oldUserData = GetUserDataByIdentityUserId(currentUserId);
+        if (oldUserData == null) {
+          context.UserDatas.Add(userData);
+        } else {
+          oldUserData.FirstName = userData.FirstName ?? oldUserData.FirstName;
+          oldUserData.LastName = userData.LastName ?? oldUserData.LastName;
+          oldUserData.Address = userData.Address ?? oldUserData.Address;
+          oldUserData.City = userData.City ?? oldUserData.City;
+          oldUserData.PostalCode = userData.PostalCode ?? oldUserData.FirstName;
+        }
+        SaveAll();
+      } catch (Exception ex) {
+        logger.LogError($"Failed to set user data: {ex.Message}");
+      }
+    }
+
     public void DeleteUserDataByIdentityUserId(string id) {
       try {
         logger.LogInformation("[PizzaCoreRepository::DeleteUserDataByIdentityUserId] Removing UserData...");

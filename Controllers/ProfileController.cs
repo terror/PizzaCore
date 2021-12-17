@@ -28,7 +28,7 @@ namespace PizzaCore.Controllers {
       this.signinManager = signinManager;
       this.userManager = userManager;
       this.roleManager = roleManager;
-      this.repository = repository; ;
+      this.repository = repository;
     }
 
     [Authorize]
@@ -72,7 +72,7 @@ namespace PizzaCore.Controllers {
       // Grab the current user
       var user = await userManager.GetUserAsync(User);
 
-      // TODO: Update user data based on model
+      repository.SetUserDataByUserId(user.Id, model.ToUserData(user.Id));
 
       return View();
     }

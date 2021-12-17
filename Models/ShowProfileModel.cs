@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PizzaCore.Data.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -38,5 +39,18 @@ namespace PizzaCore.Models {
     public List<IdentityRole> Roles { get; set; }
 
     public List<OrderModel> Orders { get; set; }
+
+    public UserData ToUserData(string userId) {
+      return new UserData() {
+        UserDataId = this.UserDataId,
+        IdentityUserId = userId,
+        FirstName = this.FirstName,
+        LastName = this.LastName,
+        Address = this.Address,
+        City = this.City,
+        PostalCode = this.PostalCode,
+        Orders = this.Orders
+      };
+    }
   }
 }
