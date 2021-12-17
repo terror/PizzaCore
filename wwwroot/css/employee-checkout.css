@@ -5,4 +5,29 @@
   align-items: center;
 }
 
+#employee-payment-decision {
+  visibility: visible;
+}
+
+.payment-decision-option {
+  visibility: visible;
+}
+
+#payment-decision-options{
+  visibility: visible;
+}
+
+#payment-decision-options form{
+  width: 40%;
+}
+
+#payment-decision-options button{
+  width: 100%;
+}
+
+#payment-decision-options a{
+  text-align: center;
+}
+
+
 

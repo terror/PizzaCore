@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using PizzaCore.Data;
@@ -39,6 +40,7 @@ namespace PizzaCore.Controllers
 
     }
 
+    [Authorize(Roles = "Service")]
     [HttpGet("employee/menu")]
     public IActionResult Menu() {
       // Storing cart & cartTotal in ViewBag
@@ -49,29 +51,34 @@ namespace PizzaCore.Controllers
       return View(products);
     }
 
+    [Authorize(Roles = "Service")]
     [HttpGet("employee/order/pickup")]
     public IActionResult PickUp() {
       return Order(false);
     }
 
+    [Authorize(Roles = "Service")]
     [HttpGet("employee/order/delivery")]
     public IActionResult Delivery()
     {
       return Order(true);
     }
 
+    [Authorize(Roles = "Service")]
     [HttpPost("employee/order/delivery")]
     public async Task<IActionResult> DeliveryAsync(OrderModel order)
     {
       return await OrderAsync(order, true);
     }
 
+    [Authorize(Roles = "Service")]
     [HttpPost("employee/order/pickup")]
     public async Task<IActionResult> PickUpAsync(OrderModel order)
     {
       return await OrderAsync(order, false);
     }
 
+    [Authorize(Roles = "Service")]
     public IActionResult Order(bool isDelivery) {
       ViewData["isDelivery"] = isDelivery;
       var cart = repository.GetCart(HttpContext.Session);
@@ -81,6 +88,7 @@ namespace PizzaCore.Controllers
       return View("Order");
     }
 
+    [Authorize(Roles = "Service")]
     public async Task<IActionResult> OrderAsync(OrderModel order, bool isDelivery)
     {
       // Validate postal code
@@ -90,12 +98,15 @@ namespace PizzaCore.Controllers
           Message = $"Invalid order location. Valid postal code prefixes include: {string.Join(", ", postalCodes.ToArray())}"
         }
         );
-
-      // TODO: Save cart items
-      repository.SaveOrder(order.setDate(DateTime.Now));
+      
 
       // Send confirmation email to customer
       IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
+      order.isPaid = false;
+      int orderId = repository.SaveOrder(order.setDate(DateTime.Now), cart);
+      if(orderId == -1) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
 
       StringBuilder emailMessage = new StringBuilder();
       emailMessage.Append("Thank you for placing your order at PizzaCore!<br><br>");
@@ -114,17 +125,75 @@ namespace PizzaCore.Controllers
       await emailSender.SendEmailAsync(order.Email, emailTopic, emailMessage.ToString());
 
       // Remove all items from the cart
-      repository.ResetCart(HttpContext.Session);
+      
 
       ViewData["askPayment"] = true;
       ViewData["isDelivery"] = isDelivery;
 
       // We don't want to ask for payment decision (Pay now / Pay later) since it is delivery
-      if (isDelivery)
+      if (isDelivery) {
+        repository.ResetCart(HttpContext.Session);
         return RedirectToAction("Menu", "Employee");
+      }
 
-
+      ViewBag.cart = cart;
+      ViewBag.cartTotal = cart != null ? cart.Sum(cartItem => cartItem.ProductSize.Price * cartItem.Quantity) : default;
+      ViewBag.orderId = orderId;
       return View("Order");
+    }
+
+    [Authorize(Roles = "Service")]
+    [HttpGet("employee/order/paylater")]
+    public IActionResult PayLater()
+    {
+      repository.ResetCart(HttpContext.Session);
+      return RedirectToAction("Menu", "Employee");
+    }
+
+    [Authorize(Roles = "Service")]
+    [HttpGet("employee/order/{orderId}")]
+    public IActionResult GetOrder(int orderId)
+    {
+      repository.ResetCart(HttpContext.Session);
+      OrderModel order = repository.GetOrderById(orderId);
+      List<Product> products = new List<Product>();
+      for(int i = 0; i < order.Items.Count; i++)
+      {
+        products.Add(repository.GetProduct(order.Items[i].ProductId));
+      }
+
+      ViewBag.Products = products;
+      ViewBag.cartTotal = order.Items != null ? order.Items.Sum(item => item.Price * item.Quantity) : default;
+
+      return View(order);
+    }
+
+    [Authorize(Roles = "Service")]
+    [HttpPost("employee/order")]
+    [ValidateAntiForgeryToken]
+    public IActionResult UpdateOrder(OrderModel orderModel)
+    {
+      if (orderModel.Payment.ToLower() == "debit" || orderModel.Payment.ToLower() == "credit" || orderModel.Payment.ToLower() == "cash")
+      {
+        orderModel.isPaid = true;
+      }
+      else
+      {
+        orderModel.isPaid = false;
+      }
+
+      orderModel.setDate(DateTime.Now);
+      repository.UpdateOrder(orderModel);
+
+      return RedirectToAction("Menu", "Employee");
+    }
+
+    [Authorize(Roles = "Service")]
+    [HttpGet("employee/orders")]
+    public IActionResult GetOrders()
+    {
+      IEnumerable<OrderModel> orders = repository.GetAllOrders();
+      return View(orders);
     }
 
   }

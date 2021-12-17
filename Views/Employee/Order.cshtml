@@ -11,6 +11,14 @@
     const int DECIMAL_NUM = OrderModel.DECIMAL_NUM;
     bool isDelivery = (bool)ViewData["isDelivery"];
     bool? askPayment = ViewData["askPayment"] as bool?;
+
+    double[] summary = OrderModel.generateSummary(ViewBag.CartTotal);
+
+    double subTotal = summary[0];
+    double gstTax = summary[1];
+    double qstTax = summary[2];
+    double allTaxes = Math.Round(gstTax + qstTax, DECIMAL_NUM);
+    double finalPrice = summary[3];
 }
 
 <div id="checkout-container">
@@ -22,9 +30,15 @@
       <hr />
     </div>*@
 
-    @if(isDelivery && askPayment == true)
-    {
+    @if (!isDelivery && askPayment == true) {
+      <div id="employee-payment-decision" class="warning-box">
+        <div id="payment-decision-options" class="warning-box-option-container">
+          <h3 class="text-light">Choose payment decision</h3>
+          <a class="checkout-warning-option sleek-button payment-decision-option" href="/employee/order/paylater">Pay Later</a>
 
+          <a class="checkout-warning-option sleek-button payment-decision-option"  href="/employee/order/@(ViewBag.orderId)">Pay Now</a>
+        </div>
+      </div>
     }
 
     <form asp-action="@(isDelivery ? "Delivery" : "PickUp")" id="order-info-form" method="post">
@@ -85,6 +99,10 @@
         </div>
         
       }
+
+      <input asp-for="SubTotal" type="hidden" value="@subTotal" />
+      <input asp-for="ShippingCost" type="hidden" value="0" />
+      <input asp-for="Taxes" type="hidden" value="@allTaxes" />
 
       <button class="btn btn-secondary text-light" type="submit" form="order-info-form" disabled="@(ViewBag.cart == null || ViewBag.cart.Count == 0)">PLACE ORDER</button>
 
@@ -155,13 +173,7 @@
         }
       }
     </div>
-    @{
-      const double TAX_RATE = OrderModel.GST_TAX_RATE + OrderModel.QST_TAX_RATE;
-
-      double subTotal = Math.Round(ViewBag.CartTotal, DECIMAL_NUM);
-      double taxAmount = Math.Round(subTotal * TAX_RATE, DECIMAL_NUM);
-      double finalPrice = Math.Round(subTotal + taxAmount, DECIMAL_NUM);
-    }
+   
     <div class="cart-price-breakdown">
       <div class="sub-total">
         <label>Sub Total:</label>
@@ -169,7 +181,7 @@
       </div>
       <div class="tax-info">
         <label>Taxes:</label>
-        <span>@(taxAmount.ToString("C2"))</span>
+        <span>@(allTaxes.ToString("C2"))</span>
       </div>
       <div class="total-price">
         <label>Total:</label>
