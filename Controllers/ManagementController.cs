@@ -40,8 +40,10 @@ namespace PizzaCore.Controllers {
         var user = new IdentityUser { UserName = model.Email, Email = model.Email };
         if (await userManager.FindByEmailAsync(model.Email) == null) {
           var createdUser = await userManager.CreateAsync(user, model.Password);
-          if (createdUser.Succeeded)
+          if (createdUser.Succeeded) {
+            await userManager.AddToRoleAsync(user, "Staff");
             await userManager.AddToRoleAsync(user, model.Role);
+          }
           return View("Success");
         }
       }
