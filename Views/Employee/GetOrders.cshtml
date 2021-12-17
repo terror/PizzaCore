@@ -4,7 +4,7 @@
     ViewData["Title"] = "All Orders";
 }
 
-<h1>All Orders</h1>
+<h2 class="text-primary" style="text-align: center">All Orders</h2>
 
 <table class="table">
     <thead>
@@ -59,11 +59,19 @@
             </td>
           <td>
             @if (!item.isPaid) {
-              <a  style="color:var(--bs-tertiary);" class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
+              <a  style="color:var(--bs-blue);" class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
             }
           </td>
           <td>
-            .
+            @if(item.Status == Status.Ready) {
+              <a  style="color:var(--bs-green);" class="sleek-button">@item.Status</a>
+            }
+            else if(item.Status == Status.Preparing) {
+              <a style="color:var(--bs-orange);" class="sleek-button">@item.Status</a>
+            }
+            else {
+              <a style="color:var(--bs-red);" class="sleek-button">@item.Status</a>
+            }
           </td>
         </tr>
 }
