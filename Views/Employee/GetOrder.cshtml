@@ -22,7 +22,7 @@
   <section id="general-info">
 
     <!-- Order Item Display -->
-    <h2>Review Order</h2>
+    <h2>@(Model.FirstName + " " + Model.LastName)'s Order</h2>
     <div id="order-container">
       @{ OrderItem item = null; }
       @for (int i = 0; i < Model.Items.Count; i++)
@@ -59,6 +59,10 @@
         <span asp-validation-for="Id" class="text-danger"></span>
       </div>
       <div class="form-group">
+        <input asp-for="Status" class="form-control" value="@Model.Status" hidden />
+        <span asp-validation-for="Status" class="text-danger"></span>
+      </div>
+      <div class="form-group">
         <input asp-for="Items" class="form-control" value="@Model.Items" hidden />
         <span asp-validation-for="Items" class="text-danger"></span>
       </div>
@@ -88,14 +92,14 @@
         <select asp-for="Method" class="form-control" hidden>
           @if (Model.Method == "Delivery")
           {
-    <option value="Pickup">Pickup</option>
+            <option value="Pickup">Pickup</option>
             <option value="Delivery" selected>Delivery</option>
- }
+          }
           else
           {
-    <option value="Pickup" selected>Pickup</option>
+            <option value="Pickup" selected>Pickup</option>
             <option value="Delivery">Delivery</option>
-}
+          }
         </select>
         <span asp-validation-for="Method" class="text-danger"></span>
       </div>

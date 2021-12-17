@@ -14,6 +14,8 @@ namespace PizzaCore.Data {
     void UpdateOrderItemStatus(int itemId, Status status);
     void DeleteOrder(int orderId);
     IEnumerable<OrderModel> GetAllOrders();
+    IEnumerable<OrderModel> GetOrdersDeliveryReadyOrderByOldest();
+    IEnumerable<OrderModel> GetPendingPickupOrdersOrderByOldest();
     OrderModel GetOrderById(int orderId);
     IEnumerable<OrderModel> GetTodayOrders();
     IEnumerable<OrderModel> GetYesterdaysOrders();

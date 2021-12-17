@@ -4,7 +4,7 @@
     ViewData["Title"] = "All Orders";
 }
 
-<h1>All Orders</h1>
+<h2 class="text-primary" style="text-align: center">All Orders</h2>
 
 <table class="table">
     <thead>
@@ -48,15 +48,51 @@
                @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
             </td>
             <td>
-                @(item.isPaid ? "PAID" : "NOT PAID")
+              @if (item.isPaid)
+              {
+                <span style="color:var(--bs-green)">Paid</span>
+              }
+              else
+              {
+                <span style="color:var(--bs-red)">Not Paid</span>
+              }
             </td>
           <td>
             @if (!item.isPaid) {
-              <a  class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
+              <a  style="color:var(--bs-blue);" class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
             }
           </td>
           <td>
-            .
+
+            @if (item.Status == Status.Ready && item.isPaid)
+            {
+              @using (Html.BeginForm("UpdateOrderStatus", "Employee", FormMethod.Post, new { orderId = 0, status = "" }))
+              {
+                <input type="hidden" name="orderId" value="@(item.Id)" />
+                <select name="status" onchange="this.form.submit()">
+                  <option value="@(item.Status)">@(item.Status)</option>             
+                  <option value="@Status.Complete">@(Status.Complete)</option>
+                </select>
+              }
+            }
+            else
+            {
+              @if (item.Status == Status.Ready)
+              {
+                <a style="color:var(--bs-green);" class="sleek-button">@item.Status</a>
+              }
+              else if (item.Status == Status.Preparing)
+              {
+                <a style="color:var(--bs-orange);" class="sleek-button">@item.Status</a>
+              }
+              else
+              {
+                <a style="color:var(--bs-red);" class="sleek-button">@item.Status</a>
+              }
+            }
+
+
+            
           </td>
         </tr>
 }

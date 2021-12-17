@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Identity
+@using PizzaCore.Helpers;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -29,7 +30,11 @@
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul class="navbar-nav flex-grow-1">
 
-            @if(!User.IsInRole("Manger") && !User.IsInRole("Owner") && !User.IsInRole("Service") && !User.IsInRole("Delivery") && !User.IsInRole("Cook")) {
+            @if(User.IsInRole("Staff") && SessionHelper.GetObjectFromJson<bool?>(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == null) {
+              SessionHelper.SetObjectAsJson(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY, true);
+            }
+
+            @if(!User.IsInRole("Staff") || SessionHelper.GetObjectFromJson<bool>(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == false) {
                           
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
@@ -49,33 +54,42 @@
             <li class="nav-item">
               <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
             </li>
-            @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
-            {
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="ManageOrder" asp-action="Index">Manage Orders</a>
-              </li>
+
+            @if (SessionHelper.GetObjectFromJson<bool>(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == true) {
+              @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
+              {
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="ManageOrder" asp-action="Index">Manage Orders</a>
+                </li>
+              }
+              @if (User.IsInRole("Service") && !User.IsInRole("Owner") && !User.IsInRole("Manager"))
+              {
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="orders">All Orders</a>
+                </li>
+              }
+              @if (User.IsInRole("Cook"))
+              {
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Cook" asp-action="Index">Manage Orders</a>
+                </li>
+              }
+              @if (User.IsInRole("Delivery")) {
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Delivery" asp-action="Index">Delivery Orders</a>
+                </li>
+              }
             }
-            @if (User.IsInRole("Service") && !User.IsInRole("Owner") && !User.IsInRole("Manager"))
-            {
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="orders">All Orders</a>
-              </li>
-            }
-            @if (User.IsInRole("Cook"))
-            {
-              <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Cook" asp-action="Index">Manage Orders</a>
-              </li>
-            }
+            
           </ul>
             <partial name="_LoginPartial" />
           </div>
