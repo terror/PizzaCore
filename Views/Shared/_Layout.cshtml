@@ -67,6 +67,9 @@
                 <li class="nav-item">
                   <a class="nav-link text-light" asp-area="" asp-controller="ManageOrder" asp-action="Index">Manage Orders</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" asp-area="" asp-controller="Management" asp-action="Index">Manage Employees</a>
+                </li>
               }
               @if (User.IsInRole("Service") && !User.IsInRole("Owner") && !User.IsInRole("Manager"))
               {
