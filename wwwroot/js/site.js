@@ -70,7 +70,6 @@ function onDeliveryMethodChange() {
   const location = document.getElementsByClassName("order-location");
   for (let i = 0; i < location.length; ++i) {
     location[i].disabled = deliveryMethod === "Pickup";
-    location[i].value = "";
   }
 }
 
