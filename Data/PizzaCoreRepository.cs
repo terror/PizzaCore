@@ -287,6 +287,25 @@ namespace PizzaCore.Data {
       }
     }
 
+    public IEnumerable<OrderModel> GetOrdersDeliveryReadyOrderByOldest()
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::GetOrdersDeliveryReadyOrderByOldest] Getting all dilevery ready orders ordered by oldest...");
+        IEnumerable<OrderModel> allOrders = GetAllOrders();
+        IEnumerable<OrderModel> deliveryReadyOrders = allOrders.Where(o => o.Method == "Delivery" && (o.Status == Status.Ready || o.Status == Status.InTransit))
+                                                                .OrderBy(o => o.Date);
+
+        return deliveryReadyOrders;
+
+      }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to get all delivery ready orders: {ex.Message}");
+        return null;
+      }
+    }
+
     public OrderModel GetOrderById(int orderId)
     {
       try
