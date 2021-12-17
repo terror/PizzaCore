@@ -34,14 +34,16 @@ namespace PizzaCore.Controllers {
     public async Task<IActionResult> Index() {
       var user = await userManager.GetUserAsync(User);
 
-      var data = repository.GetUserDataByIdentityUserId(user.Id) ??
-        new UserData {
+      UserData data = user == null ? null : repository.GetUserDataByIdentityUserId(user.Id);
+      if (data == null) {
+        data = new UserData {
           FirstName = "",
           LastName = "",
           Address = "",
           City = "",
           PostalCode = ""
         };
+      }
 
       IEnumerable<CartItem> cart = repository.GetCart(HttpContext.Session);
       ViewBag.cart = cart;
@@ -49,7 +51,7 @@ namespace PizzaCore.Controllers {
       return View(new OrderModel {
         FirstName = data.FirstName,
         LastName = data.LastName,
-        Email = user.Email ?? "",
+        Email = user == null ? "" : user.Email ?? "",
         Address = data.Address,
         City = data.City,
         PostalCode = data.PostalCode

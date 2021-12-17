@@ -25,16 +25,18 @@ namespace PizzaCore.Controllers {
     public async Task<IActionResult> Index() {
       var user = await userManager.GetUserAsync(User);
 
-      var data = repository.GetUserDataByIdentityUserId(user.Id) ??
-        new UserData {
+      UserData data = user == null ? null : repository.GetUserDataByIdentityUserId(user.Id);
+      if (data == null) {
+        data = new UserData {
           FirstName = "",
           LastName = "",
         };
+      }
 
       return View(new ContactModel {
         FirstName = data.FirstName,
         LastName = data.LastName,
-        Email = user.Email ?? ""
+        Email = user == null ? "" : user.Email ?? ""
       });
     }
 
