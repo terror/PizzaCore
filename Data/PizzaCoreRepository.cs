@@ -208,6 +208,7 @@ namespace PizzaCore.Data {
               Size = item.ProductSize.Size,
               Price = item.ProductSize.Price,
               Quantity = item.Quantity,
+              ProductId = item.ProductSize.ProductId
             });
           }
         }
