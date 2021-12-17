@@ -547,7 +547,7 @@ namespace PizzaCore.Data {
         order.Status = Status.Preparing;
       }
       else if (orderItem.Status == Status.Ready) {
-        // Set the order status to preparing the specified order item is now ready
+        // Set the order status to preparing if the specified order item is now ready
         order.Status = Status.Preparing;
 
         // If all of the order items in the order are now ready, mark the order as ready as well

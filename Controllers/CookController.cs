@@ -21,7 +21,7 @@ namespace PizzaCore.Controllers
 
     [HttpPost]
     public RedirectResult UpdateOrderStatus(int orderId, string status) {
-      // Update the order item status and reload the view
+      // Update the order status and reload the view
       repository.UpdateOrderStatus(orderId, (Status)Enum.Parse(typeof(Status), status));
       return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
