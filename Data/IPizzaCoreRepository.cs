@@ -10,6 +10,7 @@ namespace PizzaCore.Data {
     IEnumerable<Product> GetAllProducts();
     IEnumerable<ProductByCategory> GetProductsGroupedByCategory();
     void UpdateOrderStatus(int orderId, Status status);
+    void UpdateOrderItemStatus(int itemId, Status status);
     void DeleteOrder(int orderId);
     IEnumerable<OrderModel> GetAllOrders();
     IEnumerable<OrderModel> GetTodayOrders();

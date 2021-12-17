@@ -198,10 +198,10 @@ namespace PizzaCore.Data {
         if (items != null) {
           foreach (CartItem item in items) {
             order.Items.Add(new OrderItem() {
+              Name = item.ProductSize.Product.Name,
               Size = item.ProductSize.Size,
               Price = item.ProductSize.Price,
               Quantity = item.Quantity,
-              ProductId = item.ProductSize.Product.Id
             });
           }
         }
@@ -313,7 +313,7 @@ namespace PizzaCore.Data {
       foreach (var order in itemsbyOrder) {
         foreach (var item in order) {
           // Get the key by finding the name of the product whose ID matches the order items product ID
-          key = GetAllProducts().Where(p => p.Id == item.ProductId).Select(p => p.Name).ToList()[0];
+          key = GetAllProducts().Where(p => p.Name == item.Name).Select(p => p.Name).ToList()[0];
 
           // If the dictionary already contains the product, increment its value, otherwise add it to the dictionary
           if (productOrderFrequency.ContainsKey(key)) {
@@ -487,12 +487,88 @@ namespace PizzaCore.Data {
         var order = GetAllOrders().Where(o => o.Id == orderId).ToList()[0];
         order.Status = status;
 
+        // Get the order items that belong to the order
+        var orderItems = context.OrderItems.Where(i => i.Order.Id == order.Id).ToList();
+
+        // Update each order item so that their status is consistent with the order status
+        foreach (var item in orderItems) {
+          // Only update the item status if it is at an early stage than the order is at
+          if (item.Status < order.Status) {
+            UpdateOrderItemStatus(item.Id, status);
+          }
+        }
+
         // Update the order and save
         context.Update(order);
         SaveAll();
       }
       catch (Exception ex) {
         logger.LogError($"Failed to update order status: {ex.Message}");
+      }
+    }
+
+    public void UpdateOrderItemStatus(int itemId, Status status) {
+      try {
+        logger.LogInformation("[PizzaRepository::UpdateOrderItemStatus] Updating order item status...");
+
+        // Get the order item with the provided order item ID and update its status to the provided status
+        var orderItem = context.OrderItems.Where(i => i.Id == itemId).ToList()[0];
+        orderItem.Status = status;
+
+        // Update the relevant timestamp if the item is now ready or being prepared
+        if (status == Status.Ready) {
+          orderItem.ReadyTimeStamp = DateTime.Now;
+        }
+        else if (status == Status.Preparing) {
+          orderItem.PreparingTimeStamp = DateTime.Now;
+        }
+
+        // If the order item has a different status than the order that it belongs to, update the order status
+        if (orderItem.Status != GetAllOrders().Where(o => o.Id == orderItem.Order.Id).Select(o => o.Status).ToList()[0]) {
+          UpdateOrderStatusBasedOnOrderItemStatus(orderItem);
+        }
+
+        // Update the order and save
+        context.Update(orderItem);
+        SaveAll();
+      }
+      catch (Exception ex) {
+        logger.LogError($"Failed to update order item status: {ex.Message}");
+      }
+    }
+
+    private void UpdateOrderStatusBasedOnOrderItemStatus(OrderItem orderItem) {
+      // Get the order that the order item belongs to
+      var order = GetAllOrders().Where(o => o.Id == orderItem.Order.Id).ToList()[0];
+      Status initialOrderStatus = order.Status;
+
+      if (orderItem.Status == Status.Preparing) {
+        // Set the order status to preparing if the specified order item is now being prepared
+        order.Status = Status.Preparing;
+      }
+      else if (orderItem.Status == Status.Ready) {
+        // Set the order status to preparing the specified order item is now ready
+        order.Status = Status.Preparing;
+
+        // If all of the order items in the order are now ready, mark the order as ready as well
+        bool allItemsReady = true;
+
+        foreach (var item in order.Items) {
+          if (item.Status != Status.Ready) {
+            allItemsReady = false;
+            break;
+          }
+        }
+
+        if (allItemsReady) {
+          order.Status = Status.Ready;
+        }
+      }
+
+      // If the order status has been changed, update and save it
+      if (order.Status != initialOrderStatus) {
+        context.Update(order);
+        SaveAll();
       }
     }
 

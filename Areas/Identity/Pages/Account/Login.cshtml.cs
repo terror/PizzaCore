@@ -77,9 +77,12 @@ namespace PizzaCore.Areas.Identity.Pages.Account {
           var user = await _userManager.FindByEmailAsync(Input.Email);
           var role = _userManager.GetRolesAsync(user);
 
-          // Redirect the user to the dashboard page if their role is owner or manager
+          // Redirect the user to the appropriate page depending on their role
           if (role.Result.Contains("Owner") || role.Result.Contains("Manager")) {
             return LocalRedirect("~/dashboard");
+          }
+          else if (role.Result.Contains("Cook")) {
+            return LocalRedirect("~/cook");
           }
 
           return LocalRedirect(returnUrl);

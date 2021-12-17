@@ -1,0 +1,85 @@
+@model IEnumerable<OrderModel>
+@section Styles{
+  <link rel="stylesheet" href="~/css/cook.css" /> }
+
+@{
+  ViewData["Title"] = "Manage Orders";
+}
+
+<div class="header-container">
+  <h3>Current Orders</h3>
+</div>
+
+<div class="orders-container">
+  @if (Model == null || Model.Count() == 0)
+  {
+    <h5 id="order-container-header">No current orders to prepare.</h5>
+  }
+  else
+  {
+    @foreach (var order in Model)
+    {
+      <div class="order-container bg-secondary text-light">
+        <div class="order-info-container">
+          <div class="order-info">
+            <p>Order: @(order.Id)</p>
+            <p>Customer: @(order.FirstName) @(order.LastName)</p>
+            <p>Method: @(order.Method)</p>
+            <p>Date: @(order.Date.ToString("MM-dd-yy hh:mm tt"))</p>
+          </div>
+          <div class="order-status">
+            @using (Html.BeginForm("UpdateOrderStatus", "Cook", FormMethod.Post, new { orderId = 0, status = "" }))
+            {
+              <input type="hidden" name="orderId" value="@(order.Id)" />
+              <select name="status" onchange="this.form.submit()">
+                <option value="@(order.Status)">@(order.Status)</option>
+                @if (order.Status != Status.Preparing)
+                {
+                  <option value="@Status.Preparing" >@Status.Preparing</option>
+                }
+                @if (order.Status != Status.Ready)
+                {
+                  <option value="@Status.Ready">@(Status.Ready)</option>
+                }
+              </select>
+             }
+          </div>
+        </div>
+        <table class="order-items-table">
+          <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Status</th>
+          </tr>
+          @foreach (var item in order.Items)
+          {
+            <tr>
+              <td>@(item.Name)</td>
+              <td>@(item.Size)</td>
+              <td>@(item.Quantity)</td>
+              <td>
+                @using (Html.BeginForm("UpdateItemStatus", "Cook", FormMethod.Post, new { itemId = 0, status = "" }))
+                {
+                  <input type="hidden" name="itemId" value="@(item.Id)" />
+                  <select name="status" onchange="this.form.submit()">
+                    <option value="@(item.Status)">@(item.Status)</option>
+                    @if (item.Status != Status.Preparing)
+                    {
+                       <option value="@Status.Preparing" >@Status.Preparing</option>
+                    }
+                    @if (item.Status != Status.Ready)
+                    {
+                      <option value="@Status.Ready">@(Status.Ready)</option>
+                    }
+                  </select>
+                }
+              </td>
+            </tr>
+          }
+        </table>
+      </div>
+    }
+  }
+</div>
+
