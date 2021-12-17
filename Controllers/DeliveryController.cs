@@ -24,5 +24,19 @@ namespace PizzaCore.Controllers
       IEnumerable<OrderModel> orderModels = repository.GetOrdersDeliveryReadyOrderByOldest();
       return View(orderModels);
     }
+
+    public IActionResult UpdateOrderStatus(int orderId, string status)
+    {
+      if (status != Status.InTransit.ToString() && status != Status.Complete.ToString())
+      {
+        return View("Error", new ErrorModel
+        {
+          Message = $"Status permission not allowed!"
+        });
+      }
+      // Update the order status and reload the view
+      repository.UpdateOrderStatus(orderId, (Status)Enum.Parse(typeof(Status), status));
+      return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
+    }
   }
 }

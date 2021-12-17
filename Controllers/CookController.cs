@@ -20,14 +20,14 @@ namespace PizzaCore.Controllers
     }
 
     [HttpPost]
-    public RedirectResult UpdateOrderStatus(int orderId, string status) {
+    public IActionResult UpdateOrderStatus(int orderId, string status) {
       // Update the order status and reload the view
       repository.UpdateOrderStatus(orderId, (Status)Enum.Parse(typeof(Status), status));
       return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
 
     [HttpPost]
-    public RedirectResult UpdateItemStatus(int itemId, string status) {
+    public IActionResult UpdateItemStatus(int itemId, string status) {
       // Update the order item status and reload the view
       repository.UpdateOrderItemStatus(itemId, (Status)Enum.Parse(typeof(Status), status));
       return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
