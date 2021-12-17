@@ -14,7 +14,7 @@
 }
 
 #time-frame {
-    margin-left: auto;
+    margin-right: 15px;
 }
 
 .order-manager-container {
@@ -42,5 +42,11 @@ tr:nth-child(even) {
 
 #cancel-cell {
     text-align: center;
+}
+
+#options-container {
+    margin-left: auto;
+    display: flex;
+    align-items: end;
 }
 
