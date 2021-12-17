@@ -9,16 +9,22 @@
 <div class="header-container">
   <h3>Manage Orders</h3>
 
-  <form asp-action="Index" id="time-frame">
-    <select name="timeFrame" onchange="this.form.submit();">
-      <option disabled selected>Choose time frame</option>
-      <option value="today">Today</option>
-      <option value="yesterday">Yesterday</option>
-      <option value="week">Last Week</option>
-      <option value="month">Last Month</option>
-      <option value="year">Last Year</option>
-    </select>
-  </form>
+  <div id="options-container">
+    <form asp-action="Index" id="time-frame">
+      <select name="timeFrame" onchange="this.form.submit();">
+        <option disabled selected>Choose time frame</option>
+        <option value="today">Today</option>
+        <option value="yesterday">Yesterday</option>
+        <option value="week">Last Week</option>
+        <option value="month">Last Month</option>
+        <option value="year">Last Year</option>
+      </select>
+    </form>
+    @using (Html.BeginForm("Menu", "Employee", FormMethod.Get))
+    {
+      <button class="btn btn-secondary">Create Order</button>
+    }
+  </div>
 </div>
 
 <div class="order-manager-container">

@@ -52,13 +52,16 @@
             @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
             {
               <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="ManageOrder" asp-action="Index">Manage Orders</a>
               </li>
             }
-            @if (User.IsInRole("Service"))
+            @if (User.IsInRole("Service") && !User.IsInRole("Owner") && !User.IsInRole("Manager"))
             {
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Order</a>
