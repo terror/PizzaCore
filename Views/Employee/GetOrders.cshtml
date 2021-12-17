@@ -63,15 +63,36 @@
             }
           </td>
           <td>
-            @if(item.Status == Status.Ready) {
-              <a  style="color:var(--bs-green);" class="sleek-button">@item.Status</a>
+
+            @if (item.Status == Status.Ready && item.isPaid)
+            {
+              @using (Html.BeginForm("UpdateOrderStatus", "Employee", FormMethod.Post, new { orderId = 0, status = "" }))
+              {
+                <input type="hidden" name="orderId" value="@(item.Id)" />
+                <select name="status" onchange="this.form.submit()">
+                  <option value="@(item.Status)">@(item.Status)</option>             
+                  <option value="@Status.Complete">@(Status.Complete)</option>
+                </select>
+              }
             }
-            else if(item.Status == Status.Preparing) {
-              <a style="color:var(--bs-orange);" class="sleek-button">@item.Status</a>
+            else
+            {
+              @if (item.Status == Status.Ready)
+              {
+                <a style="color:var(--bs-green);" class="sleek-button">@item.Status</a>
+              }
+              else if (item.Status == Status.Preparing)
+              {
+                <a style="color:var(--bs-orange);" class="sleek-button">@item.Status</a>
+              }
+              else
+              {
+                <a style="color:var(--bs-red);" class="sleek-button">@item.Status</a>
+              }
             }
-            else {
-              <a style="color:var(--bs-red);" class="sleek-button">@item.Status</a>
-            }
+
+
+            
           </td>
         </tr>
 }
