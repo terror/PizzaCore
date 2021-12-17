@@ -19,7 +19,7 @@ namespace PizzaCore.Controllers {
     public IActionResult Index() {
 
       
-      if(SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == true)
+      if(SessionHelper.GetObjectFromJson<bool?>(HttpContext.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == null || SessionHelper.GetObjectFromJson<bool?>(HttpContext.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == true)
       {
         if (User.IsInRole("Manager") || User.IsInRole("Owner"))
         {
