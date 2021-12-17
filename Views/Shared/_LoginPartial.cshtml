@@ -1,9 +1,11 @@
 @using Microsoft.AspNetCore.Identity
+@using PizzaCore.Helpers;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
-  @if (SignInManager.IsSignedIn(User)) {
+  @if (SignInManager.IsSignedIn(User))
+  {
     <li class="nav-item">
       <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
     </li>
@@ -12,7 +14,9 @@
         <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
       </form>
     </li>
-  } else {
+  }
+  else
+  {
     <li class="nav-item">
       <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
@@ -27,18 +31,25 @@
     </div>
     <ul>
       <li id="english-lang">
-        <a href="#" >English</a>
+        <a href="#">English</a>
       </li>
       <li id="french-lang">
-        <a href="#" >French</a>
+        <a href="#">French</a>
       </li>
     </ul>
   </li>
 </ul>
-<div>
-  @if (SignInManager.IsSignedIn(User)) {
-    <a class="sleek-button checkout-button" href="/checkout">🛒&nbsp;Cart</a>
-  } else {
-    <button class="sleek-button checkout-button" onclick="onCheckoutGuest()">🛒&nbsp;Cart</button>
-  }
-</div>
+
+@if (!User.IsInRole("Staff") || SessionHelper.GetObjectFromJson<bool?>(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == false || SessionHelper.GetObjectFromJson<bool?>(Context.Session, SessionHelper.EMPLOYEE_SIGN_IN_KEY) == null)
+{
+  <div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+      <a class="sleek-button checkout-button" href="/checkout">🛒&nbsp;Cart</a>
+    }
+    else
+    {
+      <button class="sleek-button checkout-button" onclick="onCheckoutGuest()">🛒&nbsp;Cart</button>
+    }
+  </div>
+}

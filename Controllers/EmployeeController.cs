@@ -197,8 +197,22 @@ namespace PizzaCore.Controllers
     [HttpGet("employee/orders")]
     public IActionResult GetOrders()
     {
-      IEnumerable<OrderModel> orders = repository.GetAllOrders();
+      IEnumerable<OrderModel> orders = repository.GetPendingPickupOrdersOrderByOldest();
       return View(orders);
+    }
+
+    public IActionResult UpdateOrderStatus(int orderId, string status)
+    {
+      if (status != Status.Complete.ToString())
+      {
+        return View("Error", new ErrorModel
+        {
+          Message = $"Status permission not allowed!"
+        });
+      }
+      // Update the order status and reload the view
+      repository.UpdateOrderStatus(orderId, (Status)Enum.Parse(typeof(Status), status));
+      return RedirectPermanent(HttpContext.Request.Headers["Referer"]);
     }
 
   }

@@ -306,6 +306,24 @@ namespace PizzaCore.Data {
       }
     }
 
+    public IEnumerable<OrderModel> GetPendingPickupOrdersOrderByOldest()
+    {
+      try
+      {
+        logger.LogInformation("[PizzaRepository::GetPickupOrdersOrderByOldest] Getting all pickup orders ordered by oldest...");
+        IEnumerable<OrderModel> allOrders = GetAllOrders();
+        IEnumerable<OrderModel> pickupOrders = allOrders.Where(o => o.Method == "Pickup" && o.Status != Status.Complete).OrderBy(o => o.Date);
+
+        return pickupOrders;
+
+      }
+      catch (Exception ex)
+      {
+        logger.LogError($"Failed to get all pickup orders: {ex.Message}");
+        return null;
+      }
+    }
+
     public OrderModel GetOrderById(int orderId)
     {
       try
