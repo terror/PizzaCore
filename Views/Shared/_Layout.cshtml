@@ -29,7 +29,7 @@
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul class="navbar-nav flex-grow-1">
 
-            @if(!User.IsInRole("Manger") && !User.IsInRole("Owner") && !User.IsInRole("Service") && !User.IsInRole("Delivery") && !User.IsInRole("Cook")) {
+            @if(!User.IsInRole("Staff")) {
                           
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
@@ -71,6 +71,11 @@
             {
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Cook" asp-action="Index">Manage Orders</a>
+              </li>
+            }
+            @if (User.IsInRole("Delivery")) {
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Delivery" asp-action="Index">Delivery Orders</a>
               </li>
             }
           </ul>
