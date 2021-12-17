@@ -48,11 +48,18 @@
                @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
             </td>
             <td>
-                @(item.isPaid ? "PAID" : "NOT PAID")
+              @if (item.isPaid)
+              {
+                <span style="color:var(--bs-green)">Paid</span>
+              }
+              else
+              {
+                <span style="color:var(--bs-red)">Not Paid</span>
+              }
             </td>
           <td>
             @if (!item.isPaid) {
-              <a  class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
+              <a  style="color:var(--bs-tertiary);" class="sleek-button" href="/employee/order/@(item.Id)">PAY</a>
             }
           </td>
           <td>

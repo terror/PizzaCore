@@ -4,8 +4,11 @@
   ViewData["Title"] = "All Orders";
 }
 
-<h1>Orders To Deliver</h1>
-
+<h2 class="text-primary" style="text-align:center">Orders To Deliver</h2>
+@if(Model == null || Model.Count() == 0) {
+  <h5 style="text-align:center" class="text-secondary" >No Delivery Orders Remaining</h5>
+}
+else{
 <table class="table">
   <thead>
     <tr>
@@ -62,11 +65,26 @@
           @(Math.Round(item.SubTotal + item.ShippingCost + item.Taxes, OrderModel.DECIMAL_NUM))
         </td>
         <td>
-          @(item.Status)
+          @using (Html.BeginForm("UpdateOrderStatus", "Delivery", FormMethod.Post, new { orderId = 0, status = "" }))
+          {
+            <input type="hidden" name="orderId" value="@(item.Id)" />
+            <select name="status" onchange="this.form.submit()">
+              <option value="@(item.Status)">@(item.Status)</option>
+              @if (item.Status == Status.Ready)
+              {
+                <option value="@Status.InTransit">@Status.InTransit</option>
+              }
+              @if (item.Status == Status.InTransit)
+              {
+                <option value="@Status.Complete">@(Status.Complete)</option>
+              }
+            </select>
+          }
         </td>
         
       </tr>
     }
   </tbody>
 </table>
+}
 

@@ -4,9 +4,8 @@
 }
 
 .header-container {
-    display: flex;
+    display: block;
     margin: 50px 70px 25px 70px;
-    align-items: center;
 }
 
 .orders-container {
