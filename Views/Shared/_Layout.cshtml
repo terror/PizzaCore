@@ -58,7 +58,6 @@
                 <a class="nav-link text-light" asp-area="" asp-controller="ManageOrder" asp-action="Index">Manage Orders</a>
               </li>
             }
-
             @if (User.IsInRole("Service"))
             {
               <li class="nav-item">
@@ -66,6 +65,12 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="orders">All Orders</a>
+              </li>
+            }
+            @if (User.IsInRole("Cook"))
+            {
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Cook" asp-action="Index">Manage Orders</a>
               </li>
             }
           </ul>

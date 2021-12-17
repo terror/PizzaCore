@@ -11,6 +11,7 @@ namespace PizzaCore.Data {
     Product GetProduct(int id);
     IEnumerable<ProductByCategory> GetProductsGroupedByCategory();
     void UpdateOrderStatus(int orderId, Status status);
+    void UpdateOrderItemStatus(int itemId, Status status);
     void DeleteOrder(int orderId);
     IEnumerable<OrderModel> GetAllOrders();
     OrderModel GetOrderById(int orderId);
