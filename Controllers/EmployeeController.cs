@@ -36,6 +36,11 @@ namespace PizzaCore.Controllers
         return RedirectToAction("Menu", "Employee");
       }
 
+      if (User.IsInRole("Delivery"))
+      {
+        return RedirectToAction("Index", "Delivery");
+      }
+
       return RedirectToAction("Index", "Home");
 
     }
